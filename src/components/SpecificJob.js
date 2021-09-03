@@ -1,11 +1,14 @@
 import React from "react";
+import Footer from "./Footer";
+import Header from "./Header";
 
 const SpecificJob = () => {
 	return (
 		<>
+			<Header />
 			<section
 				className="position-relative bg-white rounded-xxl-4 zindex-5"
-				style={{ marginTop: "-30px" }}
+				style={{ marginTop: "70px" }}
 			>
 				<div className="container pt-4 pb-5 mb-md-4">
 					<nav className="pb-4 my-2" aria-label="Breadcrumb">
@@ -1289,6 +1292,7 @@ const SpecificJob = () => {
 					</div>
 				</div>
 			</section>
+			<Footer />
 		</>
 	);
 };

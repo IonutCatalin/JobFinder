@@ -1,6 +1,9 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
 
 function Header() {
+	const history = useHistory();
+
 	return (
 		<header
 			className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
@@ -141,9 +144,9 @@ function Header() {
 							</a>
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
-									<a className="dropdown-item" href="job-board-catalog.html">
-										List of Jobs
-									</a>
+									<Link to="/joblist">
+										<a className="dropdown-item">List of Jobs</a>
+									</Link>
 								</li>
 								<li>
 									<a className="dropdown-item" href="job-board-single.html">

@@ -1,20 +1,25 @@
 import "./App.css";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+// import Footer from "./components/Footer";
+// import Header from "./components/Header";
 import HomeBanner from "./components/HomeBanner";
 import JobList from "./components/JobList";
 import SpecificJob from "./components/SpecificJob";
-import "./styles/theme.min.css";
-//import "./styles/_global.scss";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+
+// import "./custom.scss";
+
+// import "./styles/global.scss";
 
 function App() {
 	return (
 		<>
-			<Header />
-			<HomeBanner />
-			<JobList />
-			<SpecificJob />
-			<Footer />
+			<BrowserRouter>
+				<Switch>
+					<Route exact path="/" component={HomeBanner} />
+					<Route path="/joblist" component={JobList} />
+					<Route path="/specificjob" component={SpecificJob} />
+				</Switch>
+			</BrowserRouter>
 		</>
 	);
 }
