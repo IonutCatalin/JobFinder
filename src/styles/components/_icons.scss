@@ -270,9 +270,7 @@ $fi-education: '\ea00';
 @font-face {
   font-family: '#{$icons-font-family}';
   src:
-    url('#{$icons-font-path}/#{$icons-font-family}.ttf?7648j3') format('truetype'),
-    url('#{$icons-font-path}/#{$icons-font-family}.woff?7648j3') format('woff'),
-    url('#{$icons-font-path}/#{$icons-font-family}.svg?7648j3##{$icons-font-family}') format('svg');
+    url('#{$icons-font-path}/#{$icons-font-family}.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: block;

@@ -6,9 +6,8 @@ import JobList from "./components/JobList";
 import SpecificJob from "./components/SpecificJob";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-// import "./custom.scss";
-
-// import "./styles/global.scss";
+import "./styles/global.scss";
+import "./styles/styles.css";
 
 function App() {
 	return (
