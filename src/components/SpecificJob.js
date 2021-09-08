@@ -1,11 +1,13 @@
 import React from "react";
 import Footer from "./Footer";
 import Header from "./Header";
+import JobsFindHeader from "./JobsFindHeader";
 
 const SpecificJob = () => {
 	return (
 		<>
 			<Header />
+			<JobsFindHeader />
 			<section
 				className="position-relative bg-white rounded-xxl-4 zindex-5"
 				style={{ marginTop: "70px" }}

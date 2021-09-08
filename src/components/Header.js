@@ -53,65 +53,9 @@ function Header() {
 						className="navbar-nav navbar-nav-scroll"
 						style={{ maxHeight: "35rem" }}
 					>
-						<li className="nav-item dropdown py-2 me-lg-2">
-							<a
-								className="nav-link dropdown-toggle align-items-center border-end-lg border-light py-1 pe-lg-4"
-								href="#"
-								data-bs-toggle="dropdown"
-								role="button"
-								aria-expanded="false"
-							>
-								<i className="fi-layers me-2"></i>Demos
-							</a>
-							<ul className="dropdown-menu dropdown-menu-dark">
-								<li>
-									<a className="dropdown-item" href="real-estate-home.html">
-										<i className="fi-building fs-base me-2"></i>Real Estate Demo
-									</a>
-								</li>
-								<li className="dropdown-divider"></li>
-								<li>
-									<a className="dropdown-item" href="car-finder-home.html">
-										<i className="fi-car fs-base me-2"></i>Car Finder Demo
-									</a>
-								</li>
-								<li className="dropdown-divider"></li>
-								<li>
-									<a className="dropdown-item" href="job-board-home-v1.html">
-										<i className="fi-briefcase fs-base me-2"></i>Job Board Demo
-									</a>
-								</li>
-								<li className="dropdown-divider"></li>
-								<li>
-									<a className="dropdown-item" href="city-guide-home-v1.html">
-										<i className="fi-map-pin fs-base me-2"></i>City Guide Demo
-									</a>
-								</li>
-								<li className="dropdown-divider"></li>
-								<li>
-									<a className="dropdown-item" href="index.html">
-										<i className="fi-home fs-base me-2"></i>Main Page
-									</a>
-								</li>
-								<li>
-									<a
-										className="dropdown-item"
-										href="components/typography.html"
-									>
-										<i className="fi-list fs-base me-2"></i>Components
-									</a>
-								</li>
-								<li>
-									<a className="dropdown-item" href="docs/dev-setup.html">
-										<i className="fi-file fs-base me-2"></i>Documentation
-									</a>
-								</li>
-							</ul>
-						</li>
-
 						<li className="nav-item dropdown active">
 							<a
-								className="nav-link dropdown-toggle"
+								className="nav-link dropdown-toggle border-start-lg border-light"
 								href="#"
 								role="button"
 								data-bs-toggle="dropdown"
@@ -121,14 +65,14 @@ function Header() {
 							</a>
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
-									<a className="dropdown-item" href="job-board-home-v1.html">
-										For Job Seekers
-									</a>
+									<Link to="/" style={{ textDecoration: "none" }}>
+										<a className="dropdown-item">For Job Seekers</a>
+									</Link>
 								</li>
 								<li>
-									<a className="dropdown-item" href="job-board-home-v2.html">
-										For Employers
-									</a>
+									<Link to="/" style={{ textDecoration: "none" }}>
+										<a className="dropdown-item">For Employers</a>
+									</Link>
 								</li>
 							</ul>
 						</li>
@@ -144,14 +88,9 @@ function Header() {
 							</a>
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
-									<Link to="/joblist">
+									<Link to="/joblist" style={{ textDecoration: "none" }}>
 										<a className="dropdown-item">List of Jobs</a>
 									</Link>
-								</li>
-								<li>
-									<a className="dropdown-item" href="job-board-single.html">
-										Single Job Page
-									</a>
 								</li>
 							</ul>
 						</li>
@@ -267,32 +206,7 @@ function Header() {
 								</li>
 							</ul>
 						</li>
-						<li className="nav-item dropdown">
-							<a
-								className="nav-link dropdown-toggle"
-								href="#"
-								role="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-							>
-								Blog
-							</a>
-							<ul className="dropdown-menu dropdown-menu-dark">
-								<li>
-									<a className="dropdown-item" href="job-board-blog.html">
-										Blog List
-									</a>
-								</li>
-								<li>
-									<a
-										className="dropdown-item"
-										href="job-board-blog-single.html"
-									>
-										Single Post
-									</a>
-								</li>
-							</ul>
-						</li>
+
 						<li className="nav-item d-lg-none">
 							<a
 								className="nav-link"

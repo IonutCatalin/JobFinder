@@ -1,8 +1,27 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
+
+// import application from "./../../application";
+// const Jobs = require("../../models/Jobs");
 
 const JobCard = () => {
+	// const job = app.get("/jobs", (req, res) => {
+	// 	Jobs.find()
+	// 		.then((result) => {
+	// 			res.send(result);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// });
+
 	return (
 		<>
+			{/* <div>
+				{jobs.map((jobes) => {
+					return <p>{jobes.companyName}</p>;
+				})}
+			</div> */}
 			<div className="card bg-secondary card-hover mb-2">
 				<div className="card-body">
 					<div className="d-flex justify-content-between align-items-start mb-2">
@@ -42,12 +61,11 @@ const JobCard = () => {
 						</div>
 					</div>
 					<h3 className="h6 card-title pt-1 mb-3">
-						<a
-							className="text-nav stretched-link text-decoration-none"
-							href="job-board-single.html"
-						>
-							Business Analyst
-						</a>
+						<Link to="/specificjob" style={{ textDecoration: "none" }}>
+							<a className="text-nav stretched-link text-decoration-none">
+								Business Analyst
+							</a>
+						</Link>
 					</h3>
 					<div className="fs-sm">
 						<span className="text-nowrap me-3">

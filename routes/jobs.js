@@ -5,6 +5,7 @@ const Jobs = require("../models/Jobs");
 // GET BACK ALL THE JOBS
 router.get("/", async (req, res) => {
 	try {
+		// res.send("We are on jobs");
 		const jobs = await Jobs.find();
 		res.json(jobs);
 	} catch (err) {
