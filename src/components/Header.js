@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import logo from "./../img/logo-light.svg";
 
 function Header() {
 	const history = useHistory();
@@ -11,12 +12,7 @@ function Header() {
 		>
 			<div className="container">
 				<a className="navbar-brand me-0 me-xl-4" href="job-board-home-v1.html">
-					<img
-						className="d-block"
-						src="img/logo/logo-light.svg"
-						width="116"
-						alt="Finder"
-					/>
+					<img className="d-block" src={logo} width="116" alt="Finder" />
 				</a>
 				<button
 					className="navbar-toggler ms-auto"

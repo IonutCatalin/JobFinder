@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import companyImage from "./../img/company.png";
 
 // import application from "./../../application";
 // const Jobs = require("../../models/Jobs");
@@ -28,7 +29,7 @@ const JobCard = () => {
 						<div className="d-flex align-items-center">
 							<img
 								className="me-2"
-								src="img/job-board/company/it-pro.png"
+								src={companyImage}
 								width="24"
 								alt="IT Pro Logo"
 							/>

@@ -1,4 +1,5 @@
 import React from "react";
+import footerImage from "./../img/footer-mobile.svg";
 
 const Footer = () => {
 	return (
@@ -193,7 +194,7 @@ const Footer = () => {
 								</div>
 								<img
 									className="d-none d-xl-block ms-n4"
-									src="img/job-board/footer-mobile.svg"
+									src={footerImage}
 									width="116"
 									alt="Mobile app"
 								/>
