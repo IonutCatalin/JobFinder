@@ -3,8 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import logo from "./../img/logo-light.svg";
 
 function Header() {
-	const history = useHistory();
-
 	return (
 		<header
 			className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
@@ -25,10 +23,10 @@ function Header() {
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
+
 				<a
 					className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-					href="#signin-modal"
-					data-bs-toggle="modal"
+					href="/login"
 				>
 					<i className="fi-user me-2"></i>Sign in
 				</a>
@@ -62,12 +60,12 @@ function Header() {
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
 									<Link to="/" style={{ textDecoration: "none" }}>
-										<a className="dropdown-item">For Job Seekers</a>
+										<p className="dropdown-item">For Job Seekers</p>
 									</Link>
 								</li>
 								<li>
 									<Link to="/" style={{ textDecoration: "none" }}>
-										<a className="dropdown-item">For Employers</a>
+										<p className="dropdown-item">For Employers</p>
 									</Link>
 								</li>
 							</ul>
@@ -85,7 +83,7 @@ function Header() {
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
 									<Link to="/joblist" style={{ textDecoration: "none" }}>
-										<a className="dropdown-item">List of Jobs</a>
+										<p className="dropdown-item">List of Jobs</p>
 									</Link>
 								</li>
 							</ul>
@@ -204,13 +202,11 @@ function Header() {
 						</li>
 
 						<li className="nav-item d-lg-none">
-							<a
-								className="nav-link"
-								href="#signin-modal"
-								data-bs-toggle="modal"
-							>
-								<i className="fi-user me-2"></i>Sign in
-							</a>
+							<Link to="/login" style={{ textDecoration: "none" }}>
+								<p className="nav-link" data-bs-toggle="modal">
+									<i className="fi-user me-2"></i>Sign in
+								</p>
+							</Link>
 						</li>
 					</ul>
 				</div>

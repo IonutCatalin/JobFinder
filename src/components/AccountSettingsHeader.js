@@ -4,20 +4,23 @@ const AccountSettingsHeader = () => {
 	return (
 		<>
 			<header
-				class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+				className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 				data-scroll-header=""
 			>
-				<div class="container">
-					<a class="navbar-brand me-0 me-xl-4" href="job-board-home-v1.html">
+				<div className="container">
+					<a
+						className="navbar-brand me-0 me-xl-4"
+						href="job-board-home-v1.html"
+					>
 						<img
-							class="d-block"
+							className="d-block"
 							src="img/logo/logo-light.svg"
 							width="116"
 							alt="Finder"
 						/>
 					</a>
 					<button
-						class="navbar-toggler ms-auto"
+						className="navbar-toggler ms-auto"
 						type="button"
 						data-bs-toggle="collapse"
 						data-bs-target="#navbarNav"
@@ -25,127 +28,144 @@ const AccountSettingsHeader = () => {
 						aria-expanded="false"
 						aria-label="Toggle navigation"
 					>
-						<span class="navbar-toggler-icon"></span>
+						<span className="navbar-toggler-icon"></span>
 					</button>
-					<div class="dropdown d-none d-lg-block order-lg-3 my-n2 me-3">
-						<a class="d-block py-2" href="job-board-account-profile.html">
+					<div className="dropdown d-none d-lg-block order-lg-3 my-n2 me-3">
+						<a className="d-block py-2" href="job-board-account-profile.html">
 							<img
-								class="rounded-circle"
+								className="rounded-circle"
 								src="img/avatars/35.png"
 								width="40"
 								alt="Annette Black"
 							/>
 						</a>
-						<div class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+						<div className="dropdown-menu dropdown-menu-dark dropdown-menu-end">
 							<div
-								class="d-flex align-items-start border-bottom border-light px-3 py-1 mb-2"
+								className="d-flex align-items-start border-bottom border-light px-3 py-1 mb-2"
 								style="width: 16rem;"
 							>
 								<img
-									class="rounded-circle"
+									className="rounded-circle"
 									src="img/avatars/25.png"
 									width="48"
 									alt="Annette Black"
 								/>
-								<div class="ps-2">
-									<h6 class="fs-base text-light mb-0">Annette Black</h6>
-									<div class="fs-xs py-2">
+								<div className="ps-2">
+									<h6 className="fs-base text-light mb-0">Annette Black</h6>
+									<div className="fs-xs py-2">
 										(302) 555-0107
 										<br />
 										annette_black@email.com
 									</div>
 								</div>
 							</div>
-							<a class="dropdown-item" href="job-board-account-profile.html">
-								<i class="fi-settings me-2"></i>Profile Settings
-							</a>
-							<a class="dropdown-item" href="job-board-account-my-resumes.html">
-								<i class="fi-file me-2"></i>My Resumes
-							</a>
-							<a class="dropdown-item" href="job-board-account-saved-jobs.html">
-								<i class="fi-heart me-2"></i>Saved Jobs
+							<a
+								className="dropdown-item"
+								href="job-board-account-profile.html"
+							>
+								<i className="fi-settings me-2"></i>Profile Settings
 							</a>
 							<a
-								class="dropdown-item"
+								className="dropdown-item"
+								href="job-board-account-my-resumes.html"
+							>
+								<i className="fi-file me-2"></i>My Resumes
+							</a>
+							<a
+								className="dropdown-item"
+								href="job-board-account-saved-jobs.html"
+							>
+								<i className="fi-heart me-2"></i>Saved Jobs
+							</a>
+							<a
+								className="dropdown-item"
 								href="job-board-account-notifications.html"
 							>
-								<i class="fi-bell me-2"></i>Notifications
+								<i className="fi-bell me-2"></i>Notifications
 							</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">
-								<i class="fi-logout me-2"></i>Sign Out
+							<div className="dropdown-divider"></div>
+							<a className="dropdown-item" href="#">
+								<i className="fi-logout me-2"></i>Sign Out
 							</a>
 						</div>
 					</div>
 					<a
-						class="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+						className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
 						href="job-board-post-resume-1.html"
 					>
-						<i class="fi-plus me-2"></i>Post resume
+						<i className="fi-plus me-2"></i>Post resume
 					</a>
 					<a
-						class="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3 pe-0 ms-2"
+						className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3 pe-0 ms-2"
 						href="job-board-home-v2.html"
 					>
-						For employers<i class="fi-arrow-long-right ms-2"></i>
+						For employers<i className="fi-arrow-long-right ms-2"></i>
 					</a>
-					<div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-						<ul class="navbar-nav navbar-nav-scroll" style="max-height: 35rem;">
-							<li class="nav-item dropdown py-2 me-lg-2">
+					<div className="collapse navbar-collapse order-lg-2" id="navbarNav">
+						<ul
+							className="navbar-nav navbar-nav-scroll"
+							style="max-height: 35rem;"
+						>
+							<li className="nav-item dropdown py-2 me-lg-2">
 								<a
-									class="nav-link dropdown-toggle align-items-center border-end-lg border-light py-1 pe-lg-4"
+									className="nav-link dropdown-toggle align-items-center border-end-lg border-light py-1 pe-lg-4"
 									href="#"
 									data-bs-toggle="dropdown"
 									role="button"
 									aria-expanded="false"
 								>
-									<i class="fi-layers me-2"></i>Demos
+									<i className="fi-layers me-2"></i>Demos
 								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
+								<ul className="dropdown-menu dropdown-menu-dark">
 									<li>
-										<a class="dropdown-item" href="real-estate-home.html">
-											<i class="fi-building fs-base me-2"></i>Real Estate Demo
+										<a className="dropdown-item" href="real-estate-home.html">
+											<i className="fi-building fs-base me-2"></i>Real Estate
+											Demo
 										</a>
 									</li>
-									<li class="dropdown-divider"></li>
+									<li className="dropdown-divider"></li>
 									<li>
-										<a class="dropdown-item" href="car-finder-home.html">
-											<i class="fi-car fs-base me-2"></i>Car Finder Demo
+										<a className="dropdown-item" href="car-finder-home.html">
+											<i className="fi-car fs-base me-2"></i>Car Finder Demo
 										</a>
 									</li>
-									<li class="dropdown-divider"></li>
+									<li className="dropdown-divider"></li>
 									<li>
-										<a class="dropdown-item" href="job-board-home-v1.html">
-											<i class="fi-briefcase fs-base me-2"></i>Job Board Demo
+										<a className="dropdown-item" href="job-board-home-v1.html">
+											<i className="fi-briefcase fs-base me-2"></i>Job Board
+											Demo
 										</a>
 									</li>
-									<li class="dropdown-divider"></li>
+									<li className="dropdown-divider"></li>
 									<li>
-										<a class="dropdown-item" href="city-guide-home-v1.html">
-											<i class="fi-map-pin fs-base me-2"></i>City Guide Demo
+										<a className="dropdown-item" href="city-guide-home-v1.html">
+											<i className="fi-map-pin fs-base me-2"></i>City Guide Demo
 										</a>
 									</li>
-									<li class="dropdown-divider"></li>
+									<li className="dropdown-divider"></li>
 									<li>
-										<a class="dropdown-item" href="index.html">
-											<i class="fi-home fs-base me-2"></i>Main Page
-										</a>
-									</li>
-									<li>
-										<a class="dropdown-item" href="components/typography.html">
-											<i class="fi-list fs-base me-2"></i>Components
+										<a className="dropdown-item" href="index.html">
+											<i className="fi-home fs-base me-2"></i>Main Page
 										</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="docs/dev-setup.html">
-											<i class="fi-file fs-base me-2"></i>Documentation
+										<a
+											className="dropdown-item"
+											href="components/typography.html"
+										>
+											<i className="fi-list fs-base me-2"></i>Components
+										</a>
+									</li>
+									<li>
+										<a className="dropdown-item" href="docs/dev-setup.html">
+											<i className="fi-file fs-base me-2"></i>Documentation
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown">
+							<li className="nav-item dropdown">
 								<a
-									class="nav-link dropdown-toggle"
+									className="nav-link dropdown-toggle"
 									href="#"
 									role="button"
 									data-bs-toggle="dropdown"
@@ -153,22 +173,22 @@ const AccountSettingsHeader = () => {
 								>
 									Home
 								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
+								<ul className="dropdown-menu dropdown-menu-dark">
 									<li>
-										<a class="dropdown-item" href="job-board-home-v1.html">
+										<a className="dropdown-item" href="job-board-home-v1.html">
 											For Job Seekers
 										</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="job-board-home-v2.html">
+										<a className="dropdown-item" href="job-board-home-v2.html">
 											For Employers
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown">
+							<li className="nav-item dropdown">
 								<a
-									class="nav-link dropdown-toggle"
+									className="nav-link dropdown-toggle"
 									href="#"
 									role="button"
 									data-bs-toggle="dropdown"
@@ -176,22 +196,22 @@ const AccountSettingsHeader = () => {
 								>
 									Catalog
 								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
+								<ul className="dropdown-menu dropdown-menu-dark">
 									<li>
-										<a class="dropdown-item" href="job-board-catalog.html">
+										<a className="dropdown-item" href="job-board-catalog.html">
 											List of Jobs
 										</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="job-board-single.html">
+										<a className="dropdown-item" href="job-board-single.html">
 											Single Job Page
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown active">
+							<li className="nav-item dropdown active">
 								<a
-									class="nav-link dropdown-toggle"
+									className="nav-link dropdown-toggle"
 									href="#"
 									role="button"
 									data-bs-toggle="dropdown"
@@ -199,15 +219,15 @@ const AccountSettingsHeader = () => {
 								>
 									Account
 								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
-									<li class="dropdown">
-										<a class="dropdown-item dropdown-toggle" href="#">
+								<ul className="dropdown-menu dropdown-menu-dark">
+									<li className="dropdown">
+										<a className="dropdown-item dropdown-toggle" href="#">
 											Account Pages
 										</a>
-										<ul class="dropdown-menu dropdown-menu-dark">
+										<ul className="dropdown-menu dropdown-menu-dark">
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-account-profile.html"
 												>
 													Profile Settings
@@ -215,7 +235,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-account-my-resumes.html"
 												>
 													My Resumes
@@ -223,7 +243,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-account-saved-jobs.html"
 												>
 													Saved Jobs
@@ -231,7 +251,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-account-notifications.html"
 												>
 													Notifications
@@ -239,14 +259,14 @@ const AccountSettingsHeader = () => {
 											</li>
 										</ul>
 									</li>
-									<li class="dropdown">
-										<a class="dropdown-item dropdown-toggle" href="#">
+									<li className="dropdown">
+										<a className="dropdown-item dropdown-toggle" href="#">
 											Post Resume
 										</a>
-										<ul class="dropdown-menu dropdown-menu-dark">
+										<ul className="dropdown-menu dropdown-menu-dark">
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-post-resume-1.html"
 												>
 													Step 1: Basic Info
@@ -254,7 +274,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-post-resume-2.html"
 												>
 													Step 2: Education
@@ -262,7 +282,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-post-resume-3.html"
 												>
 													Step 3: Work Experience
@@ -270,7 +290,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-post-resume-4.html"
 												>
 													Step 4: Skills
@@ -278,7 +298,7 @@ const AccountSettingsHeader = () => {
 											</li>
 											<li>
 												<a
-													class="dropdown-item"
+													className="dropdown-item"
 													href="job-board-post-resume-5.html"
 												>
 													Step 5: Review
@@ -287,13 +307,16 @@ const AccountSettingsHeader = () => {
 										</ul>
 									</li>
 									<li>
-										<a class="dropdown-item" href="job-board-promotion.html">
+										<a
+											className="dropdown-item"
+											href="job-board-promotion.html"
+										>
 											Ad Promotion Page
 										</a>
 									</li>
 									<li>
 										<a
-											class="dropdown-item"
+											className="dropdown-item"
 											href="job-board-employer-single.html"
 										>
 											Employer / Company Page
@@ -301,9 +324,9 @@ const AccountSettingsHeader = () => {
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown">
+							<li className="nav-item dropdown">
 								<a
-									class="nav-link dropdown-toggle"
+									className="nav-link dropdown-toggle"
 									href="#"
 									role="button"
 									data-bs-toggle="dropdown"
@@ -311,70 +334,73 @@ const AccountSettingsHeader = () => {
 								>
 									Blog
 								</a>
-								<ul class="dropdown-menu dropdown-menu-dark">
+								<ul className="dropdown-menu dropdown-menu-dark">
 									<li>
-										<a class="dropdown-item" href="job-board-blog.html">
+										<a className="dropdown-item" href="job-board-blog.html">
 											Blog List
 										</a>
 									</li>
 									<li>
-										<a class="dropdown-item" href="job-board-blog-single.html">
+										<a
+											className="dropdown-item"
+											href="job-board-blog-single.html"
+										>
 											Single Post
 										</a>
 									</li>
 								</ul>
 							</li>
-							<li class="nav-item dropdown d-lg-none">
+							<li className="nav-item dropdown d-lg-none">
 								<a
-									class="nav-link dropdown-toggle d-flex align-items-center"
+									className="nav-link dropdown-toggle d-flex align-items-center"
 									href="#"
 									role="button"
 									data-bs-toggle="dropdown"
 									aria-expanded="false"
 								>
 									<img
-										class="rounded-circle me-2"
+										className="rounded-circle me-2"
 										src="img/avatars/35.png"
 										width="30"
 										alt="Annette Black"
 									/>
 									Annette Black
 								</a>
-								<div class="dropdown-menu dropdown-menu-dark">
-									<div class="ps-3">
-										<div class="fs-xs py-2">
+								<div className="dropdown-menu dropdown-menu-dark">
+									<div className="ps-3">
+										<div className="fs-xs py-2">
 											(302) 555-0107
 											<br />
 											annette_black@email.com
 										</div>
 									</div>
 									<a
-										class="dropdown-item"
+										className="dropdown-item"
 										href="job-board-account-profile.html"
 									>
-										<i class="fi-settings me-2"></i>Profile Settings
+										<i className="fi-settings me-2"></i>Profile Settings
 									</a>
 									<a
-										class="dropdown-item"
+										className="dropdown-item"
 										href="job-board-account-my-resumes.html"
 									>
-										<i class="fi-file me-2"></i>My Resumes
+										<i className="fi-file me-2"></i>My Resumes
 									</a>
 									<a
-										class="dropdown-item"
+										className="dropdown-item"
 										href="job-board-account-saved-jobs.html"
 									>
-										<i class="fi-heart me-2"></i>Saved Jobs
+										<i className="fi-heart me-2"></i>Saved Jobs
 									</a>
 									<a
-										class="dropdown-item"
+										className="dropdown-item"
 										href="job-board-account-notifications.html"
 									>
-										<i class="fi-bell me-2"></i>Notifications
+										<i className="fi-bell me-2"></i>Notifications
 									</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">
-										<i class="fi-logout me-2"></i>Sign Out
+									<div className="dropdown-divider"></div>
+									<a className="dropdown-item" href="#">
+										<i className="fi-logout me-2"></i>Sign Out
 									</a>
 								</div>
 							</li>

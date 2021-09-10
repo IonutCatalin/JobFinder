@@ -50,6 +50,7 @@ const JobList = () => {
 							<JobCard />
 							<JobCard />
 							<JobCard />
+							<JobCard />
 
 							<nav className="pt-4 pb-2" aria-label="Blog pagination">
 								<ul className="pagination mb-0">
