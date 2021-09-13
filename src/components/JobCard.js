@@ -1,40 +1,20 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import companyImage from "./../img/company.png";
-import { useState, useEffect } from "react";
 
-// import application from "./../../application";
-// const Jobs = require("../../models/Jobs");
+const JobCard = (props) => {
+	const {
+		companyName,
+		location,
+		remuneration,
+		contact,
+		period,
+		description,
+		requirements,
+		companyOffers,
+	} = props.data;
 
-const JobCard = () => {
-	// const job = app.get("/jobs", (req, res) => {
-	// 	Jobs.find()
-	// 		.then((result) => {
-	// 			res.send(result);
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// });
-
-	const [jobList, setJobList] = useState([]);
-
-	// Getting the jobs info
-	const getJobs = () => {
-		fetch("http://localhost:3001/jobs/", {
-			mode: "no-cors",
-			method: "GET",
-			headers: { "Content-type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setJobList(data);
-			});
-	};
-
-	useEffect(() => {
-		getJobs();
-	}, []);
+	const getJobs = props.getJobs;
 
 	return (
 		<>
@@ -48,7 +28,9 @@ const JobCard = () => {
 								width="24"
 								alt="IT Pro Logo"
 							/>
-							<span className="fs-sm text-dark opacity-80 px-1">IT Pro TV</span>
+							<span className="fs-sm text-dark opacity-80 px-1">
+								{companyName}
+							</span>
 						</div>
 						<div className="dropdown content-overlay">
 							<button
@@ -79,19 +61,17 @@ const JobCard = () => {
 					<h3 className="h6 card-title pt-1 mb-3">
 						<Link to="/specificjob" style={{ textDecoration: "none" }}>
 							<a className="text-nav stretched-link text-decoration-none">
-								{jobList.map((job) => {
-									return <p>{job.description}</p>;
-								})}
-								Business Analyst
+								{description}
 							</a>
 						</Link>
 					</h3>
 					<div className="fs-sm">
 						<span className="text-nowrap me-3">
-							<i className="fi-map-pin text-muted me-1"> </i>Chicago
+							<i className="fi-map-pin text-muted me-1"> </i>
+							{location}
 						</span>
 						<span className="text-nowrap me-3">
-							<i className="fi-cash fs-base text-muted me-1"></i>$7,500
+							<i className="fi-cash fs-base text-muted me-1"></i>${remuneration}
 						</span>
 					</div>
 				</div>

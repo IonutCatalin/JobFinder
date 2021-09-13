@@ -3,12 +3,32 @@ import Footer from "./Footer";
 import Header from "./Header";
 import JobCard from "./JobCard";
 import JobsFindHeader from "./JobsFindHeader";
+import { useState, useEffect } from "react";
 
 const JobList = () => {
+	const [jobList, setJobList] = useState([]);
+
+	// Getting the jobs info
+	const getJobs = () => {
+		fetch("http://localhost:3001/jobs/", {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setJobList(data);
+			});
+	};
+
+	useEffect(() => {
+		getJobs();
+	}, []);
+
 	return (
 		<>
 			<Header />
 			<JobsFindHeader />
+
 			<section
 				className="position-relative bg-white rounded-xxl-4 zindex-5"
 				style={{ marginTop: "-30px", borderRadius: "1.875rem !important" }}
@@ -47,7 +67,13 @@ const JobList = () => {
 									<i className="fi-briefcase fs-base mt-n1 me-2"></i>2948 jobs
 								</div>
 							</div>
-							<JobCard />
+							{jobList.map((job) => {
+								return (
+									<div key={job.id}>
+										<JobCard data={job} getJobs={getJobs} />
+									</div>
+								);
+							})}
 
 							<nav className="pt-4 pb-2" aria-label="Blog pagination">
 								<ul className="pagination mb-0">
