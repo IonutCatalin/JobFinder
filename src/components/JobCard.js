@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import companyImage from "./../img/company.png";
+import { useState, useEffect } from "react";
 
 // import application from "./../../application";
 // const Jobs = require("../../models/Jobs");
@@ -16,13 +17,27 @@ const JobCard = () => {
 	// 		});
 	// });
 
+	const [jobList, setJobList] = useState([]);
+
+	// Getting the jobs info
+	const getJobs = () => {
+		fetch("http://localhost:3001/jobs/", {
+			mode: "no-cors",
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setJobList(data);
+			});
+	};
+
+	useEffect(() => {
+		getJobs();
+	}, []);
+
 	return (
 		<>
-			{/* <div>
-				{jobs.map((jobes) => {
-					return <p>{jobes.companyName}</p>;
-				})}
-			</div> */}
 			<div className="card bg-secondary card-hover mb-2">
 				<div className="card-body">
 					<div className="d-flex justify-content-between align-items-start mb-2">
@@ -64,6 +79,9 @@ const JobCard = () => {
 					<h3 className="h6 card-title pt-1 mb-3">
 						<Link to="/specificjob" style={{ textDecoration: "none" }}>
 							<a className="text-nav stretched-link text-decoration-none">
+								{jobList.map((job) => {
+									return <p>{job.description}</p>;
+								})}
 								Business Analyst
 							</a>
 						</Link>
