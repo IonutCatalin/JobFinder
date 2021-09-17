@@ -10,6 +10,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "./styles/global.scss";
 import "./styles/styles.css";
+import CompanyDetails from "./components/CompanyDetails";
+import PostResume from "./components/PostResume";
+import PostResume2 from "./components/PostResume2";
+import PostResume3 from "./components/PostResume3";
+import PostResume4 from "./components/PostResume4";
+import PostResume5 from "./components/PostResume5";
 
 function App() {
 	return (
@@ -18,7 +24,13 @@ function App() {
 				<Switch>
 					<Route exact path="/" component={HomeBanner} />
 					<Route path="/joblist" component={JobList} />
+					<Route path="/postresume" component={PostResume} />
+					<Route path="/postresume2" component={PostResume2} />
+					<Route path="/postresume3" component={PostResume3} />
+					<Route path="/postresume4" component={PostResume4} />
+					<Route path="/postresume5" component={PostResume5} />
 					<Route path="/specificjob/:_id" component={SpecificJob} />
+					<Route path="/companydetails/:_id" component={CompanyDetails} />
 					<Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 				</Switch>

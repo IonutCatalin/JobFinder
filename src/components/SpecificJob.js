@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { useParams } from "react-router";
 import Footer from "./Footer";
@@ -38,13 +39,13 @@ const SpecificJob = () => {
 					<nav className="pb-4 my-2" aria-label="Breadcrumb">
 						<ol className="breadcrumb m-0">
 							<li className="breadcrumb-item">
-								<a href="job-board-home-v1.html">Home</a>
+								<Link to="/">Home</Link>
 							</li>
 							<li className="breadcrumb-item">
-								<a href="job-board-catalog.html">Find jobs</a>
+								<Link to="/joblist">Find jobs</Link>
 							</li>
 							<li className="breadcrumb-item active" aria-current="page">
-								Partnership Manager
+								{jobDetails.description}
 							</li>
 						</ol>
 					</nav>
@@ -54,7 +55,7 @@ const SpecificJob = () => {
 							style={{ zIndex: "1025" }}
 						>
 							<div className="d-flex justify-content-between mb-2">
-								<h2 className="h3 mb-0">Partnership Manager</h2>
+								<h2 className="h3 mb-0">{jobDetails.description}</h2>
 								<div className="text-end">
 									<span className="badge bg-faded-accent rounded-pill fs-sm mb-2">
 										Featured
@@ -64,15 +65,16 @@ const SpecificJob = () => {
 							</div>
 							<ul className="list-unstyled fs-sm mb-4">
 								<li className="mb-2">
-									<a
+									<Link
+										to={`/companydetails/${_id}`}
+										style={{ textDecoration: "none" }}
 										className="d-flex align-items-center text-decoration-none"
-										href="job-board-employer-single.html"
 									>
 										<i className="fi-external-link me-2"></i>
 										<span className="text-decoration-underline">
 											{jobDetails.companyName}
 										</span>
-									</a>
+									</Link>
 								</li>
 								<li className="d-flex align-items-center mb-2">
 									<i className="fi-map-pin text-muted me-2"></i>
@@ -121,12 +123,13 @@ const SpecificJob = () => {
 							</a>
 							<hr className="my-4" />
 							<div className="btn-group btn-group-lg">
-								<button
+								<Link
+									to={`/postresume`}
 									className="btn btn-primary rounded-pill rounded-end-0 ps-4 pe-3"
 									type="button"
 								>
 									Apply for this position
-								</button>
+								</Link>
 								<button
 									className="btn btn-primary border-end-0 border-top-0 border-bottom-0 border-light rounded-pill rounded-start-0 px-3"
 									type="button"

@@ -4,6 +4,7 @@ import Header from "./Header";
 import JobCard from "./JobCard";
 import JobsFindHeader from "./JobsFindHeader";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const JobList = () => {
 	const [jobList, setJobList] = useState([]);
@@ -38,7 +39,7 @@ const JobList = () => {
 					<nav className="pb-4 my-2" aria-label="Breadcrumb">
 						<ol className="breadcrumb m-0">
 							<li className="breadcrumb-item">
-								<a href="job-board-home-v1.html">Home</a>
+								<Link to="/">Home</Link>
 							</li>
 							<li className="breadcrumb-item active" aria-current="page">
 								Find jobs

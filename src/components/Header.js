@@ -9,9 +9,9 @@ function Header() {
 			data-scroll-header=""
 		>
 			<div className="container">
-				<a className="navbar-brand me-0 me-xl-4" href="job-board-home-v1.html">
+				<Link to="/" className="navbar-brand me-0 me-xl-4">
 					<img className="d-block" src={logo} width="116" alt="Finder" />
-				</a>
+				</Link>
 				<button
 					className="navbar-toggler ms-auto"
 					type="button"
@@ -30,12 +30,12 @@ function Header() {
 				>
 					<i className="fi-user me-2"></i>Sign in
 				</a>
-				<a
+				<Link
+					to={`/postresume`}
 					className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
-					href="job-board-post-resume-1.html"
 				>
 					<i className="fi-plus me-2"></i>Post resume
-				</a>
+				</Link>
 				<a
 					className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3 pe-0 ms-2"
 					href="job-board-home-v2.html"
@@ -71,15 +71,16 @@ function Header() {
 							</ul>
 						</li>
 						<li className="nav-item dropdown">
-							<a
+							<Link
+								to="/joblist"
+								style={{ textDecoration: "none" }}
 								className="nav-link dropdown-toggle"
-								href="#"
 								role="button"
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
 							>
 								Catalog
-							</a>
+							</Link>
 							<ul className="dropdown-menu dropdown-menu-dark">
 								<li>
 									<Link to="/joblist" style={{ textDecoration: "none" }}>
