@@ -3,18 +3,7 @@ import { Link } from "react-router-dom";
 import companyImage from "./../img/company.png";
 
 const JobCard = (props) => {
-	const {
-		companyName,
-		location,
-		remuneration,
-		contact,
-		period,
-		description,
-		requirements,
-		companyOffers,
-	} = props.data;
-
-	const getJobs = props.getJobs;
+	const { _id, companyName, location, remuneration, description } = props.data;
 
 	return (
 		<>
@@ -59,7 +48,7 @@ const JobCard = (props) => {
 						</div>
 					</div>
 					<h3 className="h6 card-title pt-1 mb-3">
-						<Link to="/specificjob" style={{ textDecoration: "none" }}>
+						<Link to={`/specificjob/${_id}`} style={{ textDecoration: "none" }}>
 							<a className="text-nav stretched-link text-decoration-none">
 								{description}
 							</a>

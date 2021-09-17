@@ -17,6 +17,7 @@ const JobList = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobList(data);
+				console.log(data);
 			});
 	};
 
@@ -69,8 +70,10 @@ const JobList = () => {
 							</div>
 							{jobList.map((job) => {
 								return (
-									<div key={job.id}>
-										<JobCard data={job} getJobs={getJobs} />
+									<div key={job._id}>
+										<div>
+											<JobCard data={job} id={job._id} getJobs={getJobs} />
+										</div>
 									</div>
 								);
 							})}

@@ -1,9 +1,31 @@
 import React from "react";
+import { useState, useEffect } from "react";
+
+import { useParams } from "react-router";
 import Footer from "./Footer";
 import Header from "./Header";
 import JobsFindHeader from "./JobsFindHeader";
 
 const SpecificJob = () => {
+	const { _id } = useParams();
+	const [jobDetails, setJobDetails] = useState([]);
+
+	const getJobDetails = () => {
+		fetch(`http://localhost:3001/jobs/${_id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setJobDetails(data);
+				console.log("data", data);
+			});
+	};
+
+	useEffect(() => {
+		getJobDetails();
+	}, []);
+
 	return (
 		<>
 			<Header />
@@ -48,94 +70,43 @@ const SpecificJob = () => {
 									>
 										<i className="fi-external-link me-2"></i>
 										<span className="text-decoration-underline">
-											Zalo Tech Company
+											{jobDetails.companyName}
 										</span>
 									</a>
 								</li>
 								<li className="d-flex align-items-center mb-2">
 									<i className="fi-map-pin text-muted me-2"></i>
-									<span>New York</span>
+									<span>{jobDetails.location}</span>
 								</li>
 								<li className="d-flex align-items-center mb-2">
 									<i className="fi-cash fs-base text-muted me-2"></i>
-									<span>$10,000</span>
+									<span>${jobDetails.remuneration}</span>
 								</li>
 								<li className="d-flex align-items-center mb-2">
 									<i className="fi-phone text-muted me-2"></i>
 									<span className="me-2">Bessie Cooper, HR Manager</span>
-									<a href="#">Show phone</a>
+									<span>Phone: {jobDetails.contact}</span>
 								</li>
 								<li className="d-flex align-items-center mb-2">
 									<i className="fi-clock text-muted me-2"></i>
-									<span className="me-2">Full-time</span>
+									<span className="me-2">{jobDetails.period}</span>
 								</li>
 							</ul>
 							<hr className="mb-4" />
 							<h3 className="h6">Description:</h3>
-							<p>
-								Sit sit viverra aenean nunc. Vestibulum nulla tellus, praesent
-								mi. Eget eu sapien posuere varius nisl. Arcu scelerisque ut
-								venenatis, nec. Sed id etiam nisl nisl, elementum ac odio morbi
-								dolor. Sem mauris turpis ultrices sed porttitor orci, erat.
-								Ultrices ut a mi sem mauris, vitae egestas. Eget suscipit a,
-								consectetur quam sed morbi. Metus, tortor egestas phasellus
-								urna. Lorem eu dictum egestas vitae faucibus congue urna. Sed
-								dolor sed risus duis volutpat ullamcorper.
-							</p>
+							<p>{jobDetails.description}</p>
 							<h3 className="h6 pt-2">Requirements:</h3>
 							<ul className="list-unstyled">
 								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Placerat id
-									mauris, ac ipsum nulla mi netus vestibulum fringilla.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Turpis
-									venenatis sapien etiam in orci, euismod.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Elit tempor,
-									integer augue aliquam justo.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Ultricies
-									accumsan, malesuada pellentesque malesuada massa sed viverra
-									eget.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Varius
-									mauris netus placerat neque, orci amet odio orci.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Fermentum ut
-									mi sit vel sit dictum mollis turpis.
+									<span className="text-primary fs-lg me-2">•</span>
+									{jobDetails.requirements}
 								</li>
 							</ul>
 							<h3 className="h6 pt-2">Company offers:</h3>
 							<ul className="list-unstyled">
 								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Et mattis
-									sit imperdiet risus, fermentum ultrices non.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Sed
-									phasellus consequat nunc enim interdum tristique ultrices
-									egestas.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Molestie mus
-									ultrices tellus enim.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Vitae
-									pulvinar massa id lorem aliquam fermentum egestas.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Dictumst
-									blandit sit mauris in consectetur.
-								</li>
-								<li className="d-flex">
-									<span className="text-primary fs-lg me-2">•</span>Sem purus
-									lorem odio donec faucibus ipsum ultricies.
+									<span className="text-primary fs-lg me-2">•</span>
+									{jobDetails.companyOffers}
 								</li>
 							</ul>
 							<p className="pt-2 mb-1">
