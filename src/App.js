@@ -16,6 +16,8 @@ import PostResume2 from "./components/PostResume2";
 import PostResume3 from "./components/PostResume3";
 import PostResume4 from "./components/PostResume4";
 import PostResume5 from "./components/PostResume5";
+import ProfileSettings from "./components/UserProfile/ProfileSettings";
+import MyResumes from "./components/UserProfile/MyResumes";
 
 function App() {
 	return (
@@ -29,6 +31,8 @@ function App() {
 					<Route path="/postresume3" component={PostResume3} />
 					<Route path="/postresume4" component={PostResume4} />
 					<Route path="/postresume5" component={PostResume5} />
+					<Route path="/profilesettings" component={ProfileSettings} />
+					<Route path="/myresumes" component={MyResumes} />
 					<Route path="/specificjob/:_id" component={SpecificJob} />
 					<Route path="/companydetails/:_id" component={CompanyDetails} />
 					<Route path="/login" component={Login} />
