@@ -18,6 +18,8 @@ import PostResume4 from "./components/PostResume4";
 import PostResume5 from "./components/PostResume5";
 import ProfileSettings from "./components/UserProfile/ProfileSettings";
 import MyResumes from "./components/UserProfile/MyResumes";
+import SavedJobs from "./components/UserProfile/SavedJobs";
+import Notifications from "./components/UserProfile/Notifications";
 
 function App() {
 	return (
@@ -33,6 +35,8 @@ function App() {
 					<Route path="/postresume5" component={PostResume5} />
 					<Route path="/profilesettings" component={ProfileSettings} />
 					<Route path="/myresumes" component={MyResumes} />
+					<Route path="/savedjobs" component={SavedJobs} />
+					<Route path="/notifications" component={Notifications} />
 					<Route path="/specificjob/:_id" component={SpecificJob} />
 					<Route path="/companydetails/:_id" component={CompanyDetails} />
 					<Route path="/login" component={Login} />

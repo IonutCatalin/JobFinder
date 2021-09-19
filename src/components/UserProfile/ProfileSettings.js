@@ -1,11 +1,17 @@
 import React from "react";
 import Footer from "../Footer";
 import Header from "../Header";
+import profileImage from "../../img/profile-image.png";
+import { Link } from "react-router-dom";
 
 function ProfileSettings() {
 	return (
 		<>
 			<Header />
+			<div
+				className="position-absolute top-0 start-0 w-100 bg-dark"
+				style={{ height: "398px" }}
+			></div>
 			<div className="container content-overlay mt-5 mb-md-4 py-5">
 				<nav className="mb-3 mb-md-4 pt-md-3" aria-label="Breadcrumb">
 					<ol className="breadcrumb breadcrumb-light">
@@ -26,7 +32,7 @@ function ProfileSettings() {
 							<div className="position-relative flex-shrink-0">
 								<img
 									className="rounded-circle"
-									src="img/avatars/37.png"
+									src={profileImage}
 									width="100"
 									alt="Annette Black"
 								/>
@@ -69,38 +75,33 @@ function ProfileSettings() {
 					<div className="collapse d-md-block" id="account-nav">
 						<ul className="nav nav-pills flex-column flex-md-row pt-3 pt-md-0 pb-md-4 border-bottom-md">
 							<li className="nav-item mb-md-0 me-md-2 pe-md-1">
-								<a
+								<Link
+									to="/profilesettings"
 									className="nav-link active"
-									href="job-board-account-profile.html"
 									aria-current="page"
 								>
 									<i className="fi-settings mt-n1 me-2 fs-base"></i>Profile
 									Settings
-								</a>
+								</Link>
 							</li>
 							<li className="nav-item mb-md-0 me-md-2 pe-md-1">
-								<a
-									className="nav-link"
-									href="job-board-account-my-resumes.html"
-								>
+								<Link to="/myresumes" className="nav-link">
 									<i className="fi-file mt-n1 me-2 fs-base"></i>My Resumes
-								</a>
+								</Link>
 							</li>
 							<li className="nav-item mb-md-0 me-md-2 pe-md-1">
-								<a
-									className="nav-link"
-									href="job-board-account-saved-jobs.html"
-								>
+								<Link to="/savedjobs" className="nav-link">
 									<i className="fi-heart mt-n1 me-2 fs-base"></i>Saved Jobs
-								</a>
+								</Link>
 							</li>
 							<li className="nav-item mb-md-0">
-								<a
+								<Link
+									to="/notifications"
 									className="nav-link"
 									href="job-board-account-notifications.html"
 								>
 									<i className="fi-bell mt-n1 me-2 fs-base"></i>Notifications
-								</a>
+								</Link>
 							</li>
 							<li className="nav-item d-md-none">
 								<a className="nav-link" href="#">
