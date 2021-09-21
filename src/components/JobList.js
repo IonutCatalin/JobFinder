@@ -66,7 +66,8 @@ const JobList = () => {
 									</select>
 								</div>
 								<div className="text-muted fs-sm text-nowrap">
-									<i className="fi-briefcase fs-base mt-n1 me-2"></i>2948 jobs
+									<i className="fi-briefcase fs-base mt-n1 me-2"></i>
+									{jobList.length} jobs
 								</div>
 							</div>
 							{jobList.map((job) => {

@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import logo from "./../img/logo-light.svg";
+import LoggedIn from "./UserProfile/LoggedIn";
 
 function Header() {
+	const loggedIn = true;
 	return (
 		<header
 			className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
@@ -23,13 +25,16 @@ function Header() {
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
-
-				<a
-					className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-					href="/login"
-				>
-					<i className="fi-user me-2"></i>Sign in
-				</a>
+				{!loggedIn ? (
+					<a
+						className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
+						href="/login"
+					>
+						<i className="fi-user me-2"></i>Sign in
+					</a>
+				) : (
+					<LoggedIn />
+				)}
 				<Link
 					to={`/postresume`}
 					className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
