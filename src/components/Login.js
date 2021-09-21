@@ -1,9 +1,81 @@
+import jwtDecode from "jwt-decode";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { AuthContext, useAuthContext } from "./Auth/AuthContext";
+
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 import logo from "./../img/signin.svg";
 
 const Login = () => {
+	// const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+	// const [isFormSubmitting, setIsFormSubmitting] = useState(true);
+	// const [incorrectPasswords, setIncorrectPasswords] = useState(false);
+	// const [passwordValidation, setPasswordValidation] = useState(false);
+	// const [areCredentialsCorrect, setCredentialsCorrect] = useState(true);
+
+	// const [users, setUsers] = useState([]);
+
+	const [credentials, setCredentials] = useState({
+		email: "",
+		password: "",
+	});
+
+	const { login, userProfile } = useAuthContext();
+	// const location = useLocation();
+	const history = useHistory();
+
+	if (userProfile?.email) {
+		return <Redirect to="/" />;
+	}
+
+	let isLogin = true;
+	// if (location.pathname === "/auth/register") {
+	// 	isLogin = false;
+	// }
+
+	function handleTyping(e) {
+		setCredentials({
+			...credentials,
+			[e.target.name]: e.target.value,
+		});
+	}
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+		const { email, password } = credentials;
+
+		// setIsFormSubmitting(true);
+		// setCredentialsCorrect(true);
+		// setPasswordValidation(false);
+		// setIncorrectPasswords(false);
+
+		//LOGIN branch
+		if (!email || !password) {
+			// return setIsFormSubmitting(false);
+			return;
+		}
+
+		const { accessToken } = await fetch("http://localhost:3001/auth", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ email: email, password: password }),
+		}).then((res) => {
+			return res.json();
+		});
+
+		if (accessToken) {
+			login(accessToken);
+			// setCredentialsCorrect(true);
+		}
+
+		history.push("/");
+	}
+
 	return (
 		<>
 			<div className="modal-dialog modal-lg modal-dialog-centered p-2 my-0 mx-auto">
@@ -54,9 +126,13 @@ const Login = () => {
 									<div className="px-3">Or</div>
 									<hr className="w-100" />
 								</div>
-								<form className="needs-validation" novalidate="">
+								<form
+									id="loginform"
+									onSubmit={handleSubmit}
+									className="needs-validation"
+								>
 									<div className="mb-4">
-										<label className="form-label mb-2" for="signin-email">
+										<label className="form-label mb-2" htmlFor="signin-email">
 											Email address
 										</label>
 										<input
@@ -64,12 +140,17 @@ const Login = () => {
 											type="email"
 											id="signin-email"
 											placeholder="Enter your email"
+											name="email"
 											required=""
+											onChange={handleTyping}
 										/>
 									</div>
 									<div className="mb-4">
 										<div className="d-flex align-items-center justify-content-between mb-2">
-											<label className="form-label mb-0" for="signin-password">
+											<label
+												className="form-label mb-0"
+												htmlFor="signin-password"
+											>
 												Password
 											</label>
 											<a className="fs-sm" href="#">
@@ -80,9 +161,11 @@ const Login = () => {
 											<input
 												className="form-control"
 												type="password"
+												name="password"
 												id="signin-password"
 												placeholder="Enter password"
 												required=""
+												onChange={handleTyping}
 											/>
 											<label
 												className="password-toggle-btn"

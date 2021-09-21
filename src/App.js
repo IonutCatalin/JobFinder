@@ -21,29 +21,39 @@ import MyResumes from "./components/UserProfile/MyResumes";
 import SavedJobs from "./components/UserProfile/SavedJobs";
 import Notifications from "./components/UserProfile/Notifications";
 import LoggedIn from "./components/UserProfile/LoggedIn";
+import { AuthContextProvider } from "./components/Auth/AuthContext";
+import { Auth } from "./components/Auth/Auth";
+import { PrivateRoute } from "./components/Auth/PrivateRoute";
 
 function App() {
 	return (
 		<>
 			<BrowserRouter>
-				<Switch>
-					<Route exact path="/" component={HomeBanner} />
-					<Route path="/joblist" component={JobList} />
-					<Route path="/postresume" component={PostResume} />
-					<Route path="/postresume2" component={PostResume2} />
-					<Route path="/postresume3" component={PostResume3} />
-					<Route path="/postresume4" component={PostResume4} />
-					<Route path="/postresume5" component={PostResume5} />
-					<Route path="/profilesettings" component={ProfileSettings} />
-					<Route path="/myresumes" component={MyResumes} />
-					<Route path="/savedjobs" component={SavedJobs} />
-					<Route path="/notifications" component={Notifications} />
-					<Route path="/loggedin" component={LoggedIn} />
-					<Route path="/specificjob/:_id" component={SpecificJob} />
-					<Route path="/companydetails/:_id" component={CompanyDetails} />
-					<Route path="/login" component={Login} />
-					<Route path="/register" component={Register} />
-				</Switch>
+				<AuthContextProvider>
+					<Switch>
+						{/* <Route path="/auth/login" component={Auth} />
+					<Route path="/auth/register" component={Auth} /> */}
+						<Route path="/login" component={Login} />
+						<Route path="/register" component={Register} />
+						<PrivateRoute exact path="/" component={HomeBanner} />
+						<PrivateRoute path="/joblist" component={JobList} />
+						<PrivateRoute path="/postresume" component={PostResume} />
+						<PrivateRoute path="/postresume2" component={PostResume2} />
+						<PrivateRoute path="/postresume3" component={PostResume3} />
+						<PrivateRoute path="/postresume4" component={PostResume4} />
+						<PrivateRoute path="/postresume5" component={PostResume5} />
+						<PrivateRoute path="/profilesettings" component={ProfileSettings} />
+						<PrivateRoute path="/myresumes" component={MyResumes} />
+						<PrivateRoute path="/savedjobs" component={SavedJobs} />
+						<PrivateRoute path="/notifications" component={Notifications} />
+						<PrivateRoute path="/loggedin" component={LoggedIn} />
+						<PrivateRoute path="/specificjob/:_id" component={SpecificJob} />
+						<PrivateRoute
+							path="/companydetails/:_id"
+							component={CompanyDetails}
+						/>
+					</Switch>
+				</AuthContextProvider>
 			</BrowserRouter>
 		</>
 	);

@@ -1,8 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import profileImage from "../../img/rounded-profile-image.png";
+import { useEffect, useState } from "react";
 
 const LoggedIn = () => {
+	const [profile, setProfile] = useState([]);
+
 	return (
 		<>
 			<div className="dropdown d-none d-lg-block order-lg-3 my-n2 me-3">

@@ -16,10 +16,10 @@ function MyResumes() {
 				<nav className="mb-3 mb-md-4 pt-md-3" aria-label="Breadcrumb">
 					<ol className="breadcrumb breadcrumb-light">
 						<li className="breadcrumb-item">
-							<a href="job-board-home-v1.html">Home</a>
+							<a href="/">Home</a>
 						</li>
 						<li className="breadcrumb-item">
-							<a href="job-board-account-profile.html">Account</a>
+							<a href="/profilesettings">Account</a>
 						</li>
 						<li className="breadcrumb-item active" aria-current="page">
 							My resumes

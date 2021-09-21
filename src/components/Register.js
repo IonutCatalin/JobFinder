@@ -1,7 +1,101 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { AuthContext, useAuthContext } from "./Auth/AuthContext";
+import { useState } from "react";
 
 const Register = () => {
+	// const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+	// const [isFormSubmitting, setIsFormSubmitting] = useState(true);
+	// const [incorrectPasswords, setIncorrectPasswords] = useState(false);
+	// const [passwordValidation, setPasswordValidation] = useState(false);
+	// const [areCredentialsCorrect, setCredentialsCorrect] = useState(true);
+
+	const [users, setUsers] = useState([]);
+
+	const [credentials, setCredentials] = useState({
+		username: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+	});
+
+	const { login, userProfile } = useAuthContext();
+	const location = useLocation();
+	const history = useHistory();
+
+	if (userProfile?.email) {
+		return <Redirect to="/" />;
+	}
+
+	let isLogin = false;
+	// if (location.pathname === "/auth/register") {
+	// 	isLogin = false;
+	// }
+
+	function handleTyping(e) {
+		setCredentials({
+			...credentials,
+			[e.target.name]: e.target.value,
+		});
+	}
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+		const { username, email, password, confirmPassword } = credentials;
+
+		// setIsFormSubmitting(true);
+		// setCredentialsCorrect(true);
+		// setPasswordValidation(false);
+		// setIncorrectPasswords(false);
+
+		//REGISTER branch
+		if (!username || !email || !password || !confirmPassword) {
+			// return setIsFormSubmitting(false);
+			return;
+		}
+		// if (!passwordValidator.test(password)) {
+		// 	// return setPasswordValidation(true);
+		// 	return;
+		// }
+		if (password !== confirmPassword) {
+			// return setIncorrectPasswords(true);
+			return;
+		}
+
+		const result = await fetch("http://localhost:3001/users", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email: credentials.email,
+				password: credentials.password,
+				username: credentials.username,
+			}),
+		}).then((res) => {
+			if (res.ok) {
+				return res.json();
+			}
+			return res.text();
+		});
+
+		const newUsers = [...users, credentials];
+
+		setUsers(newUsers);
+
+		// let deleteCredentials = document.getElementsByClassName("form")[0];
+		// deleteCredentials.reset();
+
+		// setIsFormSubmitting(true);
+		// setPasswordValidation(false);
+		// setIncorrectPasswords(false);
+
+		history.push("/");
+	}
+
 	return (
 		<>
 			<div className="modal-dialog modal-lg modal-dialog-centered p-2 my-0 mx-auto">
@@ -78,44 +172,54 @@ const Register = () => {
 									<div className="px-3">Or</div>
 									<hr className="w-100" />
 								</div>
-								<form className="needs-validation" novalidate="">
+								<form
+									className="needs-validation"
+									id="registerform"
+									onSubmit={handleSubmit}
+								>
 									<div className="row gx-2 gx-md-4">
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="js-fn">
+											<label className="form-label" htmlFor="js-fn">
 												Full name
 											</label>
 											<input
 												className="form-control"
 												type="text"
+												name="username"
 												id="js-fn"
 												placeholder="Enter your full name"
 												required=""
+												onChange={handleTyping}
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="js-email">
+											<label className="form-label" htmlFor="js-email">
 												Emaill address
 											</label>
 											<input
 												className="form-control"
+												name="email"
 												type="email"
 												id="js-email"
 												placeholder="Enter your email"
 												required=""
+												onChange={handleTyping}
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="js-password">
+											<label className="form-label" htmlFor="js-password">
 												Password{" "}
 												<span className="text-muted">(min. 8 char)</span>
 											</label>
 											<div className="password-toggle">
 												<input
 													className="form-control"
+													name="password"
 													type="password"
 													id="js-password"
-													minlength="8"
+													minLength="8"
 													required=""
+													onChange={handleTyping}
 												/>
 												<label
 													className="password-toggle-btn"
@@ -130,16 +234,21 @@ const Register = () => {
 											</div>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="js-password-confirm">
+											<label
+												className="form-label"
+												htmlFor="js-password-confirm"
+											>
 												Confirm password
 											</label>
 											<div className="password-toggle">
 												<input
 													className="form-control"
 													type="password"
+													name="confirmPassword"
 													id="js-password-confirm"
-													minlength="8"
+													minLength="8"
 													required=""
+													onChange={handleTyping}
 												/>
 												<label
 													className="password-toggle-btn"
@@ -161,7 +270,10 @@ const Register = () => {
 											id="agree-to-terms"
 											required=""
 										/>
-										<label className="form-check-label" for="agree-to-terms">
+										<label
+											className="form-check-label"
+											htmlFor="agree-to-terms"
+										>
 											By joining, I agree to the <a href="#">Terms of use</a>{" "}
 											and <a href="#">Privacy policy</a>
 										</label>
@@ -179,10 +291,10 @@ const Register = () => {
 								<p className="pb-3">
 									Get access to all special services for employers on Finder.
 								</p>
-								<form className="needs-validation" novalidate="">
+								<form className="needs-validation">
 									<div className="row gx-2 gx-md-4">
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-fn">
+											<label className="form-label" htmlFor="em-fn">
 												Full name
 											</label>
 											<input
@@ -194,7 +306,7 @@ const Register = () => {
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-email">
+											<label className="form-label" htmlFor="em-email">
 												Emaill{" "}
 												<span className="text-muted">(better corporate)</span>
 											</label>
@@ -207,7 +319,7 @@ const Register = () => {
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-company">
+											<label className="form-label" htmlFor="em-company">
 												Company name
 											</label>
 											<input
@@ -219,7 +331,7 @@ const Register = () => {
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-location">
+											<label className="form-label" htmlFor="em-location">
 												Main office location
 											</label>
 											<input
@@ -231,7 +343,7 @@ const Register = () => {
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-password">
+											<label className="form-label" htmlFor="em-password">
 												Password{" "}
 												<span className="text-muted">(min. 8 char)</span>
 											</label>
@@ -240,7 +352,7 @@ const Register = () => {
 													className="form-control"
 													type="password"
 													id="em-password"
-													minlength="8"
+													minLength="8"
 													required=""
 												/>
 												<label
@@ -256,7 +368,10 @@ const Register = () => {
 											</div>
 										</div>
 										<div className="col-sm-6 mb-4">
-											<label className="form-label" for="em-password-confirm">
+											<label
+												className="form-label"
+												htmlFor="em-password-confirm"
+											>
 												Confirm password
 											</label>
 											<div className="password-toggle">
@@ -264,7 +379,7 @@ const Register = () => {
 													className="form-control"
 													type="password"
 													id="em-password-confirm"
-													minlength="8"
+													minLength="8"
 													required=""
 												/>
 												<label
@@ -287,7 +402,10 @@ const Register = () => {
 											id="agree-to-terms2"
 											required=""
 										/>
-										<label className="form-check-label" for="agree-to-terms2">
+										<label
+											className="form-check-label"
+											htmlFor="agree-to-terms2"
+										>
 											By joining, I agree to the <a href="#">Terms of use</a>{" "}
 											and <a href="#">Privacy policy</a>
 										</label>
