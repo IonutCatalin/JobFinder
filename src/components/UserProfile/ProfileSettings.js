@@ -5,6 +5,8 @@ import profileImage from "../../img/profile-image.png";
 import { Link } from "react-router-dom";
 
 function ProfileSettings() {
+	const user = JSON.parse(localStorage.getItem("user"));
+
 	return (
 		<>
 			<Header />
@@ -52,7 +54,7 @@ function ProfileSettings() {
 								<ul className="list-unstyled fs-sm mb-0">
 									<li className="d-flex text-nav text-break">
 										<i className="fi-mail opacity-60 mt-1 me-2"></i>
-										<span>annette_black@email.com</span>
+										<span>{user.email}</span>
 									</li>
 									<li className="d-flex text-nav text-break">
 										<i className="fi-phone opacity-60 mt-1 me-2"></i>
@@ -61,9 +63,16 @@ function ProfileSettings() {
 								</ul>
 							</div>
 						</div>
-						<a className="nav-link p-0 d-none d-md-block" href="#">
+						<Link
+							className="nav-link p-0 d-none d-md-block"
+							to="/login"
+							onClick={(e) => {
+								// e.preventDefault();
+								localStorage.removeItem("user");
+							}}
+						>
 							<i className="fi-logout mt-n1 me-2"></i>Sign out
-						</a>
+						</Link>
 					</div>
 					<a
 						className="btn btn-outline-primary btn-lg rounded-pill w-100 d-md-none"
@@ -120,7 +129,7 @@ function ProfileSettings() {
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">Email</label>
-											<div id="email-value">annette_black@email.com</div>
+											<div id="email-value">{user.email}</div>
 										</div>
 										<div
 											className="me-n3"
@@ -278,7 +287,7 @@ function ProfileSettings() {
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">Full name</label>
-											<div id="fn-value">Annette Black</div>
+											<div id="fn-value">{user.username}</div>
 										</div>
 										<div
 											className="me-n3"

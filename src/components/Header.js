@@ -5,24 +5,8 @@ import LoggedIn from "./UserProfile/LoggedIn";
 import { AuthContext, useAuthContext } from "./Auth/AuthContext";
 import { useEffect, useState } from "react";
 function Header() {
-	const loggedIn = false;
-
-	const { userProfile, logout } = useAuthContext();
-	const [users, setUsers] = useState({});
-	useEffect(() => {
-		getUsers();
-	}, []);
-	console.log("userprofile outside fetch", userProfile);
-	function getUsers() {
-		fetch(`http://localhost:3001/users/`)
-			.then((res) => res.json())
-			.then((data) => {
-				console.log("users", data);
-				console.log("userprofile inside fetch", userProfile);
-				setUsers(data.find((item) => item.email === userProfile.email));
-			});
-	}
-	const { firstName } = users;
+	const user = JSON.parse(localStorage.getItem("user"));
+	console.log(user);
 
 	return (
 		<header
@@ -44,7 +28,7 @@ function Header() {
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
-				{!userProfile ? (
+				{!user ? (
 					<a
 						className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
 						href="/login"
@@ -54,13 +38,13 @@ function Header() {
 				) : (
 					<LoggedIn />
 				)}
-				{!userProfile && (
+				{user && (
 					<Link
+						to={`/login`}
 						onClick={(e) => {
 							e.preventDefault();
-							logout();
+							localStorage.removeItem("user");
 						}}
-						to={`/login`}
 						className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
 					>
 						<i className="fi-plus me-2"></i>Log Out

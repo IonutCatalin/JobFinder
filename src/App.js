@@ -29,7 +29,6 @@ function App() {
 	return (
 		<>
 			<BrowserRouter>
-				<AuthContextProvider>
 					<Switch>
 						{/* <Route path="/auth/login" component={Auth} />
 					<Route path="/auth/register" component={Auth} /> */}
@@ -53,7 +52,6 @@ function App() {
 							component={CompanyDetails}
 						/>
 					</Switch>
-				</AuthContextProvider>
 			</BrowserRouter>
 		</>
 	);

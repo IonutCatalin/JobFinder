@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { AuthContext, useAuthContext } from "./Auth/AuthContext";
+import { useAuthContext } from "./Auth/AuthContext";
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -22,18 +22,8 @@ const Login = () => {
 		password: "",
 	});
 
-	const { login, userProfile } = useAuthContext();
-	// const location = useLocation();
+	const location = useLocation();
 	const history = useHistory();
-
-	if (userProfile?.email) {
-		return <Redirect to="/" />;
-	}
-
-	let isLogin = true;
-	// if (location.pathname === "/auth/register") {
-	// 	isLogin = false;
-	// }
 
 	function handleTyping(e) {
 		setCredentials({
@@ -58,20 +48,19 @@ const Login = () => {
 			return;
 		}
 
-		const { accessToken } = await fetch("http://localhost:3001/auth", {
+		const res = await fetch("http://localhost:3001/auth", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({ email: email, password: password }),
-		}).then((res) => {
-			return res.json();
 		});
 
-		if (accessToken) {
-			login(accessToken);
-			// setCredentialsCorrect(true);
-		}
+		const data = await res.json();
+		console.log(data);
+
+		localStorage.setItem("token", data.token);
+		localStorage.setItem("user", JSON.stringify(data.user));
 
 		history.push("/");
 	}
