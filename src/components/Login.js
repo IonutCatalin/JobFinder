@@ -1,6 +1,4 @@
-import jwtDecode from "jwt-decode";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { useAuthContext } from "./Auth/AuthContext";
+import { useHistory, useLocation } from "react-router-dom";
 
 import React from "react";
 import { Link } from "react-router-dom";
@@ -9,14 +7,6 @@ import { useState } from "react";
 import logo from "./../img/signin.svg";
 
 const Login = () => {
-	// const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-	// const [isFormSubmitting, setIsFormSubmitting] = useState(true);
-	// const [incorrectPasswords, setIncorrectPasswords] = useState(false);
-	// const [passwordValidation, setPasswordValidation] = useState(false);
-	// const [areCredentialsCorrect, setCredentialsCorrect] = useState(true);
-
-	// const [users, setUsers] = useState([]);
-
 	const [credentials, setCredentials] = useState({
 		email: "",
 		password: "",
@@ -37,14 +27,8 @@ const Login = () => {
 
 		const { email, password } = credentials;
 
-		// setIsFormSubmitting(true);
-		// setCredentialsCorrect(true);
-		// setPasswordValidation(false);
-		// setIncorrectPasswords(false);
-
 		//LOGIN branch
 		if (!email || !password) {
-			// return setIsFormSubmitting(false);
 			return;
 		}
 

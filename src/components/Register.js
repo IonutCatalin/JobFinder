@@ -1,18 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { AuthContext, useAuthContext } from "./Auth/AuthContext";
 import { useState } from "react";
 
 const Register = () => {
-	// const passwordValidator = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-	// const [isFormSubmitting, setIsFormSubmitting] = useState(true);
-	// const [incorrectPasswords, setIncorrectPasswords] = useState(false);
-	// const [passwordValidation, setPasswordValidation] = useState(false);
-	// const [areCredentialsCorrect, setCredentialsCorrect] = useState(true);
-
 	const [users, setUsers] = useState([]);
+
+	const user = JSON.parse(localStorage.getItem("user"));
 
 	const [credentials, setCredentials] = useState({
 		username: "",
@@ -21,18 +15,11 @@ const Register = () => {
 		confirmPassword: "",
 	});
 
-	const { login, userProfile } = useAuthContext();
-	const location = useLocation();
 	const history = useHistory();
 
-	if (userProfile?.email) {
+	if (user) {
 		return <Redirect to="/" />;
 	}
-
-	let isLogin = false;
-	// if (location.pathname === "/auth/register") {
-	// 	isLogin = false;
-	// }
 
 	function handleTyping(e) {
 		setCredentials({
@@ -46,22 +33,11 @@ const Register = () => {
 
 		const { username, email, password, confirmPassword } = credentials;
 
-		// setIsFormSubmitting(true);
-		// setCredentialsCorrect(true);
-		// setPasswordValidation(false);
-		// setIncorrectPasswords(false);
-
-		//REGISTER branch
 		if (!username || !email || !password || !confirmPassword) {
-			// return setIsFormSubmitting(false);
 			return;
 		}
-		// if (!passwordValidator.test(password)) {
-		// 	// return setPasswordValidation(true);
-		// 	return;
-		// }
+
 		if (password !== confirmPassword) {
-			// return setIncorrectPasswords(true);
 			return;
 		}
 
@@ -75,23 +51,16 @@ const Register = () => {
 				password: credentials.password,
 				username: credentials.username,
 			}),
-		}).then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-			return res.text();
 		});
+
+		const data = await result.json();
+
+		localStorage.setItem("token", data.token);
+		localStorage.setItem("user", JSON.stringify(data.user));
 
 		const newUsers = [...users, credentials];
 
 		setUsers(newUsers);
-
-		// let deleteCredentials = document.getElementsByClassName("form")[0];
-		// deleteCredentials.reset();
-
-		// setIsFormSubmitting(true);
-		// setPasswordValidation(false);
-		// setIncorrectPasswords(false);
 
 		history.push("/");
 	}

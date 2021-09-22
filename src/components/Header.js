@@ -42,8 +42,9 @@ function Header() {
 					<Link
 						to={`/login`}
 						onClick={(e) => {
-							e.preventDefault();
+							//e.preventDefault();
 							localStorage.removeItem("user");
+							console.log("logouted");
 						}}
 						className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
 					>
