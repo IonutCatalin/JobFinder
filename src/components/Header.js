@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 function Header() {
 	const user = JSON.parse(localStorage.getItem("user"));
 	console.log(user);
+	console.log(user.phone);
 
 	return (
 		<header

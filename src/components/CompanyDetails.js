@@ -9,10 +9,15 @@ import noImageAvatar from "./../img/no-image-avatar.png";
 import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import JobList from "./JobList";
+import JobCard from "./JobCard";
+import ReviewModal from "./ReviewModal";
 
 const CompanyDetails = () => {
 	const { _id } = useParams();
 	const [jobDetails, setJobDetails] = useState([]);
+	const [jobList, setJobList] = useState([]);
+	const [show, setShow] = useState(false);
 
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
@@ -26,8 +31,20 @@ const CompanyDetails = () => {
 			});
 	};
 
+	const getJobs = () => {
+		fetch("http://localhost:3001/jobs/", {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setJobList(data);
+			});
+	};
+
 	useEffect(() => {
 		getJobDetails();
+		getJobs();
 	}, []);
 
 	return (
@@ -37,10 +54,10 @@ const CompanyDetails = () => {
 				<nav className="mb-4 pt-md-3" aria-label="Breadcrumb">
 					<ol className="breadcrumb">
 						<li className="breadcrumb-item">
-							<a href="job-board-home-v2.html">Home</a>
+							<a href="/">Home</a>
 						</li>
 						<li className="breadcrumb-item">
-							<a href="#">Companies</a>
+							<a href="/joblist">Companies</a>
 						</li>
 						<li className="breadcrumb-item active" aria-current="page">
 							{jobDetails.companyName}
@@ -65,135 +82,20 @@ const CompanyDetails = () => {
 								</select>
 							</div>
 						</div>
-						<div className="card bg-secondary card-hover mb-2">
-							<div className="card-body">
-								<div className="d-flex justify-content-between align-items-start mb-2">
-									<div className="d-flex align-items-center">
-										<img
-											className="me-2"
-											src={companyImage}
-											width="24"
-											alt="Zalo Logo"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											{jobDetails.companyName}
-										</span>
+
+						{jobList.map((job) => {
+							if (
+								job.companyName === jobDetails.companyName &&
+								job._id != jobDetails._id
+							)
+								return (
+									<div key={job._id}>
+										<div>
+											<JobCard data={job} id={job._id} getJobs={getJobs} />
+										</div>
 									</div>
-									<div className="dropdown content-overlay">
-										<button
-											className="btn btn-icon btn-light btn-xs rounded-circle shadow-sm"
-											type="button"
-											id="contextMenu1"
-											data-bs-toggle="dropdown"
-											aria-expanded="false"
-										>
-											<i className="fi-dots-vertical"></i>
-										</button>
-										<ul
-											className="dropdown-menu my-1"
-											aria-labelledby="contextMenu1"
-										>
-											<li>
-												<button className="dropdown-item" type="button">
-													<i className="fi-heart opacity-60 me-2"></i>Add to
-													Saved Jobs
-												</button>
-											</li>
-											<li>
-												<button className="dropdown-item" type="button">
-													<i className="fi-x-circle opacity-60 me-2"></i>Not
-													interested
-												</button>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<h3 className="h6 card-title pt-1 mb-3">
-									<a
-										className="text-nav stretched-link text-decoration-none"
-										href="job-board-single.html"
-									>
-										{jobDetails.description}
-									</a>
-								</h3>
-								<div className="fs-sm">
-									<span className="text-nowrap me-3">
-										<i className="fi-map-pin text-muted me-1"> </i>
-										{jobDetails.location}
-									</span>
-									<span className="text-nowrap me-3">
-										<i className="fi-cash fs-base text-muted me-1"></i>$
-										{jobDetails.remuneration}
-									</span>
-								</div>
-							</div>
-						</div>
-						<div className="card bg-secondary card-hover mb-2">
-							<div className="card-body">
-								<div className="d-flex justify-content-between align-items-start mb-2">
-									<div className="d-flex align-items-center">
-										<img
-											className="me-2"
-											src={companyImage}
-											width="24"
-											alt="Zalo Logo"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											{jobDetails.companyName}
-										</span>
-										<span className="badge bg-faded-accent rounded-pill fs-sm ms-2">
-											Featured
-										</span>
-									</div>
-									<div className="dropdown content-overlay">
-										<button
-											className="btn btn-icon btn-light btn-xs rounded-circle shadow-sm"
-											type="button"
-											id="contextMenu2"
-											data-bs-toggle="dropdown"
-											aria-expanded="false"
-										>
-											<i className="fi-dots-vertical"></i>
-										</button>
-										<ul
-											className="dropdown-menu my-1"
-											aria-labelledby="contextMenu2"
-										>
-											<li>
-												<button className="dropdown-item" type="button">
-													<i className="fi-heart opacity-60 me-2"></i>Add to
-													Saved Jobs
-												</button>
-											</li>
-											<li>
-												<button className="dropdown-item" type="button">
-													<i className="fi-x-circle opacity-60 me-2"></i>Not
-													interested
-												</button>
-											</li>
-										</ul>
-									</div>
-								</div>
-								<h3 className="h6 card-title pt-1 mb-3">
-									<a
-										className="text-nav stretched-link text-decoration-none"
-										href="job-board-single.html"
-									>
-										{jobDetails.description}
-									</a>
-								</h3>
-								<div className="fs-sm">
-									<span className="text-nowrap me-3">
-										<i className="fi-map-pin text-muted me-1"> </i>
-										{jobDetails.location}
-									</span>
-									<span className="text-nowrap me-3">
-										<i className="fi-cash fs-base text-muted me-1"></i>$
-										{jobDetails.remuneration}
-									</span>
-								</div>
-							</div>
-						</div>
+								);
+						})}
 
 						<h2 className="h3 pt-4 pt-lg-5 my-4 pb-2">Company reviews (62)</h2>
 						<div className="d-flex align-items-center mb-2">
@@ -318,14 +220,15 @@ const CompanyDetails = () => {
 									<option>Low rating</option>
 								</select>
 							</div>
-							<a
+							<button
 								className="btn btn-outline-primary rounded-pill"
-								href="#modal-review"
 								data-bs-toggle="modal"
+								onClick={() => setShow(true)}
 							>
 								<i className="fi-edit me-1"></i>Add review
-							</a>
+							</button>
 						</div>
+						{show && <ReviewModal setShow={setShow} />}
 						<div className="mb-4 pb-4 border-bottom">
 							<div className="d-flex justify-content-between mb-3">
 								<div className="d-flex align-items-center pe-2">

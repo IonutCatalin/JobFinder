@@ -60,7 +60,7 @@ const SpecificJob = () => {
 									<span className="badge bg-faded-accent rounded-pill fs-sm mb-2">
 										Featured
 									</span>
-									<div className="fs-sm text-muted">2 hours ago</div>
+									<div className="fs-sm text-muted">{jobDetails.date}</div>
 								</div>
 							</div>
 							<ul className="list-unstyled fs-sm mb-4">
