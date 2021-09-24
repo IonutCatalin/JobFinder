@@ -7,13 +7,15 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const JobList = () => {
+	const defaultJobList = [];
 	const [jobList, setJobList] = useState([]);
-	const optionList = ["Newest", "Popular", "Highest Salary"];
+	const [jobState, setJobState] = useState(false);
+	// const optionList = ["Newest", "Popular", "Highest Salary"];
 	const [sortingTypeJobs, setSortingTypeJobs] = useState({
-		sortingType: optionList[0],
+		sortingType: "",
 	});
 	const getJobsSortingTypeOption = useCallback((option) => {
-		setSortingTypeJobs({ ...sortingTypeJobs, sortingType: option });
+		setSortingTypeJobs({ sortingType: option });
 	});
 
 	// Getting the jobs info
@@ -25,7 +27,6 @@ const JobList = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobList(data);
-				console.log("joblist:", data);
 			});
 	};
 
@@ -44,8 +45,9 @@ const JobList = () => {
 	};
 
 	useEffect(() => {
-		sortJobsByNewest();
-		sortJobsByHighestSalary();
+		getJobs();
+		// sortJobsByNewest();
+		// sortJobsByHighestSalary();
 	}, []);
 
 	// useEffect(() => {}, []);
@@ -83,26 +85,37 @@ const JobList = () => {
 									>
 										<i className="fi-arrows-sort mt-n1 me-2"></i>Sort by:
 									</label>
-									<div className="form-select form-select-sm" id="sorting">
+									<select
+										className="form-select form-select-sm"
+										id="sorting"
+										onChange={(e) => {
+											setSortingTypeJobs(e.target.value);
+										}}
+									>
 										<option
-											onClick={() => {
-												console.log("clicked newest");
-
-												sortJobsByNewest();
+											onChange={(e) => {
+												setSortingTypeJobs(e.target.value);
+												console.log(sortingTypeJobs);
+											}}
+										>
+											Default
+										</option>
+										<option
+											onChange={(e) => {
+												setSortingTypeJobs(e.target.value);
+												console.log(sortingTypeJobs);
 											}}
 										>
 											Newest
 										</option>
-										<option>Popular</option>
 										<option
-											onClick={() => {
-												console.log("clicked salary");
-												sortJobsByHighestSalary();
+											onChange={(e) => {
+												setSortingTypeJobs(e.target.value);
 											}}
 										>
 											Highest Salary
 										</option>
-									</div>
+									</select>
 								</div>
 								<div className="text-muted fs-sm text-nowrap">
 									<i className="fi-briefcase fs-base mt-n1 me-2"></i>
@@ -110,6 +123,37 @@ const JobList = () => {
 								</div>
 							</div>
 							{jobList.map((job) => {
+								if (sortingTypeJobs === "Newest") {
+									jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
+
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (sortingTypeJobs === "Highest Salary") {
+									jobList.sort((a, b) =>
+										a.remuneration < b.remuneration ? 1 : -1
+									);
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (sortingTypeJobs === "Default") {
+									jobList.sort((a, b) => (a.date < b.date ? 1 : -1));
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								}
 								return (
 									<div key={job._id}>
 										<div>
