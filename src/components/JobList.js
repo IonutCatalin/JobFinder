@@ -3,11 +3,18 @@ import Footer from "./Footer";
 import Header from "./Header";
 import JobCard from "./JobCard";
 import JobsFindHeader from "./JobsFindHeader";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const JobList = () => {
 	const [jobList, setJobList] = useState([]);
+	const optionList = ["Newest", "Popular", "Highest Salary"];
+	const [sortingTypeJobs, setSortingTypeJobs] = useState({
+		sortingType: optionList[0],
+	});
+	const getJobsSortingTypeOption = useCallback((option) => {
+		setSortingTypeJobs({ ...sortingTypeJobs, sortingType: option });
+	});
 
 	// Getting the jobs info
 	const getJobs = () => {
@@ -18,13 +25,30 @@ const JobList = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobList(data);
-				console.log(data);
+				console.log("joblist:", data);
 			});
 	};
 
-	useEffect(() => {
+	const sortJobsByNewest = () => {
 		getJobs();
+
+		jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
+		console.log("date:", jobList);
+	};
+
+	const sortJobsByHighestSalary = () => {
+		getJobs();
+
+		jobList.sort((a, b) => (a.remuneration < b.remuneration ? 1 : -1));
+		console.log("salary:", jobList);
+	};
+
+	useEffect(() => {
+		sortJobsByNewest();
+		sortJobsByHighestSalary();
 	}, []);
+
+	// useEffect(() => {}, []);
 
 	return (
 		<>
@@ -59,11 +83,26 @@ const JobList = () => {
 									>
 										<i className="fi-arrows-sort mt-n1 me-2"></i>Sort by:
 									</label>
-									<select className="form-select form-select-sm" id="sorting">
-										<option>Newest</option>
+									<div className="form-select form-select-sm" id="sorting">
+										<option
+											onClick={() => {
+												console.log("clicked newest");
+
+												sortJobsByNewest();
+											}}
+										>
+											Newest
+										</option>
 										<option>Popular</option>
-										<option>Highest Salary</option>
-									</select>
+										<option
+											onClick={() => {
+												console.log("clicked salary");
+												sortJobsByHighestSalary();
+											}}
+										>
+											Highest Salary
+										</option>
+									</div>
 								</div>
 								<div className="text-muted fs-sm text-nowrap">
 									<i className="fi-briefcase fs-base mt-n1 me-2"></i>
