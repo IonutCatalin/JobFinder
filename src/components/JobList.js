@@ -3,10 +3,19 @@ import Footer from "./Footer";
 import Header from "./Header";
 import JobCard from "./JobCard";
 import JobsFindHeader from "./JobsFindHeader";
+import JobPagination from "./JobPagination";
 import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const JobList = () => {
+	// Get current jobs
+	const [loading, setLoading] = useState(false);
+	const [currentPage, setCurrentPage] = useState(1);
+	const [jobsPerPage, setJobsPerPage] = useState(2);
+
+	// Change Page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 	const defaultJobList = [];
 	const [jobList, setJobList] = useState([]);
 	const [jobState, setJobState] = useState(false);
@@ -20,6 +29,7 @@ const JobList = () => {
 
 	// Getting the jobs info
 	const getJobs = () => {
+		setLoading(true);
 		fetch("http://localhost:3001/jobs/", {
 			method: "GET",
 			headers: { "Content-type": "application/json" },
@@ -27,7 +37,10 @@ const JobList = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobList(data);
+				setLoading(false);
+				console.log(jobList);
 			});
+		console.log(jobList);
 	};
 
 	const sortJobsByNewest = () => {
@@ -43,6 +56,11 @@ const JobList = () => {
 		jobList.sort((a, b) => (a.remuneration < b.remuneration ? 1 : -1));
 		console.log("salary:", jobList);
 	};
+
+	// Get Current Jobs
+	const indexOfLastJob = currentPage * jobsPerPage;
+	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+	const currentJobs = jobList.slice(indexOfFirstJob, indexOfLastJob);
 
 	useEffect(() => {
 		getJobs();
@@ -122,9 +140,9 @@ const JobList = () => {
 									{jobList.length} jobs
 								</div>
 							</div>
-							{jobList.map((job) => {
+							{currentJobs.map((job) => {
 								if (sortingTypeJobs === "Newest") {
-									jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
+									currentJobs.sort((a, b) => (a.date > b.date ? 1 : -1));
 
 									return (
 										<div key={job._id}>
@@ -134,7 +152,7 @@ const JobList = () => {
 										</div>
 									);
 								} else if (sortingTypeJobs === "Highest Salary") {
-									jobList.sort((a, b) =>
+									currentJobs.sort((a, b) =>
 										a.remuneration < b.remuneration ? 1 : -1
 									);
 									return (
@@ -145,7 +163,7 @@ const JobList = () => {
 										</div>
 									);
 								} else if (sortingTypeJobs === "Default") {
-									jobList.sort((a, b) => (a.date < b.date ? 1 : -1));
+									currentJobs.sort((a, b) => (a.date < b.date ? 1 : -1));
 									return (
 										<div key={job._id}>
 											<div>
@@ -162,6 +180,11 @@ const JobList = () => {
 									</div>
 								);
 							})}
+							<JobPagination
+								jobsPerPage={jobsPerPage}
+								totalJobs={jobList.length}
+								paginate={paginate}
+							/>
 
 							<nav className="pt-4 pb-2" aria-label="Blog pagination">
 								<ul className="pagination mb-0">
