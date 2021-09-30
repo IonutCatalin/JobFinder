@@ -6,17 +6,25 @@ const JobPagination = ({ jobsPerPage, totalJobs, paginate }) => {
 	for (let i = 1; i <= Math.ceil(totalJobs / jobsPerPage); i++) {
 		pageNumbers.push(i);
 	}
+	console.log("page numbers", pageNumbers);
 
 	return (
-		<nav>
-			<ul>
-				{pageNumbers.map((number) => {
-					<li key={number}>
-						<a onClick={() => paginate(number)} href="/joblist">
+		<nav className="pt-4 pb-2" aria-label="Blog pagination">
+			<ul className="pagination mb-0">
+				{pageNumbers.map((number) => (
+					<li key={number} className="page-item d-sm-block" aria-current="page">
+						<a
+							onClick={(e) => {
+								e.preventDefault();
+								paginate(number);
+							}}
+							href="joblist"
+							className="page-link active"
+						>
 							{number}
 						</a>
-					</li>;
-				})}
+					</li>
+				))}
 			</ul>
 		</nav>
 	);

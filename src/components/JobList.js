@@ -8,13 +8,12 @@ import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const JobList = () => {
+	// Second get jobslist
+	const [newJobs, setNewJobs] = useState([]);
 	// Get current jobs
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [jobsPerPage, setJobsPerPage] = useState(2);
-
-	// Change Page
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+	const [jobsPerPage] = useState(4);
 
 	const defaultJobList = [];
 	const [jobList, setJobList] = useState([]);
@@ -29,7 +28,6 @@ const JobList = () => {
 
 	// Getting the jobs info
 	const getJobs = () => {
-		setLoading(true);
 		fetch("http://localhost:3001/jobs/", {
 			method: "GET",
 			headers: { "Content-type": "application/json" },
@@ -37,38 +35,51 @@ const JobList = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobList(data);
-				setLoading(false);
-				console.log(jobList);
+				console.log("joblist inside", jobList);
 			});
-		console.log(jobList);
+		console.log("joblist outside", jobList);
 	};
 
 	const sortJobsByNewest = () => {
-		getJobs();
+		//getJobs();
 
 		jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
 		console.log("date:", jobList);
 	};
 
 	const sortJobsByHighestSalary = () => {
-		getJobs();
+		//getJobs();
 
 		jobList.sort((a, b) => (a.remuneration < b.remuneration ? 1 : -1));
 		console.log("salary:", jobList);
 	};
+
+	useEffect(() => {
+		getJobs();
+
+		// Getting the jobs info
+		const getNewJobs = () => {
+			fetch("http://localhost:3001/jobs/", {
+				method: "GET",
+				headers: { "Content-type": "application/json" },
+			})
+				.then((res) => res.json())
+				.then((data) => {
+					setNewJobs(data);
+					console.log("newJobs inside", newJobs);
+				});
+			console.log("newJobs outside", newJobs);
+		};
+		getNewJobs();
+	}, []);
 
 	// Get Current Jobs
 	const indexOfLastJob = currentPage * jobsPerPage;
 	const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 	const currentJobs = jobList.slice(indexOfFirstJob, indexOfLastJob);
 
-	useEffect(() => {
-		getJobs();
-		// sortJobsByNewest();
-		// sortJobsByHighestSalary();
-	}, []);
-
-	// useEffect(() => {}, []);
+	// Change Page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
 	return (
 		<>
@@ -180,13 +191,14 @@ const JobList = () => {
 									</div>
 								);
 							})}
+
 							<JobPagination
 								jobsPerPage={jobsPerPage}
 								totalJobs={jobList.length}
 								paginate={paginate}
 							/>
 
-							<nav className="pt-4 pb-2" aria-label="Blog pagination">
+							{/* <nav className="pt-4 pb-2" aria-label="Blog pagination">
 								<ul className="pagination mb-0">
 									<li className="page-item d-sm-none">
 										<span className="page-link page-link-static">1 / 8</span>
@@ -221,7 +233,7 @@ const JobList = () => {
 										</a>
 									</li>
 								</ul>
-							</nav>
+							</nav> */}
 						</div>
 						<aside className="col-lg-7 col-md-6" style={{ marginTop: "-6rem" }}>
 							<div className="sticky-top" style={{ paddingTop: "6rem" }}>
