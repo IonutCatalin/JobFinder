@@ -11,20 +11,11 @@ const JobList = () => {
 	// Second get jobslist
 	const [newJobs, setNewJobs] = useState([]);
 	// Get current jobs
-	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [jobsPerPage] = useState(4);
 
-	const defaultJobList = [];
 	const [jobList, setJobList] = useState([]);
-	const [jobState, setJobState] = useState(false);
-	// const optionList = ["Newest", "Popular", "Highest Salary"];
-	const [sortingTypeJobs, setSortingTypeJobs] = useState({
-		sortingType: "",
-	});
-	const getJobsSortingTypeOption = useCallback((option) => {
-		setSortingTypeJobs({ sortingType: option });
-	});
+	const [jobState, setJobState] = useState("");
 
 	// Getting the jobs info
 	const getJobs = () => {
@@ -40,24 +31,10 @@ const JobList = () => {
 		console.log("joblist outside", jobList);
 	};
 
-	const sortJobsByNewest = () => {
-		//getJobs();
-
-		jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
-		console.log("date:", jobList);
-	};
-
-	const sortJobsByHighestSalary = () => {
-		//getJobs();
-
-		jobList.sort((a, b) => (a.remuneration < b.remuneration ? 1 : -1));
-		console.log("salary:", jobList);
-	};
-
 	useEffect(() => {
 		getJobs();
 
-		// Getting the jobs info
+		// Getting the new jobs info
 		const getNewJobs = () => {
 			fetch("http://localhost:3001/jobs/", {
 				method: "GET",
@@ -117,33 +94,16 @@ const JobList = () => {
 									<select
 										className="form-select form-select-sm"
 										id="sorting"
+										value={jobState}
 										onChange={(e) => {
-											setSortingTypeJobs(e.target.value);
+											const select = e.target.value;
+											setJobState(select);
+											console.log("sort type, select:", jobState);
 										}}
 									>
-										<option
-											onChange={(e) => {
-												setSortingTypeJobs(e.target.value);
-												console.log(sortingTypeJobs);
-											}}
-										>
-											Default
-										</option>
-										<option
-											onChange={(e) => {
-												setSortingTypeJobs(e.target.value);
-												console.log(sortingTypeJobs);
-											}}
-										>
-											Newest
-										</option>
-										<option
-											onChange={(e) => {
-												setSortingTypeJobs(e.target.value);
-											}}
-										>
-											Highest Salary
-										</option>
+										<option value="Oldest">Oldest</option>
+										<option value="Newest">Newest</option>
+										<option value="HighestSalary">Highest Salary</option>
 									</select>
 								</div>
 								<div className="text-muted fs-sm text-nowrap">
@@ -152,8 +112,8 @@ const JobList = () => {
 								</div>
 							</div>
 							{currentJobs.map((job) => {
-								if (sortingTypeJobs === "Newest") {
-									currentJobs.sort((a, b) => (a.date > b.date ? 1 : -1));
+								if (jobState === "Newest") {
+									jobList.sort((a, b) => (a.date < b.date ? 1 : -1));
 
 									return (
 										<div key={job._id}>
@@ -162,8 +122,8 @@ const JobList = () => {
 											</div>
 										</div>
 									);
-								} else if (sortingTypeJobs === "Highest Salary") {
-									currentJobs.sort((a, b) =>
+								} else if (jobState === "HighestSalary") {
+									jobList.sort((a, b) =>
 										a.remuneration < b.remuneration ? 1 : -1
 									);
 									return (
@@ -173,8 +133,16 @@ const JobList = () => {
 											</div>
 										</div>
 									);
-								} else if (sortingTypeJobs === "Default") {
-									currentJobs.sort((a, b) => (a.date < b.date ? 1 : -1));
+								} else if (jobState === "Oldest") {
+									jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (!jobState) {
 									return (
 										<div key={job._id}>
 											<div>
@@ -183,13 +151,6 @@ const JobList = () => {
 										</div>
 									);
 								}
-								return (
-									<div key={job._id}>
-										<div>
-											<JobCard data={job} id={job._id} getJobs={getJobs} />
-										</div>
-									</div>
-								);
 							})}
 
 							<JobPagination
@@ -197,43 +158,6 @@ const JobList = () => {
 								totalJobs={jobList.length}
 								paginate={paginate}
 							/>
-
-							{/* <nav className="pt-4 pb-2" aria-label="Blog pagination">
-								<ul className="pagination mb-0">
-									<li className="page-item d-sm-none">
-										<span className="page-link page-link-static">1 / 8</span>
-									</li>
-									<li
-										className="page-item active d-none d-sm-block"
-										aria-current="page"
-									>
-										<span className="page-link">
-											1<span className="visually-hidden">(current)</span>
-										</span>
-									</li>
-									<li className="page-item d-none d-sm-block">
-										<a className="page-link" href="#">
-											2
-										</a>
-									</li>
-									<li className="page-item d-none d-sm-block">
-										<a className="page-link" href="#">
-											3
-										</a>
-									</li>
-									<li className="page-item d-none d-sm-block">...</li>
-									<li className="page-item d-none d-sm-block">
-										<a className="page-link" href="#">
-											8
-										</a>
-									</li>
-									<li className="page-item">
-										<a className="page-link" href="#" aria-label="Next">
-											<i className="fi-chevron-right"></i>
-										</a>
-									</li>
-								</ul>
-							</nav> */}
 						</div>
 						<aside className="col-lg-7 col-md-6" style={{ marginTop: "-6rem" }}>
 							<div className="sticky-top" style={{ paddingTop: "6rem" }}>

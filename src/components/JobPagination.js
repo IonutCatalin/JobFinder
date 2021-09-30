@@ -6,7 +6,6 @@ const JobPagination = ({ jobsPerPage, totalJobs, paginate }) => {
 	for (let i = 1; i <= Math.ceil(totalJobs / jobsPerPage); i++) {
 		pageNumbers.push(i);
 	}
-	console.log("page numbers", pageNumbers);
 
 	return (
 		<nav className="pt-4 pb-2" aria-label="Blog pagination">
