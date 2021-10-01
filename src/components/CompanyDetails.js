@@ -19,6 +19,8 @@ const CompanyDetails = () => {
 	const [jobList, setJobList] = useState([]);
 	const [show, setShow] = useState(false);
 
+	const [jobState, setJobState] = useState("");
+
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
 			method: "GET",
@@ -75,10 +77,19 @@ const CompanyDetails = () => {
 								>
 									<i className="fi-arrows-sort mt-n1 me-2"></i>Sort by:
 								</label>
-								<select className="form-select form-select-sm" id="sorting">
-									<option>Newest</option>
-									<option>Popular</option>
-									<option>Highest Salary</option>
+								<select
+									className="form-select form-select-sm"
+									id="sorting"
+									value={jobState}
+									onChange={(e) => {
+										const select = e.target.value;
+										setJobState(select);
+										console.log("sort type, select:", jobState);
+									}}
+								>
+									<option value="Oldest">Oldest</option>
+									<option value="Newest">Newest</option>
+									<option value="HighestSalary">Highest Salary</option>
 								</select>
 							</div>
 						</div>
@@ -87,7 +98,46 @@ const CompanyDetails = () => {
 							if (
 								job.companyName === jobDetails.companyName &&
 								job._id != jobDetails._id
-							)
+							) {
+								if (jobState === "Newest") {
+									jobList.sort((a, b) => (a.date < b.date ? 1 : -1));
+
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (jobState === "HighestSalary") {
+									jobList.sort((a, b) =>
+										a.remuneration < b.remuneration ? 1 : -1
+									);
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (jobState === "Oldest") {
+									jobList.sort((a, b) => (a.date > b.date ? 1 : -1));
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								} else if (!jobState) {
+									return (
+										<div key={job._id}>
+											<div>
+												<JobCard data={job} id={job._id} getJobs={getJobs} />
+											</div>
+										</div>
+									);
+								}
 								return (
 									<div key={job._id}>
 										<div>
@@ -95,6 +145,7 @@ const CompanyDetails = () => {
 										</div>
 									</div>
 								);
+							}
 						})}
 
 						<h2 className="h3 pt-4 pt-lg-5 my-4 pb-2">Company reviews (62)</h2>
