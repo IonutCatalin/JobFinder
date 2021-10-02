@@ -1,53 +1,65 @@
 import { useHistory, useLocation } from "react-router-dom";
-
+import { AuthContext } from "./authContext/AuthContext";
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import logo from "./../img/signin.svg";
+import { login } from "./authContext/apiCalls";
 
 const Login = () => {
-	const [credentials, setCredentials] = useState({
-		email: "",
-		password: "",
-	});
+	// const [credentials, setCredentials] = useState({
+	// 	email: "",
+	// 	password: "",
+	// });
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const { dispatch } = useContext(AuthContext);
 
-	const location = useLocation();
-	const history = useHistory();
+	// const location = useLocation();
+	// const history = useHistory();
 
-	function handleTyping(e) {
-		setCredentials({
-			...credentials,
-			[e.target.name]: e.target.value,
-		});
-	}
+	// function handleTyping(e) {
+	// 	// setCredentials({
+	// 	// 	...credentials,
+	// 	// 	[e.target.name]: e.target.value,
+	// 	// });
+	// 	setEmail(e.target.value);
+	// 	setPassword(e.target.value);
+	// }
 
-	async function handleSubmit(e) {
+	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { email, password } = credentials;
+		// const { email, password } = credentials;
 
-		//LOGIN branch
-		if (!email || !password) {
-			return;
-		}
+		// //LOGIN branch
+		// if (!email || !password) {
+		// 	return;
+		// }
 
-		const res = await fetch("http://localhost:3001/auth", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ email: email, password: password }),
-		});
+		// from youtube
 
-		const data = await res.json();
-		console.log(data);
+		login({ email, password }, dispatch);
 
-		localStorage.setItem("token", data.token);
-		localStorage.setItem("user", JSON.stringify(data.user));
+		// from youtube
 
-		history.push("/");
-	}
+		// const res = await fetch("http://localhost:3001/auth", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// 	body: JSON.stringify({ email: email, password: password }),
+		// });
+
+		// const data = await res.json();
+		// console.log(data);
+
+		// localStorage.setItem("token", data.token);
+		// localStorage.setItem("user", JSON.stringify(data.user));
+
+		// history.push("/");
+	};
 
 	return (
 		<>
@@ -115,7 +127,7 @@ const Login = () => {
 											placeholder="Enter your email"
 											name="email"
 											required=""
-											onChange={handleTyping}
+											onChange={(e) => setEmail(e.target.value)}
 										/>
 									</div>
 									<div className="mb-4">
@@ -138,7 +150,7 @@ const Login = () => {
 												id="signin-password"
 												placeholder="Enter password"
 												required=""
-												onChange={handleTyping}
+												onChange={(e) => setPassword(e.target.value)}
 											/>
 											<label
 												className="password-toggle-btn"

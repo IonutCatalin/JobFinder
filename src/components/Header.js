@@ -2,12 +2,16 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import logo from "./../img/logo-light.svg";
 import LoggedIn from "./UserProfile/LoggedIn";
-import { AuthContext, useAuthContext } from "./Auth/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../../src/components/authContext/AuthContext";
+import { logout } from "../../src/components/authContext/AuthActions";
 function Header() {
-	const user = JSON.parse(localStorage.getItem("user"));
-	console.log(user);
-	console.log(user.phone);
+	// const user = JSON.parse(localStorage.getItem("user"));
+	// console.log(user);
+	// console.log(user.phone);
+
+	//from youtube
+	const { dispatch } = useContext(AuthContext);
 
 	return (
 		<header
@@ -29,29 +33,28 @@ function Header() {
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
-				{!user ? (
-					<a
-						className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
-						href="/login"
-					>
-						<i className="fi-user me-2"></i>Sign in
-					</a>
-				) : (
-					<LoggedIn />
-				)}
-				{user && (
-					<Link
-						to={`/login`}
-						onClick={(e) => {
-							//e.preventDefault();
-							localStorage.removeItem("user");
-							console.log("logouted");
-						}}
-						className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
-					>
-						<i className="fi-plus me-2"></i>Log Out
-					</Link>
-				)}
+				<a
+					className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
+					href="/login"
+				>
+					<i className="fi-user me-2"></i>Sign in
+				</a>
+
+				<LoggedIn />
+
+				<Link
+					to={`/login`}
+					onClick={(e) => {
+						//e.preventDefault();
+						//localStorage.removeItem("user");
+						dispatch(logout());
+						console.log("logouted");
+					}}
+					className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+				>
+					<i className="fi-plus me-2"></i>Log Out
+				</Link>
+
 				<Link
 					to={`/postresume`}
 					className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"

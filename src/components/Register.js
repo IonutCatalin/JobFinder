@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
 	const [users, setUsers] = useState([]);
@@ -15,7 +16,20 @@ const Register = () => {
 		confirmPassword: "",
 	});
 
+	//from youtube
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [username, setUsername] = useState("");
+
 	const history = useHistory();
+
+	// from youtube
+
+	const emailRef = useRef();
+	const passwordRef = useRef();
+	const usernameRef = useRef();
+
+	// from youtube
 
 	if (user) {
 		return <Redirect to="/" />;
@@ -41,26 +55,41 @@ const Register = () => {
 			return;
 		}
 
-		const result = await fetch("http://localhost:3001/users", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: credentials.email,
-				password: credentials.password,
-				username: credentials.username,
-			}),
-		});
+		//from youtube
+		setEmail(emailRef.current.value);
+		setPassword(passwordRef.current.value);
+		setUsername(usernameRef.current.value);
 
-		const data = await result.json();
+		try {
+			await axios.post("http://localhost:3001/auth/register", {
+				username,
+				email,
+				password,
+			});
+			history.push("/");
+		} catch (err) {
+			console.log(err);
+		}
+		// const result = await fetch("http://localhost:3001/users", {
+		// 	method: "POST",
+		// 	headers: {
+		// 		"Content-Type": "application/json",
+		// 	},
+		// 	body: JSON.stringify({
+		// 		email: credentials.email,
+		// 		password: credentials.password,
+		// 		username: credentials.username,
+		// 	}),
+		// });
 
-		localStorage.setItem("token", data.token);
-		localStorage.setItem("user", JSON.stringify(data.user));
+		// const data = await result.json();
 
-		const newUsers = [...users, credentials];
+		// localStorage.setItem("token", data.token);
+		// localStorage.setItem("user", JSON.stringify(data.user));
 
-		setUsers(newUsers);
+		// const newUsers = [...users, credentials];
+
+		// setUsers(newUsers);
 
 		history.push("/");
 	}
@@ -159,6 +188,7 @@ const Register = () => {
 												placeholder="Enter your full name"
 												required=""
 												onChange={handleTyping}
+												ref={usernameRef}
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
@@ -173,6 +203,7 @@ const Register = () => {
 												placeholder="Enter your email"
 												required=""
 												onChange={handleTyping}
+												ref={emailRef}
 											/>
 										</div>
 										<div className="col-sm-6 mb-4">
@@ -189,6 +220,7 @@ const Register = () => {
 													minLength="8"
 													required=""
 													onChange={handleTyping}
+													ref={passwordRef}
 												/>
 												<label
 													className="password-toggle-btn"
