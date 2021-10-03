@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import JobList from "./JobList";
 import JobCard from "./JobCard";
 import ReviewModal from "./ReviewModal";
+import ReviewDisplay from "./ReviewDisplay";
+import ReviewPagination from "./ReviewPagination";
+import JobPagination from "./JobPagination";
 
 const CompanyDetails = () => {
 	const { _id } = useParams();
@@ -20,6 +23,14 @@ const CompanyDetails = () => {
 	const [show, setShow] = useState(false);
 
 	const [jobState, setJobState] = useState("");
+
+	// Paginate Reviews
+	const [currentPage, setCurrentPage] = useState(1);
+	const [reviewsPerPage] = useState(4);
+
+	const [reviewList, setReviewList] = useState([]);
+	const [newReviewList, setNewReviewList] = useState([]);
+	const [reviewState, setReviewState] = useState("");
 
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
@@ -44,10 +55,56 @@ const CompanyDetails = () => {
 			});
 	};
 
+	const getReviewList = () => {
+		fetch(`http://localhost:3001/reviews/`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setReviewList(data);
+				console.log("data", data);
+			});
+	};
+
+	const getNewReviewList = () => {
+		fetch(`http://localhost:3001/reviews/`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setNewReviewList(data);
+				console.log("data", data);
+			});
+	};
+
 	useEffect(() => {
 		getJobDetails();
 		getJobs();
 	}, []);
+
+	useEffect(() => {
+		getReviewList();
+		getNewReviewList();
+	}, []);
+
+	// Get Current Jobs
+	const indexOfLastReview = currentPage * reviewsPerPage;
+	const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+	const currentReviews = reviewList.slice(
+		indexOfFirstReview,
+		indexOfLastReview
+	);
+
+	// Change Page
+	const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+	let ratingStars5 = 0;
+	let ratingStars4 = 0;
+	let ratingStars3 = 0;
+	let ratingStars2 = 0;
+	let ratingStars1 = 0;
 
 	return (
 		<>
@@ -148,7 +205,9 @@ const CompanyDetails = () => {
 							}
 						})}
 
-						<h2 className="h3 pt-4 pt-lg-5 my-4 pb-2">Company reviews (62)</h2>
+						<h2 className="h3 pt-4 pt-lg-5 my-4 pb-2">
+							Company reviews ({reviewList.length})
+						</h2>
 						<div className="d-flex align-items-center mb-2">
 							<div className="text-nowrap fs-sm me-3">
 								5<i className="fi-star text-muted ms-1 mt-n1"></i>
@@ -168,6 +227,7 @@ const CompanyDetails = () => {
 								style={{ width: "3rem" }}
 							>
 								70%
+								{ratingStars5}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -189,6 +249,7 @@ const CompanyDetails = () => {
 								style={{ width: "3rem" }}
 							>
 								15%
+								{ratingStars4}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -210,6 +271,7 @@ const CompanyDetails = () => {
 								style={{ width: "3rem" }}
 							>
 								0%
+								{ratingStars3}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -231,6 +293,7 @@ const CompanyDetails = () => {
 								style={{ width: "3rem" }}
 							>
 								10%
+								{ratingStars2}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -252,6 +315,7 @@ const CompanyDetails = () => {
 								style={{ width: "3rem" }}
 							>
 								5%
+								{ratingStars1}
 							</div>
 						</div>
 						<div className="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between border-bottom py-4 mt-3 mb-4">
@@ -263,12 +327,20 @@ const CompanyDetails = () => {
 									<i className="fi-arrows-sort text-muted mt-n1 me-2"></i>Sort
 									by:
 								</label>
-								<select className="form-select" id="review-sorting">
-									<option>Newest</option>
-									<option>Oldest</option>
-									<option>Popular</option>
-									<option>High rating</option>
-									<option>Low rating</option>
+								<select
+									value={reviewState}
+									onChange={(e) => {
+										const select = e.target.value;
+										setReviewState(select);
+										console.log("review sort type:", reviewState);
+									}}
+									className="form-select"
+									id="review-sorting"
+								>
+									<option value="Oldest">Oldest</option>
+									<option value="Newest">Newest</option>
+									<option value="HighestRating">High rating</option>
+									<option value="LowestRating">Low rating</option>
 								</select>
 							</div>
 							<button
@@ -280,240 +352,76 @@ const CompanyDetails = () => {
 							</button>
 						</div>
 						{show && <ReviewModal setShow={setShow} />}
-						<div className="mb-4 pb-4 border-bottom">
-							<div className="d-flex justify-content-between mb-3">
-								<div className="d-flex align-items-center pe-2">
-									<img
-										className="rounded-circle me-1"
-										src={boyAvatar}
-										width="48"
-										alt="Avatar"
-									/>
-									<div className="ps-2">
-										<h6 className="fs-base mb-0">Kristin Watson</h6>
-										<span className="star-rating">
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-										</span>
+						{reviewList.map((rev) => {
+							if (rev.rating === "5 stars") ratingStars5 = ratingStars5 + 1;
+							if (rev.rating === "4 stars") ratingStars4 = ratingStars4 + 1;
+							if (rev.rating === "3 stars") ratingStars3 = ratingStars3 + 1;
+							if (rev.rating === "2 stars") ratingStars2 = ratingStars2 + 1;
+							if (rev.rating === "1 stars") ratingStars1 = ratingStars1 + 1;
+						})}
+						{currentReviews.map((review) => {
+							if (reviewState === "Newest") {
+								reviewList.sort((a, b) => (a.date < b.date ? 1 : -1));
+								return (
+									<div key={review._id}>
+										<ReviewDisplay
+											data={review}
+											id={review._id}
+											getReviewList={getReviewList}
+										/>
 									</div>
-								</div>
-								<span className="text-muted fs-sm">Jan 17, 2021</span>
-							</div>
-							<p>
-								Elementum ut quam tincidunt egestas vitae elit, hendrerit.
-								Ullamcorper nulla amet lobortis elit, nibh condimentum enim.
-								Aliquam felis nisl tellus sodales lectus dictum tristique proin
-								vitae. Odio fermentum viverra tortor quis.
-							</p>
-							<div className="d-flex align-items-center">
-								<button className="btn-like" type="button">
-									<i className="fi-like"></i>
-									<span>(3)</span>
-								</button>
-								<div className="border-end me-1">&nbsp;</div>
-								<button className="btn-dislike" type="button">
-									<i className="fi-dislike"></i>
-									<span>(0)</span>
-								</button>
-							</div>
-						</div>
-						<div className="mb-4 pb-4 border-bottom">
-							<div className="d-flex justify-content-between mb-3">
-								<div className="d-flex align-items-center pe-2">
-									<img
-										className="rounded-circle me-1"
-										src={girlAvatar}
-										width="48"
-										alt="Avatar"
-									/>
-									<div className="ps-2">
-										<h6 className="fs-base mb-0">Darrell Steward</h6>
-										<span className="star-rating">
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star"></i>
-											<i className="star-rating-icon fi-star"></i>
-											<i className="star-rating-icon fi-star"></i>
-										</span>
+								);
+							} else if (reviewState === "Oldest") {
+								reviewList.sort((a, b) => (a.date > b.date ? 1 : -1));
+								return (
+									<div key={review._id}>
+										<ReviewDisplay
+											data={review}
+											id={review._id}
+											getReviewList={getReviewList}
+										/>
 									</div>
-								</div>
-								<span className="text-muted fs-sm">Dec 1, 2020</span>
-							</div>
-							<p>
-								Vel dictum nunc ut tristique. Egestas diam amet, ut proin
-								hendrerit. Dui accumsan at phasellus tempus consequat dignissim.
-							</p>
-							<div className="d-flex align-items-center">
-								<button className="btn-like" type="button">
-									<i className="fi-like"></i>
-									<span>(0)</span>
-								</button>
-								<div className="border-end me-1">&nbsp;</div>
-								<button className="btn-dislike" type="button">
-									<i className="fi-dislike"></i>
-									<span>(1)</span>
-								</button>
-							</div>
-						</div>
-						<div className="mb-4 pb-4 border-bottom">
-							<div className="d-flex justify-content-between mb-3">
-								<div className="d-flex align-items-center pe-2">
-									<img
-										className="rounded-circle me-1"
-										src={noImageAvatar}
-										width="48"
-										alt="Avatar"
-									/>
-									<div className="ps-2">
-										<h6 className="fs-base mb-0">Cody Fisher</h6>
-										<span className="star-rating">
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-										</span>
+								);
+							} else if (reviewState === "HighestRating") {
+								reviewList.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+								return (
+									<div key={review._id}>
+										<ReviewDisplay
+											data={review}
+											id={review._id}
+											getReviewList={getReviewList}
+										/>
 									</div>
-								</div>
-								<span className="text-muted fs-sm">Oct 28, 2020</span>
-							</div>
-							<p>
-								Viverra nunc blandit sapien non imperdiet sit. Purus tempus
-								elementum aliquam eu urna. A aenean duis non egestas at libero
-								porttitor integer eget. Sed dictum lobortis laoreet gravida.
-							</p>
-							<div className="d-flex align-items-center">
-								<button className="btn-like" type="button">
-									<i className="fi-like"></i>
-									<span>(2)</span>
-								</button>
-								<div className="border-end me-1">&nbsp;</div>
-								<button className="btn-dislike" type="button">
-									<i className="fi-dislike"></i>
-									<span>(1)</span>
-								</button>
-							</div>
-						</div>
-						<div className="mb-4 pb-4 border-bottom">
-							<div className="d-flex justify-content-between mb-3">
-								<div className="d-flex align-items-center pe-2">
-									<img
-										className="rounded-circle me-1"
-										src={boyAvatar}
-										width="48"
-										alt="Avatar"
-									/>
-									<div className="ps-2">
-										<h6 className="fs-base mb-0">Ralph Edwards</h6>
-										<span className="star-rating">
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star"></i>
-										</span>
+								);
+							} else if (reviewState === "LowestRating") {
+								reviewList.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+								return (
+									<div key={review._id}>
+										<ReviewDisplay
+											data={review}
+											id={review._id}
+											getReviewList={getReviewList}
+										/>
 									</div>
-								</div>
-								<span className="text-muted fs-sm">Sep 14, 2020</span>
-							</div>
-							<p>
-								Elementum nisl, egestas nam consectetur nisl, at pellentesque
-								cras. Non sed ac vivamus dolor dignissim ut. Nisl sapien blandit
-								pulvinar sagittis donec sociis ipsum arcu est. Tempus, rutrum
-								morbi scelerisque tempor mi. Etiam urna, cras bibendum leo nec
-								faucibus velit. Tempor lectus dignissim at auctor integer neque
-								quam amet.
-							</p>
-							<div className="d-flex align-items-center">
-								<button className="btn-like" type="button">
-									<i className="fi-like"></i>
-									<span>(0)</span>
-								</button>
-								<div className="border-end me-1">&nbsp;</div>
-								<button className="btn-dislike" type="button">
-									<i className="fi-dislike"></i>
-									<span>(0)</span>
-								</button>
-							</div>
-						</div>
-						<div className="mb-4 pb-4 border-bottom">
-							<div className="d-flex justify-content-between mb-3">
-								<div className="d-flex align-items-center pe-2">
-									<img
-										className="rounded-circle me-1"
-										src={girlAvatar}
-										width="48"
-										alt="Avatar"
-									/>
-									<div className="ps-2">
-										<h6 className="fs-base mb-0">Guy Hawkins</h6>
-										<span className="star-rating">
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-											<i className="star-rating-icon fi-star-filled active"></i>
-										</span>
+								);
+							} else if (!reviewState) {
+								return (
+									<div key={review._id}>
+										<ReviewDisplay
+											data={review}
+											id={review._id}
+											getReviewList={getReviewList}
+										/>
 									</div>
-								</div>
-								<span className="text-muted fs-sm">Dec 1, 2020</span>
-							</div>
-							<p>
-								Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-								accusantium dolor laudantium, totam rem aperiam, eaque ipsa quae
-								ab illo inventore veritatis morbi venenatis ut est.
-							</p>
-							<div className="d-flex align-items-center">
-								<button className="btn-like" type="button">
-									<i className="fi-like"></i>
-									<span>(1)</span>
-								</button>
-								<div className="border-end me-1">&nbsp;</div>
-								<button className="btn-dislike" type="button">
-									<i className="fi-dislike"></i>
-									<span>(3)</span>
-								</button>
-							</div>
-						</div>
-						<nav className="mt-2" aria-label="Reviews pagination">
-							<ul className="pagination">
-								<li className="page-item d-sm-none">
-									<span className="page-link page-link-static">1 / 5</span>
-								</li>
-								<li
-									className="page-item active d-none d-sm-block"
-									aria-current="page"
-								>
-									<span className="page-link">
-										1<span className="visually-hidden">(current)</span>
-									</span>
-								</li>
-								<li className="page-item d-none d-sm-block">
-									<a className="page-link" href="#">
-										2
-									</a>
-								</li>
-								<li className="page-item d-none d-sm-block">
-									<a className="page-link" href="#">
-										3
-									</a>
-								</li>
-								<li className="page-item d-none d-sm-block">...</li>
-								<li className="page-item d-none d-sm-block">
-									<a className="page-link" href="#">
-										8
-									</a>
-								</li>
-								<li className="page-item">
-									<a className="page-link" href="#" aria-label="Next">
-										<i className="fi-chevron-right"></i>
-									</a>
-								</li>
-							</ul>
-						</nav>
+								);
+							}
+						})}
+
+						<JobPagination
+							jobsPerPage={reviewsPerPage}
+							totalJobs={reviewList.length}
+							paginate={paginate}
+						/>
 					</div>
 					<aside className="col-lg-4 order-lg-1 pe-xl-4 mb-5">
 						<div className="d-flex align-items-start mb-4">
