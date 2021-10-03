@@ -33,12 +33,12 @@ function Header() {
 				>
 					<span className="navbar-toggler-icon"></span>
 				</button>
-				<a
+				{/* <a
 					className="btn btn-link btn-light btn-sm d-none d-lg-block order-lg-3"
 					href="/login"
 				>
 					<i className="fi-user me-2"></i>Sign in
-				</a>
+				</a> */}
 
 				<LoggedIn />
 
@@ -48,11 +48,11 @@ function Header() {
 						//e.preventDefault();
 						//localStorage.removeItem("user");
 						dispatch(logout());
-						console.log("logouted");
 					}}
 					className="btn btn-primary btn-sm rounded-pill ms-2 order-lg-3"
+					style={{ backgroundColor: "inherit" }}
 				>
-					<i className="fi-plus me-2"></i>Log Out
+					<i className="fi-minus me-2"></i>Log Out
 				</Link>
 
 				<Link

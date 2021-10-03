@@ -1,14 +1,17 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { AuthContext } from "./authContext/AuthContext";
+import { login } from "./authContext/apiCalls";
 
 const Register = () => {
 	const [users, setUsers] = useState([]);
 
 	const user = JSON.parse(localStorage.getItem("user"));
 
+	const { dispatch } = useContext(AuthContext);
 	const [credentials, setCredentials] = useState({
 		username: "",
 		email: "",
@@ -90,8 +93,9 @@ const Register = () => {
 		// const newUsers = [...users, credentials];
 
 		// setUsers(newUsers);
+		login({ email, password }, dispatch);
 
-		history.push("/");
+		//history.push("/");
 	}
 
 	return (
