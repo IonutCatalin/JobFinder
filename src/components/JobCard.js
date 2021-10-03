@@ -48,10 +48,12 @@ const JobCard = (props) => {
 						</div>
 					</div>
 					<h3 className="h6 card-title pt-1 mb-3">
-						<Link to={`/specificjob/${_id}`} style={{ textDecoration: "none" }}>
-							<a className="text-nav stretched-link text-decoration-none">
-								{description}
-							</a>
+						<Link
+							to={`/specificjob/${_id}`}
+							style={{ textDecoration: "none" }}
+							className="text-nav stretched-link text-decoration-none"
+						>
+							{description}
 						</Link>
 					</h3>
 					<div className="fs-sm">
