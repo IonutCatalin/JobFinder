@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 const LoggedIn = () => {
 	const [profile, setProfile] = useState([]);
 	const user = JSON.parse(localStorage.getItem("user"));
+	const defaultPhoneNumber = "(035)-123-123";
 
 	return (
 		<>
@@ -32,7 +33,7 @@ const LoggedIn = () => {
 						<div className="ps-2">
 							<h6 className="fs-base text-light mb-0">{user.username}</h6>
 							<div className="fs-xs py-2">
-								(302) 555-0107
+								{user.phone ? user.phone : defaultPhoneNumber}
 								<br />
 								{user.email}
 							</div>
