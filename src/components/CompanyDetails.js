@@ -87,7 +87,7 @@ const CompanyDetails = () => {
 	useEffect(() => {
 		getReviewList();
 		getNewReviewList();
-	}, []);
+	}, [_id]);
 
 	// Get Current Jobs
 	const indexOfLastReview = currentPage * reviewsPerPage;
@@ -351,7 +351,9 @@ const CompanyDetails = () => {
 								<i className="fi-edit me-1"></i>Add review
 							</button>
 						</div>
-						{show && <ReviewModal setShow={setShow} />}
+						{show && (
+							<ReviewModal getReviewList={getReviewList} setShow={setShow} />
+						)}
 						{reviewList.map((rev) => {
 							if (rev.rating === "5 stars") ratingStars5 = ratingStars5 + 1;
 							if (rev.rating === "4 stars") ratingStars4 = ratingStars4 + 1;

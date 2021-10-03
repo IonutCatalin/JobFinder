@@ -4,6 +4,8 @@ import axios from "axios";
 
 const ReviewModal = (props) => {
 	const setShow = props.setShow;
+	const getReviewList = props.getReviewList;
+
 	const [reviewInfos, setReviewInfos] = useState({
 		name: "",
 		email: "",
@@ -38,6 +40,12 @@ const ReviewModal = (props) => {
 		} catch (err) {
 			console.log(err);
 		}
+
+		getReviewList();
+
+		reviewInfos.name = "";
+		reviewInfos.email = "";
+		reviewInfos.message = "";
 	}
 
 	return (
