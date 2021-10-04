@@ -3,10 +3,49 @@ import Footer from "../Footer";
 import Header from "../Header";
 import profileImage from "../../img/profile-image.png";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function ProfileSettings() {
 	const user = JSON.parse(localStorage.getItem("user"));
-	console.log(user);
+	// console.log("user", user);
+	// console.log("user id", user._id);
+
+	const [genderState, setGenderState] = useState("");
+	const [updateUserDetails, setUpdateUserDetails] = useState({
+		username: "",
+		email: "",
+		phone: "",
+		gender: "",
+		adress: "",
+	});
+
+	const handleTyping = (e) => {
+		const newData = { ...updateUserDetails };
+		newData[e.target.name] = e.target.value;
+		setUpdateUserDetails(newData);
+
+		console.log(newData);
+	};
+
+	async function handleSubmit(e) {
+		e.preventDefault();
+
+		console.log("submit form pressed");
+		const { username, email, phone, gender, adress } = updateUserDetails;
+
+		try {
+			await axios.patch(`http://localhost:3001/users/${user._id}`, {
+				username: updateUserDetails.username,
+				email: updateUserDetails.email,
+				phone: updateUserDetails.phone,
+				gender: updateUserDetails.gender,
+				adress: updateUserDetails.adress,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
 
 	return (
 		<>
@@ -51,7 +90,7 @@ function ProfileSettings() {
 								</button>
 							</div>
 							<div className="ps-3 ps-sm-4">
-								<h3 className="h5">Annette Black</h3>
+								<h3 className="h5">{user.username}</h3>
 								<ul className="list-unstyled fs-sm mb-0">
 									<li className="d-flex text-nav text-break">
 										<i className="fi-mail opacity-60 mt-1 me-2"></i>
@@ -59,7 +98,7 @@ function ProfileSettings() {
 									</li>
 									<li className="d-flex text-nav text-break">
 										<i className="fi-phone opacity-60 mt-1 me-2"></i>
-										<span>(302) 555-0107</span>
+										<span>{user.phone}</span>
 									</li>
 								</ul>
 							</div>
@@ -156,9 +195,10 @@ function ProfileSettings() {
 										<input
 											className="form-control mt-3"
 											type="email"
+											name="email"
 											data-bs-binded-element="#email-value"
 											data-bs-unset-value="Not specified"
-											value=""
+											onChange={(e) => handleTyping(e)}
 										/>
 									</div>
 								</div>
@@ -314,9 +354,10 @@ function ProfileSettings() {
 										<input
 											className="form-control mt-3"
 											type="email"
+											name="username"
 											data-bs-binded-element="#fn-value"
 											data-bs-unset-value="Not specified"
-											value="Annette Black"
+											onChange={(e) => handleTyping(e)}
 										/>
 									</div>
 								</div>
@@ -324,7 +365,7 @@ function ProfileSettings() {
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">Gender</label>
-											<div id="gender-value">Female</div>
+											<div id="gender-value">{user.gender}</div>
 										</div>
 										<div
 											className="me-n3"
@@ -348,16 +389,15 @@ function ProfileSettings() {
 										data-bs-parent="#personal-details"
 									>
 										<select
+											name="gender"
 											className="form-select mt-3"
 											data-bs-binded-element="#gender-value"
+											onChange={(e) => {
+												handleTyping(e);
+											}}
 										>
-											<option value="" disabled="">
-												Select your gender
-											</option>
-											<option value="Male">Male</option>
-											<option value="Female" selected="">
-												Female
-											</option>
+											<option value="male">Male</option>
+											<option value="female">Female</option>
 										</select>
 									</div>
 								</div>
@@ -415,7 +455,7 @@ function ProfileSettings() {
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">Phone number</label>
-											<div id="phone-value">(302) 555-0107</div>
+											<div id="phone-value">{user.phone}</div>
 										</div>
 										<div
 											className="me-n3"
@@ -440,10 +480,12 @@ function ProfileSettings() {
 									>
 										<input
 											className="form-control mt-3"
+											name="phone"
 											type="text"
 											data-bs-binded-element="#phone-value"
 											data-bs-unset-value="Not specified"
-											value=""
+											placeholder="Enter phone"
+											onChange={(e) => handleTyping(e)}
 										/>
 									</div>
 								</div>
@@ -451,7 +493,7 @@ function ProfileSettings() {
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">Address</label>
-											<div id="address-value">Not specified</div>
+											<div id="address-value">{user.adress}</div>
 										</div>
 										<div
 											className="me-n3"
@@ -477,9 +519,11 @@ function ProfileSettings() {
 										<input
 											className="form-control mt-3"
 											type="text"
+											name="adress"
 											data-bs-binded-element="#address-value"
 											data-bs-unset-value="Not specified"
 											placeholder="Enter address"
+											onChange={(e) => handleTyping(e)}
 										/>
 									</div>
 								</div>
@@ -488,7 +532,7 @@ function ProfileSettings() {
 										<div className="pe-2">
 											<label className="form-label fw-bold">Socials</label>
 											<ul className="list-unstyled mb-0">
-												<li id="facebook-value">Not specified</li>
+												<li id="facebook-value"></li>
 												<li id="linkedin-value"></li>
 												<li id="twitter-value"></li>
 												{/* <li id="instagram-value"></li>
@@ -524,7 +568,7 @@ function ProfileSettings() {
 												className="form-control"
 												type="text"
 												data-bs-binded-element="#facebook-value"
-												placeholder="Your Facebook account"
+												placeholder={user.socials.facebook}
 											/>
 										</div>
 										<div className="d-flex align-items-center mb-3">
@@ -535,7 +579,7 @@ function ProfileSettings() {
 												className="form-control"
 												type="text"
 												data-bs-binded-element="#linkedin-value"
-												placeholder="Your LinkedIn account"
+												placeholder={user.socials.linedIn}
 											/>
 										</div>
 										<div className="d-flex align-items-center mb-3">
@@ -546,7 +590,7 @@ function ProfileSettings() {
 												className="form-control"
 												type="text"
 												data-bs-binded-element="#twitter-value"
-												placeholder="Your Twitter account"
+												placeholder={user.socials.twitter}
 											/>
 										</div>
 										{/* <div className="collapse" id="showMoreSocials">
@@ -694,6 +738,7 @@ function ProfileSettings() {
 								<button
 									className="btn btn-primary rounded-pill px-3 px-sm-4"
 									type="button"
+									onClick={(e) => handleSubmit(e)}
 								>
 									Save changes
 								</button>
