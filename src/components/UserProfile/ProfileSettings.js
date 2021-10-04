@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 function ProfileSettings() {
 	const user = JSON.parse(localStorage.getItem("user"));
+	console.log(user);
 
 	return (
 		<>
@@ -157,7 +158,7 @@ function ProfileSettings() {
 											type="email"
 											data-bs-binded-element="#email-value"
 											data-bs-unset-value="Not specified"
-											value="annette_black@email.com"
+											value=""
 										/>
 									</div>
 								</div>
@@ -360,7 +361,7 @@ function ProfileSettings() {
 										</select>
 									</div>
 								</div>
-								<div className="border-bottom pb-3 mb-3">
+								{/* <div className="border-bottom pb-3 mb-3">
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
 											<label className="form-label fw-bold">
@@ -401,15 +402,15 @@ function ProfileSettings() {
 												<input
 													className="form-control date-picker rounded pe-5 form-control input"
 													placeholder="Choose date"
-													tabindex="0"
+													tabIndex="0"
 													type="text"
-													readonly="readonly"
+													readOnly="readonly"
 												/>
 												<i className="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
 											</div>
 										</div>
 									</div>
-								</div>
+								</div> */}
 								<div className="border-bottom pb-3 mb-3">
 									<div className="d-flex align-items-center justify-content-between">
 										<div className="pe-2">
@@ -442,7 +443,7 @@ function ProfileSettings() {
 											type="text"
 											data-bs-binded-element="#phone-value"
 											data-bs-unset-value="Not specified"
-											value="(302) 555-0107"
+											value=""
 										/>
 									</div>
 								</div>
@@ -490,8 +491,8 @@ function ProfileSettings() {
 												<li id="facebook-value">Not specified</li>
 												<li id="linkedin-value"></li>
 												<li id="twitter-value"></li>
-												<li id="instagram-value"></li>
-												<li id="behance-value"></li>
+												{/* <li id="instagram-value"></li>
+												<li id="behance-value"></li> */}
 											</ul>
 										</div>
 										<div
@@ -548,7 +549,7 @@ function ProfileSettings() {
 												placeholder="Your Twitter account"
 											/>
 										</div>
-										<div className="collapse" id="showMoreSocials">
+										{/* <div className="collapse" id="showMoreSocials">
 											<div className="d-flex align-items-center mb-3">
 												<div className="btn btn-icon btn-light btn-xs shadow-sm rounded-circle pe-none flex-shrink-0 me-3">
 													<i className="fi-instagram text-body"></i>
@@ -583,13 +584,13 @@ function ProfileSettings() {
 											aria-controls="showMoreSocials"
 										>
 											<i className="fi-arrow-down me-2"></i>
-										</a>
+										</a> */}
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div className="row pt-4 mt-2">
+					{/* <div className="row pt-4 mt-2">
 						<div className="col-lg-3">
 							<h2 className="h4">Account settings</h2>
 						</div>
@@ -686,7 +687,7 @@ function ProfileSettings() {
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className="row pt-4 mt-2">
 						<div className="col-lg-9 offset-lg-3">
 							<div className="d-flex align-items-center justify-content-between">

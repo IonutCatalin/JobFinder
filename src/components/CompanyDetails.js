@@ -106,6 +106,35 @@ const CompanyDetails = () => {
 	let ratingStars2 = 0;
 	let ratingStars1 = 0;
 
+	reviewList.map((review) => {
+		if (review.rating === "5 stars") {
+			ratingStars5 = ratingStars5 + 1;
+		}
+		if (review.rating === "4 stars") {
+			ratingStars4 = ratingStars4 + 1;
+		}
+		if (review.rating === "3 stars") {
+			ratingStars3 = ratingStars3 + 1;
+		}
+		if (review.rating === "2 stars") {
+			ratingStars2 = ratingStars2 + 1;
+		}
+		if (review.rating === "1 star") {
+			ratingStars1 = ratingStars1 + 1;
+		}
+	});
+	const auxiliar5 = "" + (ratingStars5 / reviewList.length) * 100;
+	const auxiliar4 = "" + (ratingStars4 / reviewList.length) * 100;
+	const auxiliar3 = "" + (ratingStars3 / reviewList.length) * 100;
+	const auxiliar2 = "" + (ratingStars2 / reviewList.length) * 100;
+	const auxiliar1 = "" + (ratingStars1 / reviewList.length) * 100;
+
+	// document.getElementById("auxiliar5").style.width = auxiliar5 + "%";
+	// document.getElementById("auxiliar4").style.width = auxiliar4 + "%";
+	// document.getElementById("auxiliar3").style.width = auxiliar3 + "%";
+	// document.getElementById("auxiliar2").style.width = auxiliar2 + "%";
+	// document.getElementById("auxiliar1").style.width = auxiliar1 + "%";
+
 	return (
 		<>
 			<Header />
@@ -216,8 +245,8 @@ const CompanyDetails = () => {
 								<div
 									className="progress-bar bg-warning"
 									role="progressbar"
-									style={{ width: "70%" }}
-									aria-valuenow="70"
+									style={{ width: `${auxiliar5}%` }}
+									aria-valuenow={auxiliar5}
 									aria-valuemin="0"
 									aria-valuemax="100"
 								></div>
@@ -226,8 +255,8 @@ const CompanyDetails = () => {
 								className="flex-shrink-0 flex-grow-1 fs-sm text-end ps-2"
 								style={{ width: "3rem" }}
 							>
-								70%
-								{ratingStars5}
+								{auxiliar5.slice(0, 4)}
+								{"%"}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -238,8 +267,8 @@ const CompanyDetails = () => {
 								<div
 									className="progress-bar bg-warning"
 									role="progressbar"
-									style={{ width: "15%" }}
-									aria-valuenow="15"
+									style={{ width: `${auxiliar4}%` }}
+									aria-valuenow={auxiliar4}
 									aria-valuemin="0"
 									aria-valuemax="100"
 								></div>
@@ -248,8 +277,8 @@ const CompanyDetails = () => {
 								className="flex-shrink-0 flex-grow-1 fs-sm text-end ps-2"
 								style={{ width: "3rem" }}
 							>
-								15%
-								{ratingStars4}
+								{auxiliar4.slice(0, 4)}
+								{"%"}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -260,8 +289,8 @@ const CompanyDetails = () => {
 								<div
 									className="progress-bar bg-warning"
 									role="progressbar"
-									style={{ width: "0" }}
-									aria-valuenow="0"
+									style={{ width: `${auxiliar3}%` }}
+									aria-valuenow={auxiliar3}
 									aria-valuemin="0"
 									aria-valuemax="100"
 								></div>
@@ -270,8 +299,8 @@ const CompanyDetails = () => {
 								className="flex-shrink-0 flex-grow-1 fs-sm text-end ps-2"
 								style={{ width: "3rem" }}
 							>
-								0%
-								{ratingStars3}
+								{auxiliar3.slice(0, 4)}
+								{"%"}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -282,8 +311,8 @@ const CompanyDetails = () => {
 								<div
 									className="progress-bar bg-warning"
 									role="progressbar"
-									style={{ width: "10%" }}
-									aria-valuenow="10"
+									style={{ width: `${auxiliar2}%` }}
+									aria-valuenow={auxiliar2}
 									aria-valuemin="0"
 									aria-valuemax="100"
 								></div>
@@ -292,8 +321,8 @@ const CompanyDetails = () => {
 								className="flex-shrink-0 flex-grow-1 fs-sm text-end ps-2"
 								style={{ width: "3rem" }}
 							>
-								10%
-								{ratingStars2}
+								{auxiliar2.slice(0, 4)}
+								{"%"}
 							</div>
 						</div>
 						<div className="d-flex align-items-center mb-2">
@@ -304,8 +333,8 @@ const CompanyDetails = () => {
 								<div
 									className="progress-bar bg-warning"
 									role="progressbar"
-									style={{ width: "5%" }}
-									aria-valuenow="5"
+									style={{ width: `${auxiliar1}%` }}
+									aria-valuenow={auxiliar1}
 									aria-valuemin="0"
 									aria-valuemax="100"
 								></div>
@@ -314,8 +343,8 @@ const CompanyDetails = () => {
 								className="flex-shrink-0 flex-grow-1 fs-sm text-end ps-2"
 								style={{ width: "3rem" }}
 							>
-								5%
-								{ratingStars1}
+								{auxiliar1.slice(0, 4)}
+								{"%"}
 							</div>
 						</div>
 						<div className="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch justify-content-between border-bottom py-4 mt-3 mb-4">
@@ -354,13 +383,13 @@ const CompanyDetails = () => {
 						{show && (
 							<ReviewModal getReviewList={getReviewList} setShow={setShow} />
 						)}
-						{reviewList.map((rev) => {
+						{/* {reviewList.map((rev) => {
 							if (rev.rating === "5 stars") ratingStars5 = ratingStars5 + 1;
 							if (rev.rating === "4 stars") ratingStars4 = ratingStars4 + 1;
 							if (rev.rating === "3 stars") ratingStars3 = ratingStars3 + 1;
 							if (rev.rating === "2 stars") ratingStars2 = ratingStars2 + 1;
 							if (rev.rating === "1 stars") ratingStars1 = ratingStars1 + 1;
-						})}
+						})} */}
 						{currentReviews.map((review) => {
 							if (reviewState === "Newest") {
 								reviewList.sort((a, b) => (a.date < b.date ? 1 : -1));
