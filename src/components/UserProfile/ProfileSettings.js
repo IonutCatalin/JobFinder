@@ -3,13 +3,16 @@ import Footer from "../Footer";
 import Header from "../Header";
 import profileImage from "../../img/profile-image.png";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../authContext/AuthContext";
+import { logout } from "../authContext/AuthActions";
 import axios from "axios";
 
 function ProfileSettings() {
 	const user = JSON.parse(localStorage.getItem("user"));
 	console.log("user", user);
 	// console.log("user id", user._id);
+	const { dispatch } = useContext(AuthContext);
 
 	// const [genderState, setGenderState] = useState("");
 	const [noCredentialsUpdated, setNoCredentialsUpdated] = useState(false);
@@ -189,9 +192,9 @@ function ProfileSettings() {
 						<Link
 							className="nav-link p-0 d-none d-md-block"
 							to="/login"
-							onClick={(e) => {
-								// e.preventDefault();
-								localStorage.removeItem("user");
+							onClick={() => {
+								// localStorage.removeItem("user");
+								dispatch(logout());
 							}}
 						>
 							<i className="fi-logout mt-n1 me-2"></i>Sign out
@@ -236,9 +239,15 @@ function ProfileSettings() {
 								</Link>
 							</li>
 							<li className="nav-item d-md-none">
-								<a className="nav-link" href="#">
+								<Link
+									className="nav-link"
+									to="/login"
+									onClick={() => {
+										dispatch(logout());
+									}}
+								>
 									<i className="fi-logout mt-n1 me-2 fs-base"></i>Sign Out
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>

@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import profileImage from "../../img/rounded-profile-image.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "../authContext/AuthContext";
+import { logout } from "../authContext/AuthActions";
 
 const LoggedIn = () => {
-	const [profile, setProfile] = useState([]);
 	const user = JSON.parse(localStorage.getItem("user"));
-	const defaultPhoneNumber = "(035)-123-123";
+	const { dispatch } = useContext(AuthContext);
 
 	return (
 		<>
@@ -33,7 +34,7 @@ const LoggedIn = () => {
 						<div className="ps-2">
 							<h6 className="fs-base text-light mb-0">{user.username}</h6>
 							<div className="fs-xs py-2">
-								{user.phone ? user.phone : defaultPhoneNumber}
+								{user.phone}
 								<br />
 								{user.email}
 							</div>
@@ -52,9 +53,15 @@ const LoggedIn = () => {
 						<i className="fi-bell me-2"></i>Notifications
 					</Link>
 					<div className="dropdown-divider"></div>
-					<a className="dropdown-item" href="/login">
+					<Link
+						className="dropdown-item"
+						to="/login"
+						onClick={() => {
+							dispatch(logout());
+						}}
+					>
 						<i className="fi-logout me-2"></i>Sign Out
-					</a>
+					</Link>
 				</div>
 			</div>
 		</>

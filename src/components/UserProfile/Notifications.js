@@ -3,8 +3,14 @@ import { Link } from "react-router-dom";
 import Footer from "../Footer";
 import Header from "../Header";
 import profileImage from "../../img/profile-image.png";
+import { AuthContext } from "../authContext/AuthContext";
+import { logout } from "../authContext/AuthActions";
+import { useContext } from "react";
 
 const Notifications = () => {
+	const user = JSON.parse(localStorage.getItem("user"));
+	const { dispatch } = useContext(AuthContext);
+
 	return (
 		<>
 			<Header />
@@ -48,22 +54,28 @@ const Notifications = () => {
 								</button>
 							</div>
 							<div className="ps-3 ps-sm-4">
-								<h3 className="h5">Annette Black</h3>
+								<h3 className="h5">{user.username}</h3>
 								<ul className="list-unstyled fs-sm mb-0">
 									<li className="d-flex text-nav text-break">
 										<i className="fi-mail opacity-60 mt-1 me-2"></i>
-										<span>annette_black@email.com</span>
+										<span>{user.email}</span>
 									</li>
 									<li className="d-flex text-nav text-break">
 										<i className="fi-phone opacity-60 mt-1 me-2"></i>
-										<span>(302) 555-0107</span>
+										<span>{user.phone}</span>
 									</li>
 								</ul>
 							</div>
 						</div>
-						<a className="nav-link p-0 d-none d-md-block" href="#">
+						<Link
+							className="nav-link p-0 d-none d-md-block"
+							to="/login"
+							onClick={() => {
+								dispatch(logout());
+							}}
+						>
 							<i className="fi-logout mt-n1 me-2"></i>Sign out
-						</a>
+						</Link>
 					</div>
 					<a
 						className="btn btn-outline-primary btn-lg rounded-pill w-100 d-md-none"
@@ -100,9 +112,15 @@ const Notifications = () => {
 								</Link>
 							</li>
 							<li className="nav-item d-md-none">
-								<a className="nav-link" href="#">
+								<Link
+									className="nav-link"
+									to="/login"
+									onClick={() => {
+										dispatch(logout());
+									}}
+								>
 									<i className="fi-logout mt-n1 me-2 fs-base"></i>Sign Out
-								</a>
+								</Link>
 							</li>
 						</ul>
 					</div>
