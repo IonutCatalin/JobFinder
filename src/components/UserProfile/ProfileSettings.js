@@ -8,10 +8,12 @@ import axios from "axios";
 
 function ProfileSettings() {
 	const user = JSON.parse(localStorage.getItem("user"));
-	// console.log("user", user);
+	console.log("user", user);
 	// console.log("user id", user._id);
 
-	const [genderState, setGenderState] = useState("");
+	// const [genderState, setGenderState] = useState("");
+	const [noCredentialsUpdated, setNoCredentialsUpdated] = useState(false);
+	const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 	const [updateUserDetails, setUpdateUserDetails] = useState({
 		username: "",
 		email: "",
@@ -22,7 +24,16 @@ function ProfileSettings() {
 
 	const handleTyping = (e) => {
 		const newData = { ...updateUserDetails };
+		// const { username, email, phone, gender, adress } = updateUserDetails;
 		newData[e.target.name] = e.target.value;
+		console.log("e.target.name", e.target.name);
+		// if (!newData[e.target.name]) {
+		// 	newData[username] = user.username;
+		// 	newData[email] = user.email;
+		// 	newData[phone] = user.phone;
+		// 	newData[gender] = user.gender;
+		// 	newData[adress] = user.adress;
+		// }
 		setUpdateUserDetails(newData);
 
 		console.log(newData);
@@ -32,7 +43,77 @@ function ProfileSettings() {
 		e.preventDefault();
 
 		console.log("submit form pressed");
-		const { username, email, phone, gender, adress } = updateUserDetails;
+		// const { username, email, phone, gender, adress } = updateUserDetails;
+		if (
+			!updateUserDetails.username &&
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			updateUserDetails.adress
+		) {
+			updateUserDetails.username = user.username;
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.username &&
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.adress &&
+			updateUserDetails.gender
+		) {
+			updateUserDetails.username = user.username;
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.adress = user.adress;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.username &&
+			!updateUserDetails.email &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			updateUserDetails.phone
+		) {
+			updateUserDetails.username = user.username;
+			updateUserDetails.email = user.email;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.username &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			updateUserDetails.email
+		) {
+			updateUserDetails.username = user.username;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			updateUserDetails.username
+		) {
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.username &&
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress
+		) {
+			setNoCredentialsUpdated(true);
+			return;
+		}
 
 		try {
 			await axios.patch(`http://localhost:3001/users/${user._id}`, {
@@ -45,6 +126,8 @@ function ProfileSettings() {
 		} catch (err) {
 			console.log(err);
 		}
+		setIsFormSubmitted(true);
+		setNoCredentialsUpdated(false);
 	}
 
 	return (
@@ -732,6 +815,16 @@ function ProfileSettings() {
 							</div>
 						</div>
 					</div> */}
+					{noCredentialsUpdated ? (
+						<div>No credentials updated, you have nothing to submit!</div>
+					) : (
+						<div></div>
+					)}
+					{isFormSubmitted && (
+						<div>
+							Account details changed <br /> please log in back to update them!
+						</div>
+					)}
 					<div className="row pt-4 mt-2">
 						<div className="col-lg-9 offset-lg-3">
 							<div className="d-flex align-items-center justify-content-between">
