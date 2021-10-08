@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useParams } from "react-router";
 import Footer from "./Footer";
 import Header from "./Header";
+import { GlobalContext } from "./context/GlobalState";
 // import JobsFindHeader from "./JobsFindHeader";
 
 const SpecificJob = () => {
@@ -26,6 +27,10 @@ const SpecificJob = () => {
 	useEffect(() => {
 		getJobDetails();
 	}, []);
+
+	const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
+	let storedJob = savedJobs.find((item) => item.id === jobDetails.id);
+	const savedJobsDisabled = storedJob ? true : false;
 
 	return (
 		<>
@@ -509,6 +514,8 @@ const SpecificJob = () => {
 								<button
 									className="btn btn-primary border-end-0 border-top-0 border-bottom-0 border-light rounded-pill rounded-start-0 px-3"
 									type="button"
+									//disabled={savedJobsDisabled}
+									onClick={() => addJobToSavedJobs(jobDetails)}
 								>
 									<i className="fi-heart me-1"></i>
 								</button>

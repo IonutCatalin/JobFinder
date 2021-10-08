@@ -175,7 +175,7 @@ const CompanyDetails = () => {
 						{jobList.map((job) => {
 							if (
 								job.companyName === jobDetails.companyName &&
-								job._id != jobDetails._id
+								job._id !== jobDetails._id
 							) {
 								if (jobState === "Newest") {
 									jobList.sort((a, b) => (a.date < b.date ? 1 : -1));

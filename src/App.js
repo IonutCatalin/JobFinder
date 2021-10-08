@@ -20,7 +20,7 @@ import SavedJobs from "./components/UserProfile/SavedJobs";
 import Notifications from "./components/UserProfile/Notifications";
 import LoggedIn from "./components/UserProfile/LoggedIn";
 import { PrivateRoute } from "./components/Auth/PrivateRoute";
-
+import { GlobalProvider } from "./components/context/GlobalState";
 //from youtube
 import { useContext } from "react";
 import { AuthContext } from "./components/authContext/AuthContext";
@@ -29,59 +29,62 @@ function App() {
 	const { user } = useContext(AuthContext);
 	return (
 		<>
-			<BrowserRouter>
-				<Switch>
-					<Route exact path="/">
-						{user ? <HomeBanner /> : <Redirect to="/register" />}
-					</Route>
-					<Route path="/register">
-						{!user ? <Register /> : <Redirect to="/" />}
-					</Route>
-					<Route path="/login">{!user ? <Login /> : <Redirect to="/" />}</Route>
-					{user && (
-						<>
-							<Route path="/joblist">
-								<JobList />
-							</Route>
-							<Route path="/postresume">
-								<PostResume />
-							</Route>
-							<Route path="/postresume2">
-								<PostResume2 />
-							</Route>
-							<Route path="/postresume3">
-								<PostResume3 />
-							</Route>
-							<Route path="/postresume4">
-								<PostResume4 />
-							</Route>
-							<Route path="/postresume5">
-								<PostResume5 />
-							</Route>
-							<Route path="/profilesettings">
-								<ProfileSettings />
-							</Route>
-							<Route path="/myresumes">
-								<MyResumes />
-							</Route>
-							<Route path="/savedjobs">
-								<SavedJobs />
-							</Route>
-							<Route path="/notifications">
-								<Notifications />
-							</Route>
-							<Route path="/loggedin">
-								<LoggedIn />
-							</Route>
-							<Route path="/specificjob/:_id">
-								<SpecificJob />
-							</Route>
-							<Route path="/companydetails/:_id">
-								<CompanyDetails />
-							</Route>
-						</>
-					)}
-					{/* <Route path="/login" component={Login} />
+			<GlobalProvider>
+				<BrowserRouter>
+					<Switch>
+						<Route exact path="/">
+							{user ? <HomeBanner /> : <Redirect to="/register" />}
+						</Route>
+						<Route path="/register">
+							{!user ? <Register /> : <Redirect to="/" />}
+						</Route>
+						<Route path="/login">
+							{!user ? <Login /> : <Redirect to="/" />}
+						</Route>
+						{user && (
+							<>
+								<Route path="/joblist">
+									<JobList />
+								</Route>
+								<Route path="/postresume">
+									<PostResume />
+								</Route>
+								<Route path="/postresume2">
+									<PostResume2 />
+								</Route>
+								<Route path="/postresume3">
+									<PostResume3 />
+								</Route>
+								<Route path="/postresume4">
+									<PostResume4 />
+								</Route>
+								<Route path="/postresume5">
+									<PostResume5 />
+								</Route>
+								<Route path="/profilesettings">
+									<ProfileSettings />
+								</Route>
+								<Route path="/myresumes">
+									<MyResumes />
+								</Route>
+								<Route path="/savedjobs">
+									<SavedJobs />
+								</Route>
+								<Route path="/notifications">
+									<Notifications />
+								</Route>
+								<Route path="/loggedin">
+									<LoggedIn />
+								</Route>
+								<Route path="/specificjob/:_id">
+									<SpecificJob />
+								</Route>
+								<Route path="/companydetails/:_id">
+									<CompanyDetails />
+								</Route>
+							</>
+						)}
+						{/* <Route path="/login" component={Login} />
 					<Route path="/register" component={Register} />
 					<PrivateRoute exact path="/" component={HomeBanner} />
 					<PrivateRoute path="/joblist" component={JobList} />
@@ -100,8 +103,9 @@ function App() {
 						path="/companydetails/:_id"
 						component={CompanyDetails}
 					/> */}
-				</Switch>
-			</BrowserRouter>
+					</Switch>
+				</BrowserRouter>
+			</GlobalProvider>
 		</>
 	);
 }

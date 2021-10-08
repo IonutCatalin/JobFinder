@@ -6,11 +6,18 @@ import profileImage from "../../img/profile-image.png";
 import { AuthContext } from "../authContext/AuthContext";
 import { logout } from "../authContext/AuthActions";
 import { useContext } from "react";
+import { GlobalContext } from "../context/GlobalState";
+import SavedJobCard from "./SavedJobCard";
 
 const SavedJobs = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const { dispatch } = useContext(AuthContext);
 
+	const { savedJobs } = useContext(GlobalContext);
+	savedJobs.map((job) => {
+		console.log(job.remuneration);
+	});
+	console.log(savedJobs);
 	return (
 		<>
 			<Header />
@@ -132,268 +139,17 @@ const SavedJobs = () => {
 						</a>
 					</div>
 					<div className="row g-2 g-md-4">
-						<div className="col-md-6 col-lg-4">
-							<div className="card bg-secondary card-hover h-100">
-								<div className="card-body">
-									<div className="d-flex align-items-center mb-3">
-										<img
-											className="me-2"
-											src="img/job-board/company/it-pro.png"
-											width="24"
-											alt="IT Pro TV"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											IT Pro TV
-										</span>
-										<span className="badge bg-faded-info rounded-pill fs-sm ms-auto">
-											New
-										</span>
-									</div>
-									<h3 className="h6 card-title mb-2">
-										<a
-											className="text-nav stretched-link text-decoration-none"
-											href="job-board-single.html"
-										>
-											Business Analyst
-										</a>
-									</h3>
-									<p className="fs-sm mb-0">
-										Blandit a tincidunt arcu nulla. Sem neque, rhoncus non odio
-										nulla maecenas elit praesent. Orci tristique velit mauris
-										cursus nibh...
-									</p>
-								</div>
-								<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-									<div className="fs-sm">
-										<span className="text-nowrap me-3">
-											<i className="fi-map-pin text-muted me-1"> </i>New York
-										</span>
-										<span className="text-nowrap me-3">
-											<i className="fi-cash fs-base text-muted me-1"></i>$7,500
-										</span>
-									</div>
-									<button
-										className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
-										type="button"
-										data-bs-toggle="tooltip"
-										title=""
-										data-bs-original-title="Remove from saved jobs"
-										aria-label="Remove from saved jobs"
-									>
-										<i className="fi-heart-filled"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div className="col-md-6 col-lg-4">
-							<div className="card bg-secondary card-hover h-100">
-								<div className="card-body">
-									<div className="d-flex align-items-center mb-3">
-										<img
-											className="me-2"
-											src="img/job-board/company/xbox.png"
-											width="24"
-											alt="Xbox"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											Xbox Company
-										</span>
-										<span className="badge bg-faded-accent rounded-pill fs-sm ms-auto">
-											Featured
-										</span>
-									</div>
-									<h3 className="h6 card-title mb-2">
-										<a
-											className="text-nav stretched-link text-decoration-none"
-											href="job-board-single.html"
-										>
-											Full-Stack Developer
-										</a>
-									</h3>
-									<p className="fs-sm mb-0">
-										Euismod nec sagittis sit arcu libero, metus. Aliquam nisl
-										rhoncus porttitor volutpat, ante cras tincidunt. Nec sit
-										nunc, ornare tincidunt enim neque...
-									</p>
-								</div>
-								<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-									<div className="fs-sm">
-										<span className="text-nowrap me-3">
-											<i className="fi-map-pin text-muted me-1"> </i>Washington
-										</span>
-										<span className="text-nowrap me-3">
-											<i className="fi-cash fs-base text-muted me-1"></i>$12,000
-										</span>
-									</div>
-									<button
-										className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
-										type="button"
-										data-bs-toggle="tooltip"
-										title=""
-										data-bs-original-title="Remove from saved jobs"
-										aria-label="Remove from saved jobs"
-									>
-										<i className="fi-heart-filled"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div className="col-md-6 col-lg-4">
-							<div className="card bg-secondary card-hover h-100">
-								<div className="card-body">
-									<div className="d-flex align-items-center mb-3">
-										<img
-											className="me-2"
-											src="img/job-board/company/xampp.png"
-											width="24"
-											alt="Xampp"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											XAMPP Company
-										</span>
-									</div>
-									<h3 className="h6 card-title mb-2">
-										<a
-											className="text-nav stretched-link text-decoration-none"
-											href="job-board-single.html"
-										>
-											Account Manager
-										</a>
-									</h3>
-									<p className="fs-sm mb-0">
-										Auctor elit in aenean sodales mattis. Ultricies nec eu augue
-										sit. Ornare pulvinar enim fames orci enim in libero. Eu,
-										lorem leo netus velit egestas risus...
-									</p>
-								</div>
-								<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-									<div className="fs-sm">
-										<span className="text-nowrap me-3">
-											<i className="fi-map-pin text-muted me-1"> </i>Chicago
-										</span>
-										<span className="text-nowrap me-3">
-											<i className="fi-cash fs-base text-muted me-1"></i>$6,000
-										</span>
-									</div>
-									<button
-										className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
-										type="button"
-										data-bs-toggle="tooltip"
-										title=""
-										data-bs-original-title="Remove from saved jobs"
-										aria-label="Remove from saved jobs"
-									>
-										<i className="fi-heart-filled"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div className="col-md-6 col-lg-4">
-							<div className="card bg-secondary card-hover h-100">
-								<div className="card-body">
-									<div className="d-flex align-items-center mb-3">
-										<img
-											className="me-2"
-											src="img/job-board/company/zapier.png"
-											width="24"
-											alt="Zapier"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											Zapier
-										</span>
-										<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-											Hot
-										</span>
-									</div>
-									<h3 className="h6 card-title mb-2">
-										<a
-											className="text-nav stretched-link text-decoration-none"
-											href="job-board-single.html"
-										>
-											Onboarding Specialist
-										</a>
-									</h3>
-									<p className="fs-sm mb-0">
-										Rhoncus magna odio turpis porttitor nulla fringilla quis.
-										Consectetur sociis urna posuere consequat. Ut consectetur
-										amet penatibus sociis feugiat...
-									</p>
-								</div>
-								<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-									<div className="fs-sm">
-										<span className="text-nowrap me-3">
-											<i className="fi-map-pin text-muted me-1"> </i>Houston
-										</span>
-										<span className="text-nowrap me-3">
-											<i className="fi-cash fs-base text-muted me-1"></i>$4,000
-										</span>
-									</div>
-									<button
-										className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
-										type="button"
-										data-bs-toggle="tooltip"
-										title=""
-										data-bs-original-title="Remove from saved jobs"
-										aria-label="Remove from saved jobs"
-									>
-										<i className="fi-heart-filled"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-						<div className="col-md-6 col-lg-4">
-							<div className="card bg-secondary card-hover h-100">
-								<div className="card-body">
-									<div className="d-flex align-items-center mb-3">
-										<img
-											className="me-2"
-											src="img/job-board/company/kibana.png"
-											width="24"
-											alt="Elastic Kibana"
-										/>
-										<span className="fs-sm text-dark opacity-80 px-1">
-											Elastic Kibana
-										</span>
-									</div>
-									<h3 className="h6 card-title mb-2">
-										<a
-											className="text-nav stretched-link text-decoration-none"
-											href="job-board-single.html"
-										>
-											Global Product Operations Specialist
-										</a>
-									</h3>
-									<p className="fs-sm mb-0">
-										A ultrices eu facilisis suspendisse scelerisque fringilla
-										ultrices sit pellentesque. Consequat platea quam faucibus
-										egestas arcu semper adipiscing...
-									</p>
-								</div>
-								<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-									<div className="fs-sm">
-										<span className="text-nowrap me-3">
-											<i className="fi-map-pin text-muted me-1"> </i>New York
-										</span>
-										<span className="text-nowrap me-3">
-											<i className="fi-cash fs-base text-muted me-1"></i>$8,300
-										</span>
-									</div>
-									<button
-										className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
-										type="button"
-										data-bs-toggle="tooltip"
-										title=""
-										data-bs-original-title="Remove from saved jobs"
-										aria-label="Remove from saved jobs"
-									>
-										<i className="fi-heart-filled"></i>
-									</button>
-								</div>
-							</div>
-						</div>
+						{savedJobs.length > 0 ? <p>Hello</p> : <p>Nothing here</p>}
+						{savedJobs.map((job) => {
+							return <SavedJobCard job={job} />;
+						})}
+						{savedJobs[0].companyName}
+						{savedJobs[1].companyName}
+						{savedJobs[2].companyName}
 					</div>
 				</div>
 			</div>
+
 			<Footer />
 		</>
 	);
