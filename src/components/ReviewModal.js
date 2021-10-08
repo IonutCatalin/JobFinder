@@ -5,12 +5,14 @@ import axios from "axios";
 const ReviewModal = (props) => {
 	const setShow = props.setShow;
 	const getReviewList = props.getReviewList;
+	const jobDetails = props.jobDetails;
 
 	const [reviewInfos, setReviewInfos] = useState({
 		name: "",
 		email: "",
 		rating: "5 stars",
 		message: "",
+		jobId: jobDetails._id,
 	});
 
 	const handleTyping = (e) => {
@@ -36,6 +38,7 @@ const ReviewModal = (props) => {
 				email: reviewInfos.email,
 				rating: reviewInfos.rating,
 				message: reviewInfos.message,
+				jobId: reviewInfos.jobId,
 			});
 		} catch (err) {
 			console.log(err);

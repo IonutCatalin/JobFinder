@@ -24,6 +24,10 @@ const CompanyDetails = () => {
 
 	const [jobState, setJobState] = useState("");
 
+	// Reviews for specific job
+	// let [specificReviews, setSpecificReviews] = useState([]);
+	let specificReviews = [];
+
 	// Paginate Reviews
 	const [currentPage, setCurrentPage] = useState(1);
 	const [reviewsPerPage] = useState(4);
@@ -31,6 +35,7 @@ const CompanyDetails = () => {
 	const [reviewList, setReviewList] = useState([]);
 	const [newReviewList, setNewReviewList] = useState([]);
 	const [reviewState, setReviewState] = useState("");
+	let counter = 0;
 
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
@@ -40,7 +45,6 @@ const CompanyDetails = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobDetails(data);
-				console.log("data", data);
 			});
 	};
 
@@ -63,7 +67,6 @@ const CompanyDetails = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setReviewList(data);
-				console.log("data", data);
 			});
 	};
 
@@ -75,16 +78,12 @@ const CompanyDetails = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setNewReviewList(data);
-				console.log("data", data);
 			});
 	};
 
 	useEffect(() => {
 		getJobDetails();
 		getJobs();
-	}, []);
-
-	useEffect(() => {
 		getReviewList();
 		getNewReviewList();
 	}, [_id]);
@@ -129,12 +128,6 @@ const CompanyDetails = () => {
 	const auxiliar2 = "" + (ratingStars2 / reviewList.length) * 100;
 	const auxiliar1 = "" + (ratingStars1 / reviewList.length) * 100;
 
-	// document.getElementById("auxiliar5").style.width = auxiliar5 + "%";
-	// document.getElementById("auxiliar4").style.width = auxiliar4 + "%";
-	// document.getElementById("auxiliar3").style.width = auxiliar3 + "%";
-	// document.getElementById("auxiliar2").style.width = auxiliar2 + "%";
-	// document.getElementById("auxiliar1").style.width = auxiliar1 + "%";
-
 	return (
 		<>
 			<Header />
@@ -170,7 +163,6 @@ const CompanyDetails = () => {
 									onChange={(e) => {
 										const select = e.target.value;
 										setJobState(select);
-										console.log("sort type, select:", jobState);
 									}}
 								>
 									<option value="Oldest">Oldest</option>
@@ -361,7 +353,6 @@ const CompanyDetails = () => {
 									onChange={(e) => {
 										const select = e.target.value;
 										setReviewState(select);
-										console.log("review sort type:", reviewState);
 									}}
 									className="form-select"
 									id="review-sorting"
@@ -381,76 +372,76 @@ const CompanyDetails = () => {
 							</button>
 						</div>
 						{show && (
-							<ReviewModal getReviewList={getReviewList} setShow={setShow} />
+							<ReviewModal
+								getReviewList={getReviewList}
+								setShow={setShow}
+								jobDetails={jobDetails}
+							/>
 						)}
-						{/* {reviewList.map((rev) => {
-							if (rev.rating === "5 stars") ratingStars5 = ratingStars5 + 1;
-							if (rev.rating === "4 stars") ratingStars4 = ratingStars4 + 1;
-							if (rev.rating === "3 stars") ratingStars3 = ratingStars3 + 1;
-							if (rev.rating === "2 stars") ratingStars2 = ratingStars2 + 1;
-							if (rev.rating === "1 stars") ratingStars1 = ratingStars1 + 1;
-						})} */}
-						{currentReviews.map((review) => {
-							if (reviewState === "Newest") {
-								reviewList.sort((a, b) => (a.date < b.date ? 1 : -1));
-								return (
-									<div key={review._id}>
-										<ReviewDisplay
-											data={review}
-											id={review._id}
-											getReviewList={getReviewList}
-										/>
-									</div>
-								);
-							} else if (reviewState === "Oldest") {
-								reviewList.sort((a, b) => (a.date > b.date ? 1 : -1));
-								return (
-									<div key={review._id}>
-										<ReviewDisplay
-											data={review}
-											id={review._id}
-											getReviewList={getReviewList}
-										/>
-									</div>
-								);
-							} else if (reviewState === "HighestRating") {
-								reviewList.sort((a, b) => (a.rating < b.rating ? 1 : -1));
-								return (
-									<div key={review._id}>
-										<ReviewDisplay
-											data={review}
-											id={review._id}
-											getReviewList={getReviewList}
-										/>
-									</div>
-								);
-							} else if (reviewState === "LowestRating") {
-								reviewList.sort((a, b) => (a.rating > b.rating ? 1 : -1));
-								return (
-									<div key={review._id}>
-										<ReviewDisplay
-											data={review}
-											id={review._id}
-											getReviewList={getReviewList}
-										/>
-									</div>
-								);
-							} else if (!reviewState) {
-								return (
-									<div key={review._id}>
-										<ReviewDisplay
-											data={review}
-											id={review._id}
-											getReviewList={getReviewList}
-										/>
-									</div>
-								);
+
+						{reviewList.map((review) => {
+							if (review.jobId === jobDetails._id) {
+								if (reviewState === "Newest") {
+									reviewList.sort((a, b) => (a.date < b.date ? 1 : -1));
+									return (
+										<div key={review._id}>
+											<ReviewDisplay
+												data={review}
+												id={review._id}
+												getReviewList={getReviewList}
+											/>
+										</div>
+									);
+								} else if (reviewState === "Oldest") {
+									reviewList.sort((a, b) => (a.date > b.date ? 1 : -1));
+									return (
+										<div key={review._id}>
+											<ReviewDisplay
+												data={review}
+												id={review._id}
+												getReviewList={getReviewList}
+											/>
+										</div>
+									);
+								} else if (reviewState === "HighestRating") {
+									reviewList.sort((a, b) => (a.rating < b.rating ? 1 : -1));
+									return (
+										<div key={review._id}>
+											<ReviewDisplay
+												data={review}
+												id={review._id}
+												getReviewList={getReviewList}
+											/>
+										</div>
+									);
+								} else if (reviewState === "LowestRating") {
+									reviewList.sort((a, b) => (a.rating > b.rating ? 1 : -1));
+									return (
+										<div key={review._id}>
+											<ReviewDisplay
+												data={review}
+												id={review._id}
+												getReviewList={getReviewList}
+											/>
+										</div>
+									);
+								} else if (!reviewState) {
+									return (
+										<div key={review._id}>
+											<ReviewDisplay
+												data={review}
+												id={review._id}
+												getReviewList={getReviewList}
+											/>
+										</div>
+									);
+								}
 							}
 						})}
 
 						<JobPagination
 							jobsPerPage={reviewsPerPage}
-							totalJobs={reviewList.length}
+							totalJobs={currentReviews.length}
 							paginate={paginate}
 						/>
 					</div>
@@ -467,6 +458,23 @@ const CompanyDetails = () => {
 									<a href="#">
 										<i className="fi-external-link me-2"></i>Visit wesite
 									</a>
+								</p>
+								<p className="d-flex align-items-center fs-sm mb-2">
+									<i className="fi-map-pin me-1"></i>
+									<span>{jobDetails.location}</span>
+								</p>
+								<p className="d-flex align-items-center fs-sm mb-2">
+									<i className="fi-cash fs-base  me-1"></i>
+									<span>${jobDetails.remuneration}</span>
+								</p>
+								<p className="d-flex align-items-center fs-sm mb-2">
+									<i className="fi-phone me-1"></i>
+									<span className="me-2"> HR Manager,</span>
+									<span>Phone: {jobDetails.contact}</span>
+								</p>
+								<p className="d-flex align-items-center fs-sm mb-2">
+									<i className="fi-clock me-1"></i>
+									<span className="me-2">{jobDetails.period}</span>
 								</p>
 								<div className="d-flex">
 									<a
