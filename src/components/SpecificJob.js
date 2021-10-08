@@ -12,6 +12,9 @@ const SpecificJob = () => {
 	const { _id } = useParams();
 	const [jobDetails, setJobDetails] = useState([]);
 
+	const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
+	let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
+	const savedJobsDisabled = storedJob ? true : false;
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
 			method: "GET",
@@ -27,10 +30,6 @@ const SpecificJob = () => {
 	useEffect(() => {
 		getJobDetails();
 	}, []);
-
-	const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
-	let storedJob = savedJobs.find((item) => item.id === jobDetails.id);
-	const savedJobsDisabled = storedJob ? true : false;
 
 	return (
 		<>
@@ -514,7 +513,7 @@ const SpecificJob = () => {
 								<button
 									className="btn btn-primary border-end-0 border-top-0 border-bottom-0 border-light rounded-pill rounded-start-0 px-3"
 									type="button"
-									//disabled={savedJobsDisabled}
+									disabled={savedJobsDisabled}
 									onClick={() => addJobToSavedJobs(jobDetails)}
 								>
 									<i className="fi-heart me-1"></i>

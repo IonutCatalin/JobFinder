@@ -1,10 +1,10 @@
 import React from "react";
 import companyImage from "../../img/company.png";
 
-const SavedJobCard = ({ job }) => {
+const SavedJobCard = ({ job, id }) => {
 	return (
 		<>
-			<div className="col-md-6 col-lg-4">
+			<div key={id} className="col-md-6 col-lg-4">
 				<div className="card bg-secondary card-hover h-100">
 					<div className="card-body">
 						<div className="d-flex align-items-center mb-3">

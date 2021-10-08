@@ -139,13 +139,13 @@ const SavedJobs = () => {
 						</a>
 					</div>
 					<div className="row g-2 g-md-4">
-						{savedJobs.length > 0 ? <p>Hello</p> : <p>Nothing here</p>}
-						{savedJobs.map((job) => {
-							return <SavedJobCard job={job} />;
-						})}
-						{savedJobs[0].companyName}
-						{savedJobs[1].companyName}
-						{savedJobs[2].companyName}
+						{savedJobs.length > 0 ? (
+							savedJobs.map((job) => {
+								return <SavedJobCard job={job} id={job._id} />;
+							})
+						) : (
+							<p>Nothing here</p>
+						)}
 					</div>
 				</div>
 			</div>
