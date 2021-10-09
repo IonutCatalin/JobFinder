@@ -15,7 +15,7 @@ const SavedJobs = () => {
 
 	const { savedJobs } = useContext(GlobalContext);
 	savedJobs.map((job) => {
-		console.log(job.remuneration);
+		console.log(job._id);
 	});
 	console.log(savedJobs);
 	return (
@@ -141,7 +141,7 @@ const SavedJobs = () => {
 					<div className="row g-2 g-md-4">
 						{savedJobs.length > 0 ? (
 							savedJobs.map((job) => {
-								return <SavedJobCard job={job} id={job._id} />;
+								return <SavedJobCard job={job} id={job._id} type="savedJobs" />;
 							})
 						) : (
 							<p>Nothing here</p>

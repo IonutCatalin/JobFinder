@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import companyImage from "../../img/company.png";
+import { GlobalContext } from "../context/GlobalState";
 
-const SavedJobCard = ({ job, id }) => {
+const SavedJobCard = ({ job, id, type }) => {
+	const { removeJobFromSavedJobs } = useContext(GlobalContext);
+
 	return (
 		<>
 			<div key={id} className="col-md-6 col-lg-4">
@@ -45,6 +48,7 @@ const SavedJobCard = ({ job, id }) => {
 								{job.remuneration}
 							</span>
 						</div>
+
 						<button
 							className="btn btn-icon btn-light btn-xs text-primary rounded-circle shadow-sm content-overlay"
 							type="button"
@@ -52,6 +56,9 @@ const SavedJobCard = ({ job, id }) => {
 							title=""
 							data-bs-original-title="Remove from saved jobs"
 							aria-label="Remove from saved jobs"
+							onClick={() => {
+								removeJobFromSavedJobs(job._id);
+							}}
 						>
 							<i className="fi-heart-filled"></i>
 						</button>

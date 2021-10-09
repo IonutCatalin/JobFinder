@@ -23,9 +23,22 @@ export const GlobalProvider = (props) => {
 		dispatch({ type: "ADD_JOB_TO_SAVEDJOBS", payload: job });
 	};
 
+	const removeJobFromSavedJobs = (id) => {
+		dispatch({ type: "REMOVE_JOB_FROM_SAVEDJOBS", payload: id });
+	};
+
+	const removeAllJobsFromSavedJobs = (savedJobs) => {
+		dispatch({ type: "REMOVE_ALLJOBS_FROM_SAVEDJOBS", payload: savedJobs });
+	};
+
 	return (
 		<GlobalContext.Provider
-			value={{ savedJobs: state.savedJobs, addJobToSavedJobs }}
+			value={{
+				savedJobs: state.savedJobs,
+				addJobToSavedJobs,
+				removeJobFromSavedJobs,
+				removeAllJobsFromSavedJobs,
+			}}
 		>
 			{props.children}
 		</GlobalContext.Provider>
