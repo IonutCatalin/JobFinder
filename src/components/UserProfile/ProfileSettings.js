@@ -18,11 +18,14 @@ function ProfileSettings() {
 	const [noCredentialsUpdated, setNoCredentialsUpdated] = useState(false);
 	const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 	const [updateUserDetails, setUpdateUserDetails] = useState({
-		username: "",
-		email: "",
-		phone: "",
-		gender: "",
-		adress: "",
+		username: user.username ? user.username : "",
+		email: user.email ? user.email : "",
+		phone: user.phone ? user.phone : "",
+		gender: user.gender ? user.gender : "male",
+		adress: user.adress ? user.adress : "",
+		facebook: user.facebook ? user.facebook : "",
+		linkedIn: user.linkedIn ? user.linkedIn : "",
+		twitter: user.twitter ? user.twitter : "",
 	});
 
 	const handleTyping = (e) => {
@@ -52,67 +55,156 @@ function ProfileSettings() {
 			!updateUserDetails.email &&
 			!updateUserDetails.phone &&
 			!updateUserDetails.gender &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
 			updateUserDetails.adress
 		) {
 			updateUserDetails.username = user.username;
 			updateUserDetails.email = user.email;
 			updateUserDetails.phone = user.phone;
 			updateUserDetails.gender = user.gender;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
 			setNoCredentialsUpdated(false);
 		} else if (
 			!updateUserDetails.username &&
 			!updateUserDetails.email &&
 			!updateUserDetails.phone &&
 			!updateUserDetails.adress &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
 			updateUserDetails.gender
 		) {
 			updateUserDetails.username = user.username;
 			updateUserDetails.email = user.email;
 			updateUserDetails.phone = user.phone;
 			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
 			setNoCredentialsUpdated(false);
 		} else if (
 			!updateUserDetails.username &&
 			!updateUserDetails.email &&
 			!updateUserDetails.gender &&
 			!updateUserDetails.adress &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
 			updateUserDetails.phone
 		) {
 			updateUserDetails.username = user.username;
 			updateUserDetails.email = user.email;
 			updateUserDetails.gender = user.gender;
 			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
 			setNoCredentialsUpdated(false);
 		} else if (
 			!updateUserDetails.username &&
 			!updateUserDetails.phone &&
 			!updateUserDetails.gender &&
 			!updateUserDetails.adress &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
 			updateUserDetails.email
 		) {
 			updateUserDetails.username = user.username;
 			updateUserDetails.phone = user.phone;
 			updateUserDetails.gender = user.gender;
 			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
 			setNoCredentialsUpdated(false);
 		} else if (
 			!updateUserDetails.email &&
 			!updateUserDetails.phone &&
 			!updateUserDetails.gender &&
 			!updateUserDetails.adress &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
 			updateUserDetails.username
 		) {
 			updateUserDetails.email = user.email;
 			updateUserDetails.phone = user.phone;
 			updateUserDetails.gender = user.gender;
 			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			!updateUserDetails.username &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn &&
+			updateUserDetails.facebook
+		) {
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.linkedIn = user.linkedIn;
+			updateUserDetails.username = user.username;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			!updateUserDetails.username &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.linkedIn &&
+			updateUserDetails.twitter
+		) {
+			////
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.linkedIn = user.linkedIn;
+			updateUserDetails.username = user.username;
+			setNoCredentialsUpdated(false);
+		} else if (
+			!updateUserDetails.email &&
+			!updateUserDetails.phone &&
+			!updateUserDetails.gender &&
+			!updateUserDetails.adress &&
+			!updateUserDetails.username &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			updateUserDetails.linkedIn
+		) {
+			////
+			updateUserDetails.email = user.email;
+			updateUserDetails.phone = user.phone;
+			updateUserDetails.gender = user.gender;
+			updateUserDetails.adress = user.adress;
+			updateUserDetails.facebook = user.facebook;
+			updateUserDetails.twitter = user.twitter;
+			updateUserDetails.username = user.username;
 			setNoCredentialsUpdated(false);
 		} else if (
 			!updateUserDetails.username &&
 			!updateUserDetails.email &&
 			!updateUserDetails.phone &&
 			!updateUserDetails.gender &&
-			!updateUserDetails.adress
+			!updateUserDetails.adress &&
+			!updateUserDetails.facebook &&
+			!updateUserDetails.twitter &&
+			!updateUserDetails.linkedIn
 		) {
 			setNoCredentialsUpdated(true);
 			return;
@@ -125,6 +217,9 @@ function ProfileSettings() {
 				phone: updateUserDetails.phone,
 				gender: updateUserDetails.gender,
 				adress: updateUserDetails.adress,
+				facebook: updateUserDetails.facebook,
+				twitter: updateUserDetails.twitter,
+				linkedIn: updateUserDetails.linkedIn,
 			});
 		} catch (err) {
 			console.log(err);
@@ -659,8 +754,10 @@ function ProfileSettings() {
 											<input
 												className="form-control"
 												type="text"
+												name="facebook"
 												data-bs-binded-element="#facebook-value"
-												placeholder={user.socials.facebook}
+												placeholder="Enter facebook adress"
+												onChange={(e) => handleTyping(e)}
 											/>
 										</div>
 										<div className="d-flex align-items-center mb-3">
@@ -670,8 +767,10 @@ function ProfileSettings() {
 											<input
 												className="form-control"
 												type="text"
+												name="linkedIn"
 												data-bs-binded-element="#linkedin-value"
-												placeholder={user.socials.linedIn}
+												placeholder="Enter linkedIn adress"
+												onChange={(e) => handleTyping(e)}
 											/>
 										</div>
 										<div className="d-flex align-items-center mb-3">
@@ -681,8 +780,10 @@ function ProfileSettings() {
 											<input
 												className="form-control"
 												type="text"
+												name="twitter"
 												data-bs-binded-element="#twitter-value"
-												placeholder={user.socials.twitter}
+												placeholder="Enter twitter adress"
+												onChange={(e) => handleTyping(e)}
 											/>
 										</div>
 										{/* <div className="collapse" id="showMoreSocials">

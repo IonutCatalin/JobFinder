@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 import { useParams } from "react-router";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -11,10 +11,34 @@ import { GlobalContext } from "./context/GlobalState";
 const SpecificJob = () => {
 	const { _id } = useParams();
 	const [jobDetails, setJobDetails] = useState([]);
+	const user = JSON.parse(localStorage.getItem("user"));
+	const [savedJobs, setSavedJobs] = useState([]);
+	//const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
+	//let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
+	//const savedJobsDisabled = storedJob ? true : false;
 
-	const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
-	let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
-	const savedJobsDisabled = storedJob ? true : false;
+	async function saveJobsToDatabase() {
+		try {
+			await axios.patch(`http://localhost:3001/users/${user._id}`, {
+				savedJobs: jobDetails,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
+	async function getUserSavedJobs() {
+		fetch(`http://localhost:3001/users/${user._id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setSavedJobs(data);
+			});
+		console.log("aici", savedJobs.savedJobs);
+	}
+
 	const getJobDetails = () => {
 		fetch(`http://localhost:3001/jobs/${_id}`, {
 			method: "GET",
@@ -28,8 +52,12 @@ const SpecificJob = () => {
 	};
 
 	useEffect(() => {
+		getUserSavedJobs();
 		getJobDetails();
+		saveJobsToDatabase();
 	}, []);
+
+	console.log(jobDetails);
 
 	return (
 		<>
@@ -513,8 +541,8 @@ const SpecificJob = () => {
 								<button
 									className="btn btn-primary border-end-0 border-top-0 border-bottom-0 border-light rounded-pill rounded-start-0 px-3"
 									type="button"
-									disabled={savedJobsDisabled}
-									onClick={() => addJobToSavedJobs(jobDetails)}
+									//disabled={savedJobsDisabled}
+									onClick={() => saveJobsToDatabase()}
 								>
 									<i className="fi-heart me-1"></i>
 								</button>

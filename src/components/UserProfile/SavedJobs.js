@@ -8,16 +8,36 @@ import { logout } from "../authContext/AuthActions";
 import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import SavedJobCard from "./SavedJobCard";
+import { useEffect, useState } from "react";
 
 const SavedJobs = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const { dispatch } = useContext(AuthContext);
 
-	const { savedJobs } = useContext(GlobalContext);
-	savedJobs.map((job) => {
-		console.log(job._id);
-	});
-	console.log(savedJobs);
+	//const { savedJobs } = useContext(GlobalContext);
+	// savedJobs.map((job) => {
+	// 	console.log(job._id);
+	// });
+	// console.log(savedJobs);
+
+	const [savedJobs, setSavedJobs] = useState([]);
+
+	async function getUserSavedJobs() {
+		fetch(`http://localhost:3001/users/${user._id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setSavedJobs(data.savedJobs);
+			});
+		console.log("aici", savedJobs);
+	}
+
+	useEffect(() => {
+		getUserSavedJobs();
+	}, []);
+
 	return (
 		<>
 			<Header />
