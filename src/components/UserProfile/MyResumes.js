@@ -166,12 +166,12 @@ function MyResumes() {
 										</a>
 									</li>
 								</ul>
-								<a
+								<Link
+									to={`/postresume`}
 									className="btn btn-primary rounded-pill w-100"
-									href="job-board-post-resume-1.html"
 								>
 									<i className="fi-plus fs-sm me-2"></i>Post resume
-								</a>
+								</Link>
 							</div>
 						</div>
 						<div className="col-md-9">

@@ -14,19 +14,42 @@ const SpecificJob = () => {
 	const [isJobStored, setIsJobStored] = useState(false);
 
 	async function getUserSavedJobs() {
-		fetch(`http://localhost:3001/savedJobs/userId=?${user._id}`, {
-			method: "GET",
-			headers: { "Content-type": "application/json" },
-		})
+		// fetch(`http://localhost:3001/savedJobs?userId=${user._id}`, {
+		// 	method: "GET",
+		// 	headers: { "Content-type": "application/json" },
+		// })
+		// 	.then((res) => res.json())
+		// 	.then((data) => {
+		// 		setSavedJobs(data);
+		// 	});
+		fetch(
+			`http://localhost:3001/savedJobs?savedJobId=${jobDetails._id}&?userId=${user._id}`,
+			{
+				method: "GET",
+				headers: { "Content-type": "application/json" },
+			}
+		)
 			.then((res) => res.json())
 			.then((data) => {
 				setSavedJobs(data);
+				console.log("savedJobs", savedJobs);
 			});
-		if (savedJobs.map((job) => job.userId === user._id)) {
+		if (savedJobs.savedJobId === jobDetails._id) {
 			setIsJobStored(true);
 			return;
 		}
-		console.log("aici", savedJobs.savedJobs);
+		// let isTrueOrNot = savedJobs.filter((job) => if(job.userId === user._id){}));
+
+		// setIsJobStored(isTrueOrNot);
+		// savedJobs.map((job) => {
+		// 	if (job.userId === user._id) {
+		// 		console.log(job.userId);
+		// 		console.log(job._id);
+		// 		console.log(user._id);
+		// 		setIsJobStored(true);
+		// 	}
+		// });
+		console.log("aici", savedJobs._id);
 	}
 
 	const getJobDetails = () => {
@@ -39,6 +62,10 @@ const SpecificJob = () => {
 				setJobDetails(data);
 				console.log("data", data);
 			});
+		const isTrueOrNot = savedJobs.map((jobb) => {
+			if (jobb.userId === user._id) setIsJobStored(true);
+		});
+		console.log("isTrueOrNot", isJobStored);
 	};
 
 	useEffect(() => {
@@ -47,6 +74,11 @@ const SpecificJob = () => {
 	}, []);
 
 	async function saveJobsToDatabase() {
+		// savedJobs.map((jobb) => {
+		// 	if (jobb.userId === user._id) setIsJobStored(true);
+		// 	return;
+		// });
+
 		try {
 			await axios.post(`http://localhost:3001/savedJobs`, {
 				companyName: jobDetails.companyName,
@@ -58,6 +90,7 @@ const SpecificJob = () => {
 				requirements: jobDetails.requirements,
 				companyOffers: jobDetails.companyOffers,
 				userId: user._id,
+				savedJobId: jobDetails._id,
 			});
 		} catch (err) {
 			console.log(err);
@@ -65,8 +98,9 @@ const SpecificJob = () => {
 		setIsJobStored(true);
 	}
 
-	console.log(jobDetails);
+	console.log("jobDEtails", jobDetails);
 	console.log(isJobStored);
+	console.log("here", savedJobs);
 
 	return (
 		<>

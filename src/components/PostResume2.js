@@ -234,22 +234,6 @@ function PostResume2() {
 									</div>
 								</div>
 							</div>
-							<div className="form-check mb-4">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									id="still-visiting"
-								/>
-								<label className="form-check-label" htmlFor="still-visiting">
-									I currently go here
-								</label>
-							</div>
-							<button
-								className="btn btn-link btn-lg text-primary py-2 px-0 mb-md-n2"
-								type="button"
-							>
-								<i className="fi-plus fs-sm me-2"></i>Add education
-							</button>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
 							<Link

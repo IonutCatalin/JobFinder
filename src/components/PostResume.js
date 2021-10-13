@@ -253,40 +253,6 @@ function PostResume() {
 										placeholder="Your Twitter account"
 									/>
 								</div>
-								<div className="collapse" id="showMoreSocials">
-									<div className="d-flex align-items-center mb-3">
-										<div className="btn btn-icon btn-light btn-xs shadow-sm rounded-circle pe-none flex-shrink-0 me-3">
-											<i className="fi-instagram text-body"></i>
-										</div>
-										<input
-											className="form-control"
-											type="text"
-											placeholder="Your Instagram account"
-										/>
-									</div>
-									<div className="d-flex align-items-center mb-3">
-										<div className="btn btn-icon btn-light btn-xs shadow-sm rounded-circle pe-none flex-shrink-0 me-3">
-											<i className="fi-behance text-body"></i>
-										</div>
-										<input
-											className="form-control"
-											type="text"
-											placeholder="Your Behance account"
-										/>
-									</div>
-								</div>
-								<a
-									className="collapse-label collapsed d-inline-block fs-sm fw-bold text-decoration-none pt-2"
-									href="#showMoreSocials"
-									data-bs-toggle="collapse"
-									data-bs-label-collapsed="Show more"
-									data-bs-label-expanded="Show less"
-									role="button"
-									aria-expanded="false"
-									aria-controls="showMoreSocials"
-								>
-									<i className="fi-arrow-down me-2"></i>
-								</a>
 							</div>
 							<div className="border-top pt-4">
 								<label

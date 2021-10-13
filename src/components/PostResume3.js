@@ -79,16 +79,6 @@ function PostResume3() {
 									</p>
 								</div>
 							</div>
-							<div className="form-check mb-4">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									id="no-experience"
-								/>
-								<label className="form-check-label" htmlFor="no-experience">
-									I don't have any work experience yet
-								</label>
-							</div>
 							<label className="form-label" htmlFor="pr-title">
 								Job title <span className="text-danger">*</span>
 							</label>
@@ -287,16 +277,6 @@ function PostResume3() {
 									</div>
 								</div>
 							</div>
-							<div className="form-check mb-4">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									id="still-work"
-								/>
-								<label className="form-check-label" htmlFor="still-work">
-									I currently work here
-								</label>
-							</div>
 							<div className="mb-4">
 								<label className="form-label" htmlFor="pr-description">
 									Description
@@ -309,12 +289,6 @@ function PostResume3() {
 								></textarea>
 								<div className="form-text pt-1">8,000 characters left</div>
 							</div>
-							<button
-								className="btn btn-link btn-lg text-primary py-2 px-0 mb-md-n2"
-								type="button"
-							>
-								<i className="fi-plus fs-sm me-2"></i>Add experience
-							</button>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
 							<Link

@@ -104,59 +104,6 @@ function PostResume4() {
 									Illustration<i className="fi-check fs-xs ms-2"></i>
 								</span>
 							</div>
-							<div className="border-top py-4 mb-md-2">
-								<label className="form-label fw-bold py-2">
-									Recommended skills based on your profile info:
-								</label>
-								<div className="d-flex flex-wrap">
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										CSS<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Usability Testing<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										InDesign<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Adobe After Effects<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Premiere Pro<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Visual Design<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										HTML<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Logo Development<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Mobile Applications<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Researching<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Adobe Photoshop<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-									<span className="fs-sm btn text-nav btn-outline-secondary btn-xs disabled opacity-100 rounded-pill me-2 mb-2 ms-1 mt-1">
-										Adobe Illustrator<i className="fi-plus fs-xs ms-2"></i>
-									</span>
-								</div>
-							</div>
-							<div className="form-check mb-0">
-								<input
-									className="form-check-input"
-									type="checkbox"
-									id="no-skills"
-								/>
-								<label className="form-check-label" htmlFor="no-skills">
-									I do not want to enter any skills at this time
-								</label>
-							</div>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
 							<Link

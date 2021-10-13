@@ -230,7 +230,7 @@ function PostResume5() {
 											</ul>
 											<a
 												className="d-inline-block fw-bold text-decoration-none py-1"
-												href="job-board-post-resume-1.html"
+												href="/postresume"
 											>
 												<i className="fi-edit mt-n1 me-2"></i>Edit
 											</a>
@@ -285,7 +285,7 @@ function PostResume5() {
 										</ul>
 										<a
 											className="d-inline-block fw-bold text-decoration-none py-1"
-											href="job-board-post-resume-1.html"
+											href="/postresume"
 										>
 											<i className="fi-edit mt-n1 me-2"></i>Edit
 										</a>
@@ -309,7 +309,7 @@ function PostResume5() {
 											<div className="d-flex">
 												<a
 													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="job-board-post-resume-3.html"
+													href="/postresume3"
 												>
 													<i className="fi-edit mt-n1 me-2"></i>Edit
 												</a>
@@ -330,7 +330,7 @@ function PostResume5() {
 											<div className="d-flex">
 												<a
 													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="job-board-post-resume-3.html"
+													href="postresume3"
 												>
 													<i className="fi-edit mt-n1 me-2"></i>Edit
 												</a>
@@ -355,7 +355,7 @@ function PostResume5() {
 											<div className="d-flex">
 												<a
 													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="job-board-post-resume-2.html"
+													href="/postresume2"
 												>
 													<i className="fi-edit mt-n1 me-2"></i>Edit
 												</a>
@@ -372,7 +372,7 @@ function PostResume5() {
 										<h4 className="h5">Skills</h4>
 										<a
 											className="d-inline-block fw-bold text-decoration-none py-1"
-											href="job-board-post-resume-4.html"
+											href="/postresume4"
 										>
 											<i className="fi-plus fs-sm me-2"></i>Add skills
 										</a>
