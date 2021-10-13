@@ -1,19 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import companyImage from "../../img/company.png";
-import { GlobalContext } from "../context/GlobalState";
-import axios from "axios";
 
-const SavedJobCard = ({ job, id, type }) => {
-	// const { removeJobFromSavedJobs } = useContext(GlobalContext);
+const SavedJobCard = ({ job, id, getUserSavedJobs }) => {
 	const user = JSON.parse(localStorage.getItem("user"));
-	const [savedJobs, setSavedJobs] = useState([]);
 
 	const removeJobFromSavedJobs = () => {
-		// fetch(`http://localhost:3001/savedJobs/id=?${id}`, {
-		// 	method: "DELETE",
-		// })
-		// 	.then((res) => res.json()) // or res.json()
-		// 	.then((res) => console.log(res));
 		fetch("http://localhost:3001/savedJobs/" + id, {
 			method: "DELETE",
 		})
@@ -22,28 +13,10 @@ const SavedJobCard = ({ job, id, type }) => {
 			})
 			.then(() => {
 				console.log("Saved Job deleted");
+				getUserSavedJobs();
 			});
-		getUserSavedJobs();
 	};
-
-	async function getUserSavedJobs() {
-		fetch(`http://localhost:3001/savedJobs?userId=${user._id}`, {
-			method: "GET",
-			headers: { "Content-type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setSavedJobs(data);
-			});
-		// console.log("aici", savedJobs);
-	}
-
-	useEffect(() => {
-		getUserSavedJobs();
-	}, []);
-
-	// console.log("id", id);
-	// console.log("savedJobs", savedJobs);
+	console.log("id", id);
 
 	return (
 		<>
@@ -65,10 +38,7 @@ const SavedJobCard = ({ job, id, type }) => {
 							</span>
 						</div>
 						<h3 className="h6 card-title mb-2">
-							<a
-								className="text-nav stretched-link text-decoration-none"
-								href="job-board-single.html"
-							>
+							<a className="text-nav stretched-link text-decoration-none">
 								{job.description}
 							</a>
 						</h3>

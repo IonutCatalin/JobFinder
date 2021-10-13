@@ -6,20 +6,12 @@ import profileImage from "../../img/profile-image.png";
 import { AuthContext } from "../authContext/AuthContext";
 import { logout } from "../authContext/AuthActions";
 import { useContext } from "react";
-import { GlobalContext } from "../context/GlobalState";
 import SavedJobCard from "./SavedJobCard";
 import { useEffect, useState } from "react";
 
 const SavedJobs = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const { dispatch } = useContext(AuthContext);
-
-	//const { savedJobs } = useContext(GlobalContext);
-	// savedJobs.map((job) => {
-	// 	console.log(job._id);
-	// });
-	// console.log(savedJobs);
-
 	const [savedJobs, setSavedJobs] = useState([]);
 
 	async function getUserSavedJobs() {
@@ -168,7 +160,12 @@ const SavedJobs = () => {
 								.filter((jobb) => jobb.userId === user._id)
 								.map((job) => {
 									return (
-										<SavedJobCard job={job} id={job._id} type="savedJobs" />
+										<SavedJobCard
+											getUserSavedJobs={getUserSavedJobs}
+											job={job}
+											id={job._id}
+											type="savedJobs"
+										/>
 									);
 								})
 						) : (

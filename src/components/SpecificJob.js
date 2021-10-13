@@ -5,18 +5,46 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Footer from "./Footer";
 import Header from "./Header";
-import { GlobalContext } from "./context/GlobalState";
-// import JobsFindHeader from "./JobsFindHeader";
 
 const SpecificJob = () => {
 	const { _id } = useParams();
 	const [jobDetails, setJobDetails] = useState([]);
 	const user = JSON.parse(localStorage.getItem("user"));
 	const [savedJobs, setSavedJobs] = useState([]);
-	//const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
-	// let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
-	// const savedJobsDisabled = storedJob ? true : false;
 	const [isJobStored, setIsJobStored] = useState(false);
+
+	async function getUserSavedJobs() {
+		fetch(`http://localhost:3001/savedJobs/userId=?${user._id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setSavedJobs(data);
+			});
+		if (savedJobs.map((job) => job.userId === user._id)) {
+			setIsJobStored(true);
+			return;
+		}
+		console.log("aici", savedJobs.savedJobs);
+	}
+
+	const getJobDetails = () => {
+		fetch(`http://localhost:3001/jobs/${_id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setJobDetails(data);
+				console.log("data", data);
+			});
+	};
+
+	useEffect(() => {
+		getUserSavedJobs();
+		getJobDetails();
+	}, []);
 
 	async function saveJobsToDatabase() {
 		try {
@@ -37,43 +65,12 @@ const SpecificJob = () => {
 		setIsJobStored(true);
 	}
 
-	async function getUserSavedJobs() {
-		fetch(`http://localhost:3001/savedJobs/userId=?${user._id}`, {
-			method: "GET",
-			headers: { "Content-type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setSavedJobs(data);
-			});
-		console.log("aici", savedJobs.savedJobs);
-	}
-
-	const getJobDetails = () => {
-		fetch(`http://localhost:3001/jobs/${_id}`, {
-			method: "GET",
-			headers: { "Content-type": "application/json" },
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				setJobDetails(data);
-				console.log("data", data);
-			});
-	};
-
-	useEffect(() => {
-		getUserSavedJobs();
-		getJobDetails();
-		//saveJobsToDatabase();
-	}, []);
-
 	console.log(jobDetails);
 	console.log(isJobStored);
 
 	return (
 		<>
 			<Header />
-			{/* <JobsFindHeader /> */}
 			<section className="bg-dark pt-5">
 				<div className="container py-5">
 					<h1 className="text-light pt-1 pt-md-3 mb-4">Find jobs</h1>
