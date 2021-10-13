@@ -14,21 +14,31 @@ const SpecificJob = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const [savedJobs, setSavedJobs] = useState([]);
 	//const { addJobToSavedJobs, savedJobs } = useContext(GlobalContext);
-	//let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
-	//const savedJobsDisabled = storedJob ? true : false;
+	// let storedJob = savedJobs.find((item) => item._id === jobDetails._id);
+	// const savedJobsDisabled = storedJob ? true : false;
+	const [isJobStored, setIsJobStored] = useState(false);
 
 	async function saveJobsToDatabase() {
 		try {
-			await axios.patch(`http://localhost:3001/users/${user._id}`, {
-				savedJobs: jobDetails,
+			await axios.post(`http://localhost:3001/savedJobs`, {
+				companyName: jobDetails.companyName,
+				location: jobDetails.location,
+				remuneration: jobDetails.remuneration,
+				contact: jobDetails.contact,
+				period: jobDetails.period,
+				description: jobDetails.description,
+				requirements: jobDetails.requirements,
+				companyOffers: jobDetails.companyOffers,
+				userId: user._id,
 			});
 		} catch (err) {
 			console.log(err);
 		}
+		setIsJobStored(true);
 	}
 
 	async function getUserSavedJobs() {
-		fetch(`http://localhost:3001/users/${user._id}`, {
+		fetch(`http://localhost:3001/savedJobs/userId=?${user._id}`, {
 			method: "GET",
 			headers: { "Content-type": "application/json" },
 		})
@@ -54,10 +64,11 @@ const SpecificJob = () => {
 	useEffect(() => {
 		getUserSavedJobs();
 		getJobDetails();
-		saveJobsToDatabase();
+		//saveJobsToDatabase();
 	}, []);
 
 	console.log(jobDetails);
+	console.log(isJobStored);
 
 	return (
 		<>
@@ -541,7 +552,7 @@ const SpecificJob = () => {
 								<button
 									className="btn btn-primary border-end-0 border-top-0 border-bottom-0 border-light rounded-pill rounded-start-0 px-3"
 									type="button"
-									//disabled={savedJobsDisabled}
+									disabled={isJobStored}
 									onClick={() => saveJobsToDatabase()}
 								>
 									<i className="fi-heart me-1"></i>

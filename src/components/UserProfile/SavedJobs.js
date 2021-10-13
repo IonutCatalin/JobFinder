@@ -23,13 +23,13 @@ const SavedJobs = () => {
 	const [savedJobs, setSavedJobs] = useState([]);
 
 	async function getUserSavedJobs() {
-		fetch(`http://localhost:3001/users/${user._id}`, {
+		fetch(`http://localhost:3001/savedJobs?userId=${user._id}`, {
 			method: "GET",
 			headers: { "Content-type": "application/json" },
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				setSavedJobs(data.savedJobs);
+				setSavedJobs(data);
 			});
 		console.log("aici", savedJobs);
 	}
@@ -37,6 +37,10 @@ const SavedJobs = () => {
 	useEffect(() => {
 		getUserSavedJobs();
 	}, []);
+
+	savedJobs.filter((job) => {
+		if (job.userId === user._id) console.log(job);
+	});
 
 	return (
 		<>
@@ -160,9 +164,13 @@ const SavedJobs = () => {
 					</div>
 					<div className="row g-2 g-md-4">
 						{savedJobs.length > 0 ? (
-							savedJobs.map((job) => {
-								return <SavedJobCard job={job} id={job._id} type="savedJobs" />;
-							})
+							savedJobs
+								.filter((jobb) => jobb.userId === user._id)
+								.map((job) => {
+									return (
+										<SavedJobCard job={job} id={job._id} type="savedJobs" />
+									);
+								})
 						) : (
 							<p>Nothing here</p>
 						)}
