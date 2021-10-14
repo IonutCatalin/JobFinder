@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
-function PostResume4() {
+function PostResume4({ formData, setForm, navigation }) {
+	const { skills } = formData;
+
 	return (
 		<>
 			<Header />
@@ -80,6 +82,9 @@ function PostResume4() {
 										type="text"
 										id="pr-add-skill"
 										placeholder="Enter skill here"
+										name="skills"
+										value={skills}
+										onChange={setForm}
 									/>
 									<button
 										className="btn btn-primary btn-lg rounded-pill"
@@ -106,18 +111,18 @@ function PostResume4() {
 							</div>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-							<Link
-								to="/postresume3"
+							<button
+								onClick={() => navigation.previous()}
 								className="btn btn-outline-primary btn-lg rounded-pill mb-3 mb-sm-0"
 							>
 								<i className="fi-chevron-left fs-sm me-2"></i>Previous step
-							</Link>
-							<Link
-								to="/postresume5"
+							</button>
+							<button
+								onClick={() => navigation.next()}
 								className="btn btn-primary btn-lg rounded-pill ms-sm-auto"
 							>
 								Next step<i className="fi-chevron-right fs-sm ms-2"></i>
-							</Link>
+							</button>
 						</div>
 					</div>
 				</div>

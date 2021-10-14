@@ -1,9 +1,95 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
+import axios from "axios";
 
-function PostResume5() {
+function PostResume5({ formData, navigation }) {
+	const { go } = navigation;
+	const history = useHistory();
+
+	const {
+		firstName,
+		secondName,
+		email,
+		phone,
+		dateOfBirth,
+		country,
+		city,
+		adress,
+		facebook,
+		linkedIn,
+		twitter,
+		positionToWork,
+		levelOfEducation,
+		fieldOfStudy,
+		university,
+		universityCountryCity,
+		periodFromMonth,
+		periodFromYear,
+		periodToMonth,
+		periodToYear,
+		jobTitle,
+		companyName,
+		fieldOfActivity,
+		jobCountry,
+		jobCity,
+		timePeriodFromMonth,
+		timePeriodFromYear,
+		timePeriodToMonth,
+		timePeriodToYear,
+		description,
+		skills,
+		userId,
+	} = formData;
+
+	console.log(formData);
+
+	const resumeSubmit = async () => {
+		console.log("my resume submit form pressed");
+
+		// e.preventDefault();
+		try {
+			await axios.post("http://localhost:3001/myResumes", {
+				adress: formData.adress,
+				city: formData.city,
+				companyName: formData.companyName,
+				country: formData.country,
+				dateOfBirth: formData.dateOfBirth,
+				description: formData.description,
+				email: formData.email,
+				facebook: formData.facebook,
+				fieldOfActivity: formData.fieldOfActivity,
+				fieldOfStudy: formData.fieldOfStudy,
+				firstName: formData.firstName,
+				jobCity: formData.jobCity,
+				jobCountry: formData.jobCountry,
+				jobTitle: formData.jobTitle,
+				levelOfEducation: formData.levelOfEducation,
+				linkedIn: formData.linkedIn,
+				periodFromMonth: formData.periodFromMonth,
+				periodFromYear: formData.periodFromYear,
+				periodToMonth: formData.periodToMonth,
+				periodToYear: formData.periodToYear,
+				phone: formData.phone,
+				positionToWork: formData.positionToWork,
+				secondName: formData.secondName,
+				skills: formData.skills,
+				timePeriodFromMonth: formData.timePeriodFromMonth,
+				timePeriodFromYear: formData.timePeriodFromYear,
+				timePeriodToMonth: formData.timePeriodToMonth,
+				timePeriodToYear: formData.timePeriodToYear,
+				twitter: formData.twitter,
+				university: formData.university,
+				universityCountryCity: formData.universityCountryCity,
+				userId: formData.userId,
+			});
+		} catch (err) {
+			console.log(err);
+		}
+		//history.push("/myresumes");
+	};
+
 	return (
 		<>
 			<Header />
@@ -204,33 +290,38 @@ function PostResume5() {
 											</div>
 										</div>
 										<div className="order-sm-1">
-											<h3 className="h4 mb-sm-4">Annette Black</h3>
+											<h3 className="h4 mb-sm-4">
+												{firstName} {secondName}
+											</h3>
 											<h4 className="h5">Basic info</h4>
 											<ul className="list-unstyled text-nav">
 												<li>
-													<span className="text-muted">Position:</span> UX
-													Designer
+													<span className="text-muted">Position:</span>{" "}
+													{positionToWork}
 												</li>
-												<li>
+												{/* <li>
 													<span className="text-muted">Job type:</span>{" "}
 													Part-time
-												</li>
+												</li> */}
 												<li>
-													<span className="text-muted">Location:</span> New
-													York, USA
+													<span className="text-muted">Location:</span>{" "}
+													{country}
+													{city ? "," : ""} {city}
 												</li>
-												<li>
+												{/* <li>
 													<span className="text-muted">Salary:</span> $2000 –
 													$3000
-												</li>
-												<li>
+												</li> */}
+												{/* <li>
 													<span className="text-muted">Categories:</span>{" "}
 													Design, Internet Technology
-												</li>
+												</li> */}
 											</ul>
 											<a
 												className="d-inline-block fw-bold text-decoration-none py-1"
-												href="/postresume"
+												onClick={() => go(`postresume`)}
+												style={{ color: "#fd5631" }}
+												type="button"
 											>
 												<i className="fi-edit mt-n1 me-2"></i>Edit
 											</a>
@@ -240,44 +331,32 @@ function PostResume5() {
 										<h4 className="h5">Personal info</h4>
 										<ul className="list-unstyled text-nav">
 											<li>
-												<span className="text-muted">Full name:</span> Annete
-												Black
+												<span className="text-muted">Full name:</span>{" "}
+												{firstName} {secondName}
 											</li>
 											<li>
-												<span className="text-muted">Date of birth:</span> May
-												18, 1989
+												<span className="text-muted">Date of birth:</span>{" "}
+												{dateOfBirth}
 											</li>
 											<li>
-												<span className="text-muted">Address:</span> 2464 Royal
-												Ln. Mesa, New Jersey 45463
+												<span className="text-muted">Address:</span> {adress}
 											</li>
 											<li>
-												<span className="text-muted">Phone:</span> (302)
-												555-0107
+												<span className="text-muted">Phone:</span> {phone}
 											</li>
 											<li>
-												<span className="text-muted">Email:</span>{" "}
-												annette_black@email.com
+												<span className="text-muted">Email:</span> {email}
 											</li>
 											<li>
 												<span className="text-muted">Socials: </span>
 												<div className="d-inline-flex ms-1">
-													<a
-														className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm me-2 my-1"
-														href="#"
-													>
+													<a className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm me-2 my-1">
 														<i className="fi-facebook"></i>
 													</a>
-													<a
-														className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm me-2 my-1"
-														href="#"
-													>
+													<a className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm me-2 my-1">
 														<i className="fi-twitter"></i>
 													</a>
-													<a
-														className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm my-1"
-														href="#"
-													>
+													<a className="btn btn-icon btn-light-primary btn-xs rounded-circle shadow-sm my-1">
 														<i className="fi-linkedin"></i>
 													</a>
 												</div>
@@ -285,7 +364,9 @@ function PostResume5() {
 										</ul>
 										<a
 											className="d-inline-block fw-bold text-decoration-none py-1"
-											href="/postresume"
+											onClick={() => go(`postresume`)}
+											style={{ color: "#fd5631" }}
+											type="button"
 										>
 											<i className="fi-edit mt-n1 me-2"></i>Edit
 										</a>
@@ -293,51 +374,24 @@ function PostResume5() {
 									<div className="border-top py-4">
 										<h4 className="h5">Work experience</h4>
 										<div className="mt-3">
-											<h5 className="h6 mb-2">Product Designer</h5>
+											<h5 className="h6 mb-2">{jobTitle}</h5>
 											<ul className="list-unstyled fs-sm mb-2">
-												<li>XAMPP Company (IT, Consulting)</li>
-												<li>2015 – 2020</li>
+												<li>{companyName}</li>
+												<li>
+													{timePeriodFromYear} - {timePeriodToYear}
+												</li>
 											</ul>
-											<p>
-												Praesent sed pulvinar posuere nisl tincidunt. Iaculis
-												sit quam magna congue. Amet vel non aliquet habitasse.
-												Egestas erat odio et, eleifend turpis etiam blandit
-												interdum. Nec augue ut&nbsp;senectus quisque diam quis.
-												At&nbsp;augue accumsan, bibendum. A&nbsp;eget et, eget
-												quisque egestas netus&nbsp;vel.
-											</p>
+											<p>{description}</p>
 											<div className="d-flex">
 												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="/postresume3"
+													className="d-inline-block fw-bold text-decoration-none py-1"
+													onClick={() => go(`postresume3`)}
+													style={{ color: "#fd5631" }}
+													type="button"
 												>
 													<i className="fi-edit mt-n1 me-2"></i>Edit
 												</a>
-												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 ps-3"
-													href="#"
-												>
-													<i className="fi-trash mt-n1 me-2"></i>Delete
-												</a>
-											</div>
-										</div>
-										<div className="pt-2 mt-3">
-											<h5 className="h6 mb-2">Product Designer</h5>
-											<ul className="list-unstyled fs-sm">
-												<li>XAMPP Company (IT, Consulting)</li>
-												<li>2015 – 2020</li>
-											</ul>
-											<div className="d-flex">
-												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="postresume3"
-												>
-													<i className="fi-edit mt-n1 me-2"></i>Edit
-												</a>
-												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 ps-3"
-													href="#"
-												>
+												<a className="d-inline-block fw-bold text-decoration-none py-1 ps-3">
 													<i className="fi-trash mt-n1 me-2"></i>Delete
 												</a>
 											</div>
@@ -346,23 +400,24 @@ function PostResume5() {
 									<div className="border-top py-4">
 										<h4 className="h5">Education</h4>
 										<div className="mt-3">
-											<h5 className="h6 mb-2">Bachelor's degree</h5>
+											<h5 className="h6 mb-2">{levelOfEducation}</h5>
 											<ul className="list-unstyled fs-sm">
-												<li>Syracuse University</li>
-												<li>900 South Crouse Ave. Syracuse, NY 13244</li>
-												<li>2008 – 2012</li>
+												<li>{university}</li>
+												<li>{universityCountryCity}</li>
+												<li>
+													{periodFromYear} - {periodToYear}
+												</li>
 											</ul>
 											<div className="d-flex">
 												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 pe-3 border-end"
-													href="/postresume2"
+													className="d-inline-block fw-bold text-decoration-none py-1"
+													onClick={() => go(`postresume2`)}
+													style={{ color: "#fd5631" }}
+													type="button"
 												>
 													<i className="fi-edit mt-n1 me-2"></i>Edit
 												</a>
-												<a
-													className="d-inline-block fw-bold text-decoration-none py-1 ps-3"
-													href="#"
-												>
+												<a className="d-inline-block fw-bold text-decoration-none py-1 ps-3">
 													<i className="fi-trash mt-n1 me-2"></i>Delete
 												</a>
 											</div>
@@ -372,24 +427,28 @@ function PostResume5() {
 										<h4 className="h5">Skills</h4>
 										<a
 											className="d-inline-block fw-bold text-decoration-none py-1"
-											href="/postresume4"
+											onClick={() => go(`postresume4`)}
+											style={{ color: "#fd5631" }}
+											type="button"
 										>
-											<i className="fi-plus fs-sm me-2"></i>Add skills
+											<i className="fi-edit mt-n1 me-2"></i>Add skills
 										</a>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-							<Link
-								to="/postresume4"
+							<button
+								onClick={() => navigation.previous()}
 								className="btn btn-outline-primary btn-lg rounded-pill mb-3 mb-sm-0"
 							>
 								<i className="fi-chevron-left fs-sm me-2"></i>Previous step
-							</Link>
+							</button>
 							<button
 								className="btn btn-primary btn-lg rounded-pill ms-sm-auto"
-								type="button"
+								onClick={() => {
+									resumeSubmit();
+								}}
 							>
 								Save resume
 							</button>

@@ -3,7 +3,19 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
-function PostResume3() {
+function PostResume3({ formData, setForm, navigation }) {
+	const {
+		jobTitle,
+		companyName,
+		fieldOfActivity,
+		jobCountry,
+		jobCity,
+		timePeriodFromMonth,
+		timePeriodFromYear,
+		timePeriodToMonth,
+		timePeriodToYear,
+		description,
+	} = formData;
 	return (
 		<>
 			<Header />
@@ -88,6 +100,9 @@ function PostResume3() {
 								id="pr-title"
 								placeholder="Enter job title"
 								required=""
+								name="jobTitle"
+								value={jobTitle}
+								onChange={setForm}
 							/>
 							<div className="row">
 								<div className="col-sm-6 mb-4">
@@ -100,6 +115,9 @@ function PostResume3() {
 										id="pr-company"
 										placeholder="Enter company name"
 										required=""
+										name="companyName"
+										value={companyName}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="col-sm-6 mb-4">
@@ -110,10 +128,11 @@ function PostResume3() {
 										className="form-select form-select-lg"
 										id="pr-activity"
 										required=""
+										name="fieldOfActivity"
+										value={fieldOfActivity}
+										onChange={setForm}
 									>
-										<option value="" disabled="" selected="">
-											Choose field
-										</option>
+										<option>Choose field</option>
 										<option value="Accounting">Accounting</option>
 										<option value="Marketing &amp; PR">
 											Marketing &amp; PR
@@ -136,10 +155,11 @@ function PostResume3() {
 									<select
 										className="form-select form-select-lg"
 										id="pr-country"
+										name="jobCountry"
+										value={jobCountry}
+										onChange={setForm}
 									>
-										<option value="" disabled="" selected="">
-											Choose country
-										</option>
+										<option>Choose country</option>
 										<option value="Australia">Australia</option>
 										<option value="Belgium">Belgium</option>
 										<option value="Canada">Canada</option>
@@ -156,10 +176,14 @@ function PostResume3() {
 									<label className="form-label" htmlFor="pr-city">
 										City
 									</label>
-									<select className="form-select form-select-lg" id="pr-city">
-										<option value="" disabled="" selected="">
-											Choose city
-										</option>
+									<select
+										className="form-select form-select-lg"
+										id="pr-city"
+										name="jobCity"
+										value={jobCity}
+										onChange={setForm}
+									>
+										<option>Choose city</option>
 										<option value="Beijing">Beijing</option>
 										<option value="Berlin">Berlin</option>
 										<option value="Brussels">Brussels</option>
@@ -182,10 +206,11 @@ function PostResume3() {
 												className="form-select form-select-lg"
 												id="pr-period-from"
 												required=""
+												name="timePeriodFromMonth"
+												value={timePeriodFromMonth}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Month
-												</option>
+												<option>Month</option>
 												<option value="January">January</option>
 												<option value="February">February</option>
 												<option value="March">March</option>
@@ -204,10 +229,11 @@ function PostResume3() {
 											<select
 												className="form-select form-select-lg"
 												required=""
+												name="timePeriodFromYear"
+												value={timePeriodFromYear}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Year
-												</option>
+												<option>Year</option>
 												<option value="2021">2021</option>
 												<option value="2020">2020</option>
 												<option value="2019">2019</option>
@@ -234,10 +260,11 @@ function PostResume3() {
 												className="form-select form-select-lg"
 												id="pr-period-to"
 												required=""
+												name="timePeriodToMonth"
+												value={timePeriodToMonth}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Month
-												</option>
+												<option>Month</option>
 												<option value="January">January</option>
 												<option value="February">February</option>
 												<option value="March">March</option>
@@ -256,10 +283,11 @@ function PostResume3() {
 											<select
 												className="form-select form-select-lg"
 												required=""
+												name="timePeriodToYear"
+												value={timePeriodToYear}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Year
-												</option>
+												<option>Year</option>
 												<option value="2021">2021</option>
 												<option value="2020">2020</option>
 												<option value="2019">2019</option>
@@ -285,24 +313,27 @@ function PostResume3() {
 									className="form-control"
 									rows="5"
 									id="pr-description"
+									name="description"
+									value={description}
+									onChange={setForm}
 									placeholder="Describe your position and any significant accomplishments"
 								></textarea>
 								<div className="form-text pt-1">8,000 characters left</div>
 							</div>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-							<Link
-								to="/postresume2"
+							<button
+								onClick={() => navigation.previous()}
 								className="btn btn-outline-primary btn-lg rounded-pill mb-3 mb-sm-0"
 							>
 								<i className="fi-chevron-left fs-sm me-2"></i>Previous step
-							</Link>
-							<Link
-								to="/postresume4"
+							</button>
+							<button
+								onClick={() => navigation.next()}
 								className="btn btn-primary btn-lg rounded-pill ms-sm-auto"
 							>
 								Next step<i className="fi-chevron-right fs-sm ms-2"></i>
-							</Link>
+							</button>
 						</div>
 					</div>
 				</div>

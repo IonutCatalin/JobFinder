@@ -3,7 +3,22 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
-function PostResume() {
+function PostResume({ formData, setForm, navigation }) {
+	const {
+		firstName,
+		secondName,
+		email,
+		phone,
+		dateOfBirth,
+		country,
+		city,
+		adress,
+		facebook,
+		linkedIn,
+		twitter,
+		positionToWork,
+	} = formData;
+
 	return (
 		<>
 			<Header />
@@ -90,8 +105,10 @@ function PostResume() {
 									<input
 										className="form-control form-control-lg"
 										type="text"
+										name="firstName"
 										id="pr-fn"
-										value="Annette"
+										value={firstName}
+										onChange={setForm}
 										placeholder="Enter your first name"
 										required=""
 									/>
@@ -104,7 +121,9 @@ function PostResume() {
 										className="form-control form-control-lg"
 										type="text"
 										id="pr-sn"
-										value="Black"
+										name="secondName"
+										value={secondName}
+										onChange={setForm}
 										placeholder="Enter your second name"
 										required=""
 									/>
@@ -117,21 +136,26 @@ function PostResume() {
 										className="form-control form-control-lg"
 										type="email"
 										id="pr-email"
-										value="annette_black@email.com"
+										name="email"
+										value={email}
+										onChange={setForm}
 										placeholder="Enter your email address"
 										required=""
 									/>
 								</div>
 								<div className="col-sm-6 mb-4">
 									<label className="form-label" htmlFor="pr-phone">
-										Phone
+										Phone <span className="text-danger">*</span>
 									</label>
 									<input
 										className="form-control form-control-lg"
 										type="text"
 										id="pr-phone"
-										value="(302) 555-0107"
+										name="phone"
+										value={phone}
+										onChange={setForm}
 										placeholder="Enter your phone number"
+										required=""
 									/>
 								</div>
 								<div className="col-sm-6 mb-4">
@@ -141,20 +165,23 @@ function PostResume() {
 									<div className="input-group input-group-lg">
 										<input
 											className="form-control date-picker rounded pe-5 flatpickr-input"
-											type="hidden"
+											type="date"
 											id="pr-birth-date"
 											placeholder="Choose date"
+											name="dateOfBirth"
+											value={dateOfBirth}
+											onChange={setForm}
 											data-datepicker-options='{"altInput": true, "altFormat": "F j, Y", "dateFormat": "Y-m-d"}'
-											value="2021-09-23"
+											// value="2021-09-23"
 										/>
-										<input
+										{/* <input
 											className="form-control date-picker rounded pe-5 input"
 											placeholder="Choose date"
 											tabindex="0"
 											type="text"
 											readonly="readonly"
 										/>
-										<i className="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i>
+										<i className="fi-calendar text-muted position-absolute top-50 end-0 translate-middle-y me-3"></i> */}
 									</div>
 								</div>
 							</div>
@@ -168,8 +195,11 @@ function PostResume() {
 										className="form-select form-select-lg"
 										id="pr-country"
 										required=""
+										name="country"
+										value={country}
+										onChange={setForm}
 									>
-										<option value="" disabled="" selected="">
+										<option defaultValue="Choose country" disabled="">
 											Choose country
 										</option>
 										<option value="Australia">Australia</option>
@@ -193,10 +223,11 @@ function PostResume() {
 										className="form-select form-select-lg"
 										id="pr-city"
 										required=""
+										name="city"
+										value={city}
+										onChange={setForm}
 									>
-										<option value="" disabled="" selected="">
-											Choose city
-										</option>
+										<option>Choose city</option>
 										<option value="Beijing">Beijing</option>
 										<option value="Berlin">Berlin</option>
 										<option value="Brussels">Brussels</option>
@@ -211,13 +242,16 @@ function PostResume() {
 								</div>
 								<div className="col-12 mb-4">
 									<label className="form-label" htmlFor="pr-address">
-										Your address
+										Your address <span className="text-danger">*</span>
 									</label>
 									<input
 										className="form-control form-control-lg"
 										type="text"
 										id="pr-address"
 										placeholder="Enter the address"
+										name="adress"
+										value={adress}
+										onChange={setForm}
 									/>
 								</div>
 							</div>
@@ -231,6 +265,9 @@ function PostResume() {
 										className="form-control"
 										type="text"
 										placeholder="Your Facebook account"
+										name="facebook"
+										value={facebook}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="d-flex align-items-center mb-3">
@@ -241,6 +278,9 @@ function PostResume() {
 										className="form-control"
 										type="text"
 										placeholder="Your LinkedIn account"
+										name="linkedIn"
+										value={linkedIn}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="d-flex align-items-center mb-3">
@@ -251,6 +291,9 @@ function PostResume() {
 										className="form-control"
 										type="text"
 										placeholder="Your Twitter account"
+										name="twitter"
+										value={twitter}
+										onChange={setForm}
 									/>
 								</div>
 							</div>
@@ -259,7 +302,8 @@ function PostResume() {
 									className="form-label fw-bold py-2 mb-1"
 									htmlFor="pr-position"
 								>
-									Position you want to work on
+									Position you want to work on{" "}
+									<span className="text-danger">*</span>
 								</label>
 								<input
 									className="form-control form-control-lg mb-4"
@@ -267,7 +311,12 @@ function PostResume() {
 									id="pr-position"
 									placeholder="Indicate the position"
 									required=""
+									name="positionToWork"
+									value={positionToWork}
+									onChange={setForm}
 								/>
+							</div>
+							{/*
 								<label className="form-label fw-bold pb-1 mb-2">
 									Choose categories for posting resume
 								</label>
@@ -642,15 +691,16 @@ function PostResume() {
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> */}
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-							<Link
-								to="/postresume2"
+							<button
+								// to="/postresume2"
 								className="btn btn-primary btn-lg rounded-pill ms-sm-auto"
+								onClick={() => navigation.next()}
 							>
 								Next step<i className="fi-chevron-right fs-sm ms-2"></i>
-							</Link>
+							</button>
 						</div>
 					</div>
 				</div>

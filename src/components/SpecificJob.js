@@ -33,11 +33,19 @@ const SpecificJob = () => {
 			.then((data) => {
 				setSavedJobs(data);
 				console.log("savedJobs", savedJobs);
+				if (savedJobs.savedJobId === jobDetails._id) {
+					console.log("1", savedJobs.savedJobId);
+					console.log("2", jobDetails._id);
+					setIsJobStored(false);
+					console.log("aici e true", isJobStored);
+				}
 			});
-		if (savedJobs.savedJobId === jobDetails._id) {
-			setIsJobStored(true);
-			return;
-		}
+		// if (savedJobs.savedJobId === jobDetails._id) {
+		// 	console.log("1", savedJobs.savedJobId);
+		// 	console.log("2", jobDetails._id);
+		// 	setIsJobStored(false);
+		// 	console.log("aici e true", isJobStored);
+		// }
 		// let isTrueOrNot = savedJobs.filter((job) => if(job.userId === user._id){}));
 
 		// setIsJobStored(isTrueOrNot);
@@ -62,9 +70,7 @@ const SpecificJob = () => {
 				setJobDetails(data);
 				console.log("data", data);
 			});
-		const isTrueOrNot = savedJobs.map((jobb) => {
-			if (jobb.userId === user._id) setIsJobStored(true);
-		});
+
 		console.log("isTrueOrNot", isJobStored);
 	};
 
@@ -92,10 +98,10 @@ const SpecificJob = () => {
 				userId: user._id,
 				savedJobId: jobDetails._id,
 			});
+			setIsJobStored(true);
 		} catch (err) {
 			console.log(err);
 		}
-		setIsJobStored(true);
 	}
 
 	console.log("jobDEtails", jobDetails);

@@ -24,6 +24,7 @@ import { GlobalProvider } from "./components/context/GlobalState";
 //from youtube
 import { useContext } from "react";
 import { AuthContext } from "./components/authContext/AuthContext";
+import MultiStepForm from "./components/MultiStepForm";
 
 function App() {
 	const { user } = useContext(AuthContext);
@@ -47,6 +48,9 @@ function App() {
 									<JobList />
 								</Route>
 								<Route path="/postresume">
+									<MultiStepForm />
+								</Route>
+								{/* <Route path="/postresume">
 									<PostResume />
 								</Route>
 								<Route path="/postresume2">
@@ -60,7 +64,7 @@ function App() {
 								</Route>
 								<Route path="/postresume5">
 									<PostResume5 />
-								</Route>
+								</Route> */}
 								<Route path="/profilesettings">
 									<ProfileSettings />
 								</Route>

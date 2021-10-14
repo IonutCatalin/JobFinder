@@ -3,7 +3,18 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
-function PostResume2() {
+function PostResume2({ formData, setForm, navigation }) {
+	const {
+		levelOfEducation,
+		fieldOfStudy,
+		university,
+		universityCountryCity,
+		periodFromMonth,
+		periodFromYear,
+		periodToMonth,
+		periodToYear,
+	} = formData;
+
 	return (
 		<>
 			<Header />
@@ -79,10 +90,11 @@ function PostResume2() {
 										className="form-select form-select-lg"
 										id="pr-education-level"
 										required=""
+										name="levelOfEducation"
+										value={levelOfEducation}
+										onChange={setForm}
 									>
-										<option value="" disabled="" selected="">
-											Choose your level of education
-										</option>
+										<option>Choose your level of education</option>
 										<option value="Associate Degree">Associate Degree</option>
 										<option value="Bachelor's Degree">Bachelor's Degree</option>
 										<option value="Graduate Degree">Graduate Degree</option>
@@ -103,6 +115,9 @@ function PostResume2() {
 										id="pr-study-field"
 										placeholder="Enter field of study"
 										required=""
+										name="fieldOfStudy"
+										value={fieldOfStudy}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="col-sm-6 mb-4">
@@ -115,6 +130,9 @@ function PostResume2() {
 										id="pr-college"
 										placeholder="Enter your college name"
 										required=""
+										name="university"
+										value={university}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="col-sm-6 mb-4">
@@ -127,6 +145,9 @@ function PostResume2() {
 										id="pr-country"
 										placeholder="Enter country, city of your college"
 										required=""
+										name="universityCountryCity"
+										value={universityCountryCity}
+										onChange={setForm}
 									/>
 								</div>
 								<div className="col-lg-6 mb-4">
@@ -139,10 +160,11 @@ function PostResume2() {
 												className="form-select form-select-lg"
 												id="pr-period-from"
 												required=""
+												name="periodFromMonth"
+												value={periodFromMonth}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Month
-												</option>
+												<option>Month</option>
 												<option value="January">January</option>
 												<option value="February">February</option>
 												<option value="March">March</option>
@@ -161,10 +183,11 @@ function PostResume2() {
 											<select
 												className="form-select form-select-lg"
 												required=""
+												name="periodFromYear"
+												value={periodFromYear}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Year
-												</option>
+												<option>Year</option>
 												<option value="2021">2021</option>
 												<option value="2020">2020</option>
 												<option value="2019">2019</option>
@@ -191,10 +214,11 @@ function PostResume2() {
 												className="form-select form-select-lg"
 												id="pr-period-to"
 												required=""
+												name="periodToMonth"
+												value={periodToMonth}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Month
-												</option>
+												<option>Month</option>
 												<option value="January">January</option>
 												<option value="February">February</option>
 												<option value="March">March</option>
@@ -213,10 +237,11 @@ function PostResume2() {
 											<select
 												className="form-select form-select-lg"
 												required=""
+												name="periodToYear"
+												value={periodToYear}
+												onChange={setForm}
 											>
-												<option value="" disabled="" selected="">
-													Year
-												</option>
+												<option>Year</option>
 												<option value="2021">2021</option>
 												<option value="2020">2020</option>
 												<option value="2019">2019</option>
@@ -236,18 +261,18 @@ function PostResume2() {
 							</div>
 						</div>
 						<div className="d-flex flex-column flex-sm-row bg-light rounded-3 p-4 px-md-5">
-							<Link
-								to="/postresume"
+							<button
 								className="btn btn-outline-primary btn-lg rounded-pill mb-3 mb-sm-0"
+								onClick={() => navigation.previous()}
 							>
 								<i className="fi-chevron-left fs-sm me-2"></i>Previous step
-							</Link>
-							<Link
-								to="/postresume3"
+							</button>
+							<button
 								className="btn btn-primary btn-lg rounded-pill ms-sm-auto"
+								onClick={() => navigation.next()}
 							>
 								Next step<i className="fi-chevron-right fs-sm ms-2"></i>
-							</Link>
+							</button>
 						</div>
 					</div>
 				</div>
