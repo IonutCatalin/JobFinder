@@ -6,10 +6,31 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../authContext/AuthContext";
 import { logout } from "../authContext/AuthActions";
 import { useContext } from "react";
+import { useEffect, useState } from "react";
+
+import MyResumesCard from "./MyResumesCard";
 
 function MyResumes() {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const { dispatch } = useContext(AuthContext);
+
+	const [myResumes, setMyResumes] = useState([]);
+
+	async function getUserResumes() {
+		fetch(`http://localhost:3001/myResumes?userId=${user._id}`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setMyResumes(data);
+			});
+		console.log("aici", myResumes);
+	}
+
+	useEffect(() => {
+		getUserResumes();
+	}, []);
 
 	return (
 		<>
@@ -175,252 +196,21 @@ function MyResumes() {
 							</div>
 						</div>
 						<div className="col-md-9">
-							<div className="card bg-secondary card-hover mb-2">
-								<div className="card-body">
-									<div className="d-flex justify-content-between">
-										<div className="d-flex align-items-start">
-											<img
-												className="d-none d-sm-block"
-												src="img/avatars/38.png"
-												width="100"
-												alt="Resume picture"
+							{myResumes.length > 0 ? (
+								myResumes
+									.filter((resume) => resume.userId === user._id)
+									.map((resume) => {
+										return (
+											<MyResumesCard
+												getUserResumes={getUserResumes}
+												resume={resume}
+												id={resume._id}
 											/>
-											<div className="ps-sm-3">
-												<h3 className="h6 card-title pb-1 mb-2">
-													<a
-														className="stretched-link text-nav text-decoration-none"
-														href="#"
-													>
-														Lead Web Designer
-													</a>
-												</h3>
-												<div className="fs-sm">
-													<div className="text-nowrap mb-2">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														York
-													</div>
-													<div className="text-nowrap">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$4,000
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="d-flex flex-column align-items-end justify-content-between">
-											<div className="dropdown position-relative zindex-10 mb-3">
-												<button
-													className="btn btn-icon btn-light btn-xs rounded-circle shadow-sm"
-													type="button"
-													id="contextMenu1"
-													data-bs-toggle="dropdown"
-													aria-expanded="false"
-												>
-													<i className="fi-dots-vertical"></i>
-												</button>
-												<ul
-													className="dropdown-menu my-1"
-													aria-labelledby="contextMenu1"
-												>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-edit opacity-60 me-2"></i>Edit
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-flame opacity-60 me-2"></i>
-															Promote
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-download-file opacity-60 me-2"></i>
-															Download as PDF
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-power opacity-60 me-2"></i>
-															Deactivate
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-trash opacity-60 me-2"></i>Delete
-														</button>
-													</li>
-												</ul>
-											</div>
-											<strong className="fs-sm">80 views</strong>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="card bg-secondary card-hover mb-2">
-								<div className="card-body">
-									<div className="d-flex justify-content-between">
-										<div className="d-flex align-items-start">
-											<img
-												className="d-none d-sm-block"
-												src="img/avatars/37.png"
-												width="100"
-												alt="Resume picture"
-											/>
-											<div className="ps-sm-3">
-												<h3 className="h6 card-title pb-1 mb-2">
-													<a
-														className="stretched-link text-nav text-decoration-none"
-														href="#"
-													>
-														<span className="me-3">Graphic Designer</span>
-														<span className="badge bg-faded-accent fs-sm rounded-pill">
-															Featured
-														</span>
-													</a>
-												</h3>
-												<div className="fs-sm">
-													<div className="text-nowrap mb-2">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														York
-													</div>
-													<div className="text-nowrap">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$2,000 - $2,500
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="d-flex flex-column align-items-end justify-content-between">
-											<div className="dropdown position-relative zindex-5 mb-3">
-												<button
-													className="btn btn-icon btn-light btn-xs rounded-circle shadow-sm"
-													type="button"
-													id="contextMenu2"
-													data-bs-toggle="dropdown"
-													aria-expanded="false"
-												>
-													<i className="fi-dots-vertical"></i>
-												</button>
-												<ul
-													className="dropdown-menu my-1"
-													aria-labelledby="contextMenu2"
-												>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-edit opacity-60 me-2"></i>Edit
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-flame opacity-60 me-2"></i>
-															Promote
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-download-file opacity-60 me-2"></i>
-															Download as PDF
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-power opacity-60 me-2"></i>
-															Deactivate
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-trash opacity-60 me-2"></i>Delete
-														</button>
-													</li>
-												</ul>
-											</div>
-											<strong className="fs-sm">203 views</strong>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="card bg-secondary card-hover">
-								<div className="card-body">
-									<div className="d-flex justify-content-between">
-										<div className="d-flex align-items-start">
-											<img
-												className="d-none d-sm-block"
-												src="img/avatars/37.png"
-												width="100"
-												alt="Resume picture"
-											/>
-											<div className="ps-sm-3">
-												<h3 className="h6 card-title pb-1 mb-2">
-													<a
-														className="stretched-link text-nav text-decoration-none"
-														href="#"
-													>
-														Identity Designer / Illustrator
-													</a>
-												</h3>
-												<div className="fs-sm">
-													<div className="text-nowrap mb-2">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														York
-													</div>
-													<div className="text-nowrap">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$2,500
-													</div>
-												</div>
-											</div>
-										</div>
-										<div className="d-flex flex-column align-items-end justify-content-between">
-											<div className="dropdown position-relative zindex-1 mb-3">
-												<button
-													className="btn btn-icon btn-light btn-xs rounded-circle shadow-sm"
-													type="button"
-													id="contextMenu3"
-													data-bs-toggle="dropdown"
-													aria-expanded="false"
-												>
-													<i className="fi-dots-vertical"></i>
-												</button>
-												<ul
-													className="dropdown-menu my-1"
-													aria-labelledby="contextMenu3"
-												>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-edit opacity-60 me-2"></i>Edit
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-flame opacity-60 me-2"></i>
-															Promote
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-download-file opacity-60 me-2"></i>
-															Download as PDF
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-power opacity-60 me-2"></i>
-															Deactivate
-														</button>
-													</li>
-													<li>
-														<button className="dropdown-item" type="button">
-															<i className="fi-trash opacity-60 me-2"></i>Delete
-														</button>
-													</li>
-												</ul>
-											</div>
-											<strong className="fs-sm">92 views</strong>
-										</div>
-									</div>
-								</div>
-							</div>
+										);
+									})
+							) : (
+								<p>Nothing here !</p>
+							)}
 						</div>
 					</div>
 				</div>
