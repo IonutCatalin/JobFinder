@@ -42,7 +42,6 @@ const SavedJobCard = ({ job, id, getUserSavedJobs }) => {
 								{job.description}
 							</a>
 						</h3>
-						<p className="fs-sm mb-0">jobID: {job._id}</p>
 						<p className="fs-sm mb-0">Requirements: {job.requirements}</p>
 						<p className="fs-sm mb-0">Company Offers: {job.companyOffers}</p>
 						<p className="fs-sm mb-0">Period: {job.period}</p>

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useParams } from "react-router";
 import Footer from "./Footer";
 import Header from "./Header";
+import SpecificJobCard from "./SpecificJobCard";
 
 const SpecificJob = () => {
 	const { _id } = useParams();
@@ -12,16 +13,9 @@ const SpecificJob = () => {
 	const user = JSON.parse(localStorage.getItem("user"));
 	const [savedJobs, setSavedJobs] = useState([]);
 	const [isJobStored, setIsJobStored] = useState(false);
+	const [allJobsExceptCurrent, setAllJobsExceptCurrent] = useState([]);
 
 	async function getUserSavedJobs() {
-		// fetch(`http://localhost:3001/savedJobs?userId=${user._id}`, {
-		// 	method: "GET",
-		// 	headers: { "Content-type": "application/json" },
-		// })
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		setSavedJobs(data);
-		// 	});
 		fetch(
 			`http://localhost:3001/savedJobs?savedJobId=${jobDetails._id}&?userId=${user._id}`,
 			{
@@ -34,30 +28,9 @@ const SpecificJob = () => {
 				setSavedJobs(data);
 				console.log("savedJobs", savedJobs);
 				if (savedJobs.savedJobId === jobDetails._id) {
-					console.log("1", savedJobs.savedJobId);
-					console.log("2", jobDetails._id);
 					setIsJobStored(false);
-					console.log("aici e true", isJobStored);
 				}
 			});
-		// if (savedJobs.savedJobId === jobDetails._id) {
-		// 	console.log("1", savedJobs.savedJobId);
-		// 	console.log("2", jobDetails._id);
-		// 	setIsJobStored(false);
-		// 	console.log("aici e true", isJobStored);
-		// }
-		// let isTrueOrNot = savedJobs.filter((job) => if(job.userId === user._id){}));
-
-		// setIsJobStored(isTrueOrNot);
-		// savedJobs.map((job) => {
-		// 	if (job.userId === user._id) {
-		// 		console.log(job.userId);
-		// 		console.log(job._id);
-		// 		console.log(user._id);
-		// 		setIsJobStored(true);
-		// 	}
-		// });
-		console.log("aici", savedJobs._id);
 	}
 
 	const getJobDetails = () => {
@@ -68,23 +41,27 @@ const SpecificJob = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				setJobDetails(data);
-				console.log("data", data);
 			});
+	};
 
-		console.log("isTrueOrNot", isJobStored);
+	const getAllJobsExceptCurrent = () => {
+		fetch(`http://localhost:3001/jobs`, {
+			method: "GET",
+			headers: { "Content-type": "application/json" },
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setAllJobsExceptCurrent(data);
+			});
 	};
 
 	useEffect(() => {
 		getUserSavedJobs();
 		getJobDetails();
+		getAllJobsExceptCurrent();
 	}, []);
 
 	async function saveJobsToDatabase() {
-		// savedJobs.map((jobb) => {
-		// 	if (jobb.userId === user._id) setIsJobStored(true);
-		// 	return;
-		// });
-
 		try {
 			await axios.post(`http://localhost:3001/savedJobs`, {
 				companyName: jobDetails.companyName,
@@ -103,10 +80,6 @@ const SpecificJob = () => {
 			console.log(err);
 		}
 	}
-
-	console.log("jobDEtails", jobDetails);
-	console.log(isJobStored);
-	console.log("here", savedJobs);
 
 	return (
 		<>
@@ -516,7 +489,9 @@ const SpecificJob = () => {
 									<span className="badge bg-faded-accent rounded-pill fs-sm mb-2">
 										Featured
 									</span>
-									<div className="fs-sm text-muted">{jobDetails.date}</div>
+									<div className="fs-sm text-muted">
+										{jobDetails.date && jobDetails.date.substring(0, 10)}
+									</div>
 								</div>
 							</div>
 							<ul className="list-unstyled fs-sm mb-4">
@@ -693,10 +668,7 @@ const SpecificJob = () => {
 			<section className="container pt-md-2 pb-5 mb-md-4">
 				<div className="d-sm-flex align-items-center justify-content-between pb-4 mb-sm-2">
 					<h2 className="h3 mb-sm-0">You may be interested in</h2>
-					<a
-						className="btn btn-link fw-normal p-0"
-						href="job-board-catalog.html"
-					>
+					<a className="btn btn-link fw-normal p-0" href="/joblist">
 						View all<i className="fi-arrow-long-right ms-2"></i>
 					</a>
 				</div>
@@ -741,988 +713,54 @@ const SpecificJob = () => {
 										transitionDuration: "0s",
 										transform: "translate3d(-37.5%, 0px, 0px)",
 									}}
-								>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xampp.png"
-														width="24"
-														alt="XAMPP Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														XAMPP Company
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Auctor elit in aenean sodales mattis. Ultricies nec eu
-													augue sit. Ornare pulvinar enim fames orci enim in
-													libero. Eu, lorem leo netus velit egestas risus...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														Jersey
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$6,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/zapier.png"
-														width="24"
-														alt="Zapier Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Zapier
-													</span>
-													<span className="badge bg-faded-info rounded-pill fs-sm ms-auto">
-														New
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Onboarding Specialist
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Houston
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$4,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/it-pro.png"
-														width="24"
-														alt="IT Pro Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														IT Pro TV
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													{" "}
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Chicago
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$7,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xbox.png"
-														width="24"
-														alt="Xbox Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Xbox Company
-													</span>
-													<span className="badge bg-faded-accent rounded-pill fs-sm ms-auto">
-														Featured
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Full-Stack Developer
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Euismod nec sagittis sit arcu libero, metus. Aliquam
-													nisl rhoncus porttitor volutpat, ante cras tincidunt.
-													Nec sit nunc, ornare tincidunt enim, neque...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Washington
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$13,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xampp.png"
-														width="24"
-														alt="XAMPP Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														XAMPP Company
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Auctor elit in aenean sodales mattis. Ultricies nec eu
-													augue sit. Ornare pulvinar enim fames orci enim in
-													libero. Eu, lorem leo netus velit egestas risus...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														Jersey
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$6,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/zapier.png"
-														width="24"
-														alt="Zapier Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Zapier
-													</span>
-													<span className="badge bg-faded-info rounded-pill fs-sm ms-auto">
-														New
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Onboarding Specialist
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Houston
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$4,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-active"
-										id="tns1-item0"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/it-pro.png"
-														width="24"
-														alt="IT Pro Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														IT Pro TV
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													{" "}
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Chicago
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$7,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-active"
-										id="tns1-item1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xbox.png"
-														width="24"
-														alt="Xbox Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Xbox Company
-													</span>
-													<span className="badge bg-faded-accent rounded-pill fs-sm ms-auto">
-														Featured
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Full-Stack Developer
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Euismod nec sagittis sit arcu libero, metus. Aliquam
-													nisl rhoncus porttitor volutpat, ante cras tincidunt.
-													Nec sit nunc, ornare tincidunt enim, neque...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Washington
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$13,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-active"
-										id="tns1-item2"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xampp.png"
-														width="24"
-														alt="XAMPP Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														XAMPP Company
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Auctor elit in aenean sodales mattis. Ultricies nec eu
-													augue sit. Ornare pulvinar enim fames orci enim in
-													libero. Eu, lorem leo netus velit egestas risus...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														Jersey
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$6,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item"
-										id="tns1-item3"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/zapier.png"
-														width="24"
-														alt="Zapier Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Zapier
-													</span>
-													<span className="badge bg-faded-info rounded-pill fs-sm ms-auto">
-														New
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Onboarding Specialist
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Houston
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$4,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/it-pro.png"
-														width="24"
-														alt="IT Pro Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														IT Pro TV
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													{" "}
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Chicago
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$7,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xbox.png"
-														width="24"
-														alt="Xbox Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Xbox Company
-													</span>
-													<span className="badge bg-faded-accent rounded-pill fs-sm ms-auto">
-														Featured
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Full-Stack Developer
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Euismod nec sagittis sit arcu libero, metus. Aliquam
-													nisl rhoncus porttitor volutpat, ante cras tincidunt.
-													Nec sit nunc, ornare tincidunt enim, neque...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Washington
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$13,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xampp.png"
-														width="24"
-														alt="XAMPP Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														XAMPP Company
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Auctor elit in aenean sodales mattis. Ultricies nec eu
-													augue sit. Ornare pulvinar enim fames orci enim in
-													libero. Eu, lorem leo netus velit egestas risus...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>New
-														Jersey
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$6,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/zapier.png"
-														width="24"
-														alt="Zapier Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Zapier
-													</span>
-													<span className="badge bg-faded-info rounded-pill fs-sm ms-auto">
-														New
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Onboarding Specialist
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Houston
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$4,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/it-pro.png"
-														width="24"
-														alt="IT Pro Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														IT Pro TV
-													</span>
-													<span className="badge bg-faded-danger rounded-pill fs-sm ms-auto">
-														Hot
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Business Analyst
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													{" "}
-													Blandit a tincidunt arcu nulla. Sem neque, rhoncus non
-													odio nulla maecenas elit praesent. Orci tristique
-													velit mauris cursus nibh. Hendrerit et dictum sed...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Chicago
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$7,500
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-									<div
-										className="pb-4 tns-item tns-slide-cloned"
-										aria-hidden="true"
-										tabIndex="-1"
-									>
-										<div className="card bg-secondary card-hover h-100">
-											<div className="card-body pb-3">
-												<div className="d-flex align-items-center mb-2">
-													<img
-														className="me-2"
-														src="img/job-board/company/xbox.png"
-														width="24"
-														alt="Xbox Logo"
-													/>
-													<span className="fs-sm text-dark opacity-80 px-1">
-														Xbox Company
-													</span>
-													<span className="badge bg-faded-accent rounded-pill fs-sm ms-auto">
-														Featured
-													</span>
-												</div>
-												<h3 className="h6 card-title pt-1 mb-2">
-													<a
-														className="text-nav stretched-link text-decoration-none"
-														href="#"
-													>
-														Full-Stack Developer
-													</a>
-												</h3>
-												<p className="fs-sm mb-0">
-													Euismod nec sagittis sit arcu libero, metus. Aliquam
-													nisl rhoncus porttitor volutpat, ante cras tincidunt.
-													Nec sit nunc, ornare tincidunt enim, neque...
-												</p>
-											</div>
-											<div className="card-footer d-flex align-items-center justify-content-between border-0 pt-0">
-												<div className="fs-sm">
-													<span className="text-nowrap me-3">
-														<i className="fi-map-pin text-muted me-1"> </i>
-														Washington
-													</span>
-													<span className="text-nowrap me-3">
-														<i className="fi-cash fs-base text-muted me-1"></i>
-														$13,000
-													</span>
-												</div>
-												<button
-													className="btn btn-icon btn-light btn-xs text-primary shadow-sm rounded-circle content-overlay"
-													type="button"
-													data-bs-toggle="tooltip"
-													title=""
-													data-bs-original-title="Add to saved jobs"
-													aria-label="Add to saved jobs"
-												>
-													<i className="fi-heart"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								></div>
+							</div>
+							<div className="tns-nav" aria-label="Carousel Pagination">
+								<button
+									type="button"
+									data-nav="0"
+									aria-controls="tns1"
+									aria-label="Carousel Page 1 (Current Slide)"
+									className="tns-nav-active"
+								></button>
+								<button
+									type="button"
+									data-nav="1"
+									tabIndex="-1"
+									aria-controls="tns1"
+									aria-label="Carousel Page 2"
+								></button>
+								<button
+									type="button"
+									data-nav="2"
+									tabIndex="-1"
+									aria-controls="tns1"
+									style={{ display: "none" }}
+									aria-label="Carousel Page 3"
+								></button>
+								<button
+									type="button"
+									data-nav="3"
+									tabIndex="-1"
+									aria-controls="tns1"
+									style={{ display: "none" }}
+									aria-label="Carousel Page 4"
+								></button>
 							</div>
 						</div>
-						<div className="tns-nav" aria-label="Carousel Pagination">
-							<button
-								type="button"
-								data-nav="0"
-								aria-controls="tns1"
-								aria-label="Carousel Page 1 (Current Slide)"
-								className="tns-nav-active"
-							></button>
-							<button
-								type="button"
-								data-nav="1"
-								tabIndex="-1"
-								aria-controls="tns1"
-								aria-label="Carousel Page 2"
-							></button>
-							<button
-								type="button"
-								data-nav="2"
-								tabIndex="-1"
-								aria-controls="tns1"
-								style={{ display: "none" }}
-								aria-label="Carousel Page 3"
-							></button>
-							<button
-								type="button"
-								data-nav="3"
-								tabIndex="-1"
-								aria-controls="tns1"
-								style={{ display: "none" }}
-								aria-label="Carousel Page 4"
-							></button>
-						</div>
+
+						{allJobsExceptCurrent
+							.filter((job) => job._id !== _id)
+							.map((job) => {
+								return (
+									<SpecificJobCard
+										key={job._id}
+										job={job}
+										id={job._id}
+										getAllJobsExceptCurrent={getAllJobsExceptCurrent}
+									/>
+								);
+							})}
 					</div>
 				</div>
 			</section>

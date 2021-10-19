@@ -496,7 +496,7 @@ const JobList = () => {
 							</div>
 							{currentJobs
 								.filter((job) => {
-									if (searchTerm == "") {
+									if (searchTerm === "") {
 										return job;
 									} else if (
 										job.companyName
