@@ -1,7 +1,4 @@
-
-
-
-### comment 
+ 
 # Job Finder - Online Job Finder Application developed in React.js and Node.js.
 
 Online teaching application in which the user can view online courses, rate the course and leave a review.Users can also become instructors, meaning that any user can add his own course to the application. Users can also manage their own profile, editing their credentials. They can also bookmark courses or enroll into the ones they desire.
